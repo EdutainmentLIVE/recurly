@@ -1,0 +1,12 @@
+packages: .
+
+source-repository-package
+    type: git
+    location: https://github.com/aschmois/base-noprelude
+    tag: ae0653af5285323c400f23e599f762922187d341
+
+source-repository-package
+    type: git
+    location: https://github.com/snoyberg/xml
+    tag: 98e26f7ff88e4c22fd31b6664e84f49ca9ead050
+    subdir: xml-conduit

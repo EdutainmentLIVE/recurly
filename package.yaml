@@ -1,0 +1,68 @@
+name: recurly
+version: 0.0.0
+category: Recurly
+synopsis: Access recurly v3 api
+description: Library to access recurly v3 api. This is partially done and unfinished.
+maintainer: Andres Schmois <andres@itpro.tv>
+github: EdutainmentLIVE/recurly
+
+default-extensions:
+  - ConstraintKinds
+  - DataKinds
+  - DeriveGeneric
+  - FlexibleContexts
+  - GeneralizedNewtypeDeriving
+  - MultiParamTypeClasses
+  - OverloadedStrings
+  - ScopedTypeVariables
+  - TypeApplications
+
+dependencies:
+  aeson: ">=1.5.4 && <1.6"
+  base-noprelude: ">=4.14.1 && <4.15"
+  bytestring: ">=0.10.10 && <0.11"
+  cassava: ">=0.5.2 && <0.6"
+  envy: ">=2.1.0 && <2.2"
+  hslogger: ">=1.3.1 && <1.4"
+  http-client-tls: ">=0.3.5 && <0.4"
+  http-client: ">=0.6.4 && <0.7"
+  http-types: ">=0.12.3 && <0.13"
+  lens: ">=4.19.2 && <4.20"
+  monad-control: ">=1.0.2 && <1.1"
+  mtl: ">=2.2.2 && <2.3"
+  network-uri: ">=2.6.3 && <2.7"
+  pretty-simple: ">=3.3.0 && <3.4"
+  prolude: ">=0.0.0 && <0.1"
+  random: ">=1.1 && <1.2"
+  safe-money: ">=0.9 && <0.10"
+  scientific: ">=0.3.6 && <0.4"
+  text: ">=1.2.3 && <1.3"
+  time: ">=1.9.3 && <1.10"
+  transformers-base: ">=0.4.5 && <0.5"
+  transformers: ">=0.5.6 && <0.6"
+  unliftio-core: ">=0.2.0 && <0.3"
+  xml-conduit: ">=1.9.0 && <2.0"
+  xml-lens: ">=0.2 && <0.3"
+
+library:
+  source-dirs: library
+  other-modules:
+    - Paths_recurly
+    - Prelude
+    - Recurlude
+
+ghc-options:
+  - -Weverything
+  - -Wno-all-missed-specializations
+  - -Wno-implicit-prelude
+  - -Wno-missed-specialisations
+  - -Wno-missing-deriving-strategies
+  - -Wno-missing-exported-signatures
+  - -Wno-missing-export-lists
+  - -Wno-missing-import-lists
+  - -Wno-missing-safe-haskell-mode
+  - -Wno-prepositive-qualified-module
+  - -Wno-redundant-constraints
+  - -Wno-safe
+  - -Wno-unsafe
+  - -Wno-unused-packages

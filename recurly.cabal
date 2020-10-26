@@ -1,0 +1,210 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 8afbb2aa4b5b9b6367704c10991c4626f4cfe722d02b4253b7bbbb9e0e9b979c
+
+name:           recurly
+version:        0.0.0
+synopsis:       Access recurly v3 api
+description:    Library to access recurly v3 api. This is partially done and unfinished.
+category:       Recurly
+homepage:       https://github.com/EdutainmentLIVE/recurly#readme
+bug-reports:    https://github.com/EdutainmentLIVE/recurly/issues
+maintainer:     Andres Schmois <andres@itpro.tv>
+license:        MIT
+license-file:   LICENSE
+build-type:     Simple
+
+source-repository head
+  type: git
+  location: https://github.com/EdutainmentLIVE/recurly
+
+library
+  exposed-modules:
+      Recurly.V3.API.Account
+      Recurly.V3.API.Coupon
+      Recurly.V3.API.Subscription
+      Recurly.V3.API.Types
+      Recurly.V3.API.Types.Account
+      Recurly.V3.API.Types.Account.Code
+      Recurly.V3.API.Types.Account.Email
+      Recurly.V3.API.Types.Account.FirstName
+      Recurly.V3.API.Types.Account.Id
+      Recurly.V3.API.Types.Account.LastName
+      Recurly.V3.API.Types.AccountCouponRedemption
+      Recurly.V3.API.Types.AccountLineItem
+      Recurly.V3.API.Types.AccountLineItem.CreditReason
+      Recurly.V3.API.Types.AccountLineItem.Id
+      Recurly.V3.API.Types.AccountLineItem.Type
+      Recurly.V3.API.Types.AccountLineItem.UnitAmount
+      Recurly.V3.API.Types.Coupon
+      Recurly.V3.API.Types.Coupon.AppliesToAllPlans
+      Recurly.V3.API.Types.Coupon.Code
+      Recurly.V3.API.Types.Coupon.DiscountType
+      Recurly.V3.API.Types.Coupon.Id
+      Recurly.V3.API.Types.Coupon.Name
+      Recurly.V3.API.Types.Coupon.Plan
+      Recurly.V3.API.Types.CouponRedemption.Account
+      Recurly.V3.API.Types.CouponRedemption.Coupon
+      Recurly.V3.API.Types.CouponRedemption.CreatedAt
+      Recurly.V3.API.Types.CouponRedemption.Discounted
+      Recurly.V3.API.Types.CouponRedemption.Id
+      Recurly.V3.API.Types.CouponRedemption.RemovedAt
+      Recurly.V3.API.Types.CouponRedemption.State
+      Recurly.V3.API.Types.CouponRedemptionType
+      Recurly.V3.API.Types.CreditPayment.Account
+      Recurly.V3.API.Types.CreditPayment.Action
+      Recurly.V3.API.Types.CreditPayment.Amount
+      Recurly.V3.API.Types.CreditPayment.Id
+      Recurly.V3.API.Types.CreditPayment.Invoice
+      Recurly.V3.API.Types.CreditPayment.Uuid
+      Recurly.V3.API.Types.Currency
+      Recurly.V3.API.Types.Invoice
+      Recurly.V3.API.Types.Invoice.Account
+      Recurly.V3.API.Types.Invoice.Balance
+      Recurly.V3.API.Types.Invoice.ClosedAt
+      Recurly.V3.API.Types.Invoice.CollectionMethod
+      Recurly.V3.API.Types.Invoice.CreatedAt
+      Recurly.V3.API.Types.Invoice.Discount
+      Recurly.V3.API.Types.Invoice.DueAt
+      Recurly.V3.API.Types.Invoice.Id
+      Recurly.V3.API.Types.Invoice.NetTerms
+      Recurly.V3.API.Types.Invoice.Number
+      Recurly.V3.API.Types.Invoice.Origin
+      Recurly.V3.API.Types.Invoice.Paid
+      Recurly.V3.API.Types.Invoice.RefundableAmount
+      Recurly.V3.API.Types.Invoice.State
+      Recurly.V3.API.Types.Invoice.Subtotal
+      Recurly.V3.API.Types.Invoice.Tax
+      Recurly.V3.API.Types.Invoice.TaxInfo
+      Recurly.V3.API.Types.Invoice.Total
+      Recurly.V3.API.Types.Invoice.Type
+      Recurly.V3.API.Types.Invoice.UpdatedAt
+      Recurly.V3.API.Types.Money.Money
+      Recurly.V3.API.Types.PaymentGateway.Id
+      Recurly.V3.API.Types.PaymentGateway.Name
+      Recurly.V3.API.Types.PaymentGateway.Type
+      Recurly.V3.API.Types.PaymentMethod.AccountType
+      Recurly.V3.API.Types.PaymentMethod.BillingAgreementId
+      Recurly.V3.API.Types.PaymentMethod.CardType
+      Recurly.V3.API.Types.PaymentMethod.ExpMonth
+      Recurly.V3.API.Types.PaymentMethod.ExpYear
+      Recurly.V3.API.Types.PaymentMethod.FirstSix
+      Recurly.V3.API.Types.PaymentMethod.GatewayCode
+      Recurly.V3.API.Types.PaymentMethod.GatewayToken
+      Recurly.V3.API.Types.PaymentMethod.LastFour
+      Recurly.V3.API.Types.PaymentMethod.LastTwo
+      Recurly.V3.API.Types.PaymentMethod.Object
+      Recurly.V3.API.Types.PaymentMethod.RoutingNumber
+      Recurly.V3.API.Types.PaymentMethod.RoutingNumberBank
+      Recurly.V3.API.Types.Plan.Code
+      Recurly.V3.API.Types.Plan.Id
+      Recurly.V3.API.Types.Plan.Name
+      Recurly.V3.API.Types.PostAccount
+      Recurly.V3.API.Types.PostAccountLineItem
+      Recurly.V3.API.Types.PostCoupon
+      Recurly.V3.API.Types.PutAccount
+      Recurly.V3.API.Types.Subscription
+      Recurly.V3.API.Types.Subscription.Account
+      Recurly.V3.API.Types.Subscription.ActivatedAt
+      Recurly.V3.API.Types.Subscription.AutoRenew
+      Recurly.V3.API.Types.Subscription.CanceledAt
+      Recurly.V3.API.Types.Subscription.CouponRedemption
+      Recurly.V3.API.Types.Subscription.CreatedAt
+      Recurly.V3.API.Types.Subscription.CurrentPeriodEndsAt
+      Recurly.V3.API.Types.Subscription.CurrentPeriodStartedAt
+      Recurly.V3.API.Types.Subscription.CurrentTermEndsAt
+      Recurly.V3.API.Types.Subscription.CurrentTermStartedAt
+      Recurly.V3.API.Types.Subscription.ExpiresAt
+      Recurly.V3.API.Types.Subscription.Id
+      Recurly.V3.API.Types.Subscription.PausedAt
+      Recurly.V3.API.Types.Subscription.Plan
+      Recurly.V3.API.Types.Subscription.Quantity
+      Recurly.V3.API.Types.Subscription.RemainingBillingCycles
+      Recurly.V3.API.Types.Subscription.RemainingPauseCycles
+      Recurly.V3.API.Types.Subscription.RenewalBillingCycles
+      Recurly.V3.API.Types.Subscription.State
+      Recurly.V3.API.Types.Subscription.Subtotal
+      Recurly.V3.API.Types.Subscription.TotalBillingCycles
+      Recurly.V3.API.Types.Subscription.TrialEndsAt
+      Recurly.V3.API.Types.Subscription.TrialStartedAt
+      Recurly.V3.API.Types.Subscription.UnitAmount
+      Recurly.V3.API.Types.Subscription.UpdatedAt
+      Recurly.V3.API.Types.Subscription.Uuid
+      Recurly.V3.API.Types.TaxInfo.Rate
+      Recurly.V3.API.Types.TaxInfo.Region
+      Recurly.V3.API.Types.TaxInfo.Type
+      Recurly.V3.API.Types.Transaction.Account
+      Recurly.V3.API.Types.Transaction.Amount
+      Recurly.V3.API.Types.Transaction.CollectionMethod
+      Recurly.V3.API.Types.Transaction.CustomerMessage
+      Recurly.V3.API.Types.Transaction.CustomerMessageLocale
+      Recurly.V3.API.Types.Transaction.CvvCheck
+      Recurly.V3.API.Types.Transaction.GatewayApprovalCode
+      Recurly.V3.API.Types.Transaction.GatewayMessage
+      Recurly.V3.API.Types.Transaction.GatewayReference
+      Recurly.V3.API.Types.Transaction.GatewayResponseCode
+      Recurly.V3.API.Types.Transaction.GatewayResponseTime
+      Recurly.V3.API.Types.Transaction.GatewayResponseValues
+      Recurly.V3.API.Types.Transaction.Id
+      Recurly.V3.API.Types.Transaction.Invoice
+      Recurly.V3.API.Types.Transaction.IpAddressCountry
+      Recurly.V3.API.Types.Transaction.IpAddressV4
+      Recurly.V3.API.Types.Transaction.Origin
+      Recurly.V3.API.Types.Transaction.OriginalTransactionId
+      Recurly.V3.API.Types.Transaction.PaymentGateway
+      Recurly.V3.API.Types.Transaction.PaymentMethod
+      Recurly.V3.API.Types.Transaction.Refunded
+      Recurly.V3.API.Types.Transaction.Status
+      Recurly.V3.API.Types.Transaction.StatusCode
+      Recurly.V3.API.Types.Transaction.StatusMessage
+      Recurly.V3.API.Types.Transaction.Success
+      Recurly.V3.API.Types.Transaction.Type
+      Recurly.V3.API.Types.Transaction.Uuid
+      Recurly.V3.Env
+      Recurly.V3.Env.ApiUri
+      Recurly.V3.Env.MaxAttempts
+      Recurly.V3.Env.Token
+      Recurly.V3.Env.WebhookPassword
+      Recurly.V3.Env.WebhookUsername
+      Recurly.V3.Http
+      Recurly.V3.Recurly
+      Recurly.V3.Webhook.Webhook
+  other-modules:
+      Paths_recurly
+      Prelude
+      Recurlude
+  hs-source-dirs:
+      library
+  default-extensions: ConstraintKinds DataKinds DeriveGeneric FlexibleContexts GeneralizedNewtypeDeriving MultiParamTypeClasses OverloadedStrings ScopedTypeVariables TypeApplications
+  ghc-options: -Weverything -Wno-all-missed-specializations -Wno-implicit-prelude -Wno-missed-specialisations -Wno-missing-deriving-strategies -Wno-missing-exported-signatures -Wno-missing-export-lists -Wno-missing-import-lists -Wno-missing-safe-haskell-mode -Wno-prepositive-qualified-module -Wno-redundant-constraints -Wno-safe -Wno-unsafe -Wno-unused-packages
+  build-depends:
+      aeson >=1.5.4 && <1.6
+    , base-noprelude >=4.14.1 && <4.15
+    , bytestring >=0.10.10 && <0.11
+    , cassava >=0.5.2 && <0.6
+    , envy >=2.1.0 && <2.2
+    , hslogger >=1.3.1 && <1.4
+    , http-client >=0.6.4 && <0.7
+    , http-client-tls >=0.3.5 && <0.4
+    , http-types >=0.12.3 && <0.13
+    , lens >=4.19.2 && <4.20
+    , monad-control >=1.0.2 && <1.1
+    , mtl >=2.2.2 && <2.3
+    , network-uri >=2.6.3 && <2.7
+    , pretty-simple >=3.3.0 && <3.4
+    , prolude >=0.0.0 && <0.1
+    , random >=1.1 && <1.2
+    , safe-money >=0.9 && <0.10
+    , scientific >=0.3.6 && <0.4
+    , text >=1.2.3 && <1.3
+    , time >=1.9.3 && <1.10
+    , transformers >=0.5.6 && <0.6
+    , transformers-base >=0.4.5 && <0.5
+    , unliftio-core >=0.2.0 && <0.3
+    , xml-conduit >=1.9.0 && <2.0
+    , xml-lens >=0.2 && <0.3
+  default-language: Haskell2010

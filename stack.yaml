@@ -1,0 +1,13 @@
+# https://docs.haskellstack.org/en/stable/yaml_configuration/
+
+resolver: nightly-2020-10-23
+
+packages:
+  - .
+
+extra-deps:
+  - prolude-0.0.0.4
+
+  # https://github.com/haskell-hvr/base-noprelude/pull/12
+  - git: https://github.com/aschmois/base-noprelude
+    commit: ae0653af5285323c400f23e599f762922187d341
