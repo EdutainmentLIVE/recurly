@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 8afbb2aa4b5b9b6367704c10991c4626f4cfe722d02b4253b7bbbb9e0e9b979c
+-- hash: 36c62b471f7f64831213e266e652f00b5ffa278637ce1562efc0de7ca94f64b8
 
 name:           recurly
 version:        0.0.0
@@ -181,6 +181,8 @@ library
       library
   default-extensions: ConstraintKinds DataKinds DeriveGeneric FlexibleContexts GeneralizedNewtypeDeriving MultiParamTypeClasses OverloadedStrings ScopedTypeVariables TypeApplications
   ghc-options: -Weverything -Wno-all-missed-specializations -Wno-implicit-prelude -Wno-missed-specialisations -Wno-missing-deriving-strategies -Wno-missing-exported-signatures -Wno-missing-export-lists -Wno-missing-import-lists -Wno-missing-safe-haskell-mode -Wno-prepositive-qualified-module -Wno-redundant-constraints -Wno-safe -Wno-unsafe -Wno-unused-packages
+  build-tool-depends:
+      autoexporter:autoexporter >=1.1.19 && <1.2
   build-depends:
       aeson >=1.5.4 && <1.6
     , base-noprelude >=4.14.1 && <4.15

@@ -45,6 +45,8 @@ dependencies:
   xml-lens: ">=0.2 && <0.3"
 
 library:
+  build-tools:
+    autoexporter: ">=1.1.19 && <1.2"
   source-dirs: library
   other-modules:
     - Paths_recurly
