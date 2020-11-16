@@ -1,5 +1,7 @@
 module Recurly.V3.API.Types.CreditPayment.Uuid where
 
+import Recurlude
+
 newtype CreditPaymentUuid =
     CreditPaymentUuid Text
     deriving (Eq, Show, FromJSON, ToJSON)

@@ -1,5 +1,7 @@
 module Recurly.V3.API.Types.Invoice.CreatedAt where
 
+import Recurlude
+
 newtype InvoiceCreatedAt =
     InvoiceCreatedAt UTCTime
     deriving (Eq, Show, FromJSON)

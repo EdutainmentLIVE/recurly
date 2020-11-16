@@ -1,0 +1,112 @@
+# https://github.com/ndmitchell/hlint
+- arguments:
+    - -XConstraintKinds
+    - -XDataKinds
+    - -XDeriveGeneric
+    - -XFlexibleContexts
+    - -XGeneralizedNewtypeDeriving
+    - -XMultiParamTypeClasses
+    - -XOverloadedStrings
+    - -XScopedTypeVariables
+    - -XTypeApplications
+
+# We prefer `do` notation over tricky monad operators.
+- error:
+    name: Avoid right bind
+    lhs: f >>= g
+    rhs: do { x <- f; g x }
+- error:
+    name: Avoid left bind
+    lhs: g =<< f
+    rhs: do { x <- f; g x }
+
+# The default left fold from the prelude is too lazy.
+- error:
+    name: Avoid lazy left fold
+    lhs: foldl f x l
+    rhs: Data.List.foldl' f x l
+
+# We prefer less code
+- error:
+    lhs: Data.Maybe.fromMaybe x $ Data.Map.lookup k m
+    rhs: Data.Map.findWithDefault x k m
+- error:
+    lhs: Data.Maybe.isJust $ Data.Map.lookup k m
+    rhs: Data.Map.member k m
+
+# These days `pure` and `return` are the same. We prefer `pure`.
+- error:
+    lhs: return
+    rhs: pure
+
+# Unless is a lot more confusing than when (not f)
+- ignore: { name: Use unless }
+- error:
+    lhs: unless f
+    rhs: when (not f)
+
+# This encourages writing function pipelines that are easier to read.
+- group: { name: dollar, enabled: true }
+
+# We prefer polymorphic functions over monomorphic ones, when available.
+- group: { name: generalise, enabled: true }
+
+# We prefer using `fmap` rather than functor operators.
+- ignore: { name: Use <$> }
+
+# We prefer using `do` notation rather than monad operators.
+- ignore: { name: Use =<< }
+
+# Lambdas with tuples are easier to understand than bifunctors.
+- ignore: { name: Use bimap }
+
+# Lambdas with tuples are easier to understand than arrows.
+- ignore: { name: Use first }
+
+# Prefix functions can sometimes look a little weird, but you get used to them.
+- ignore: { name: Use infix }
+
+# Lambda case requires a language extension and doesn't get you that much.
+- ignore: { name: Use lambda-case }
+
+# List comprehensions are tricky, especially ones like `[ x | p ]`.
+- ignore: { name: Use list comprehension }
+
+# Lambdas with tuples are easier to understand than arrows.
+- ignore: { name: Use second }
+
+# Sections aren't usually any easier to understand than what they replace.
+- ignore: { name: Use section }
+
+# Tuple sections require a language extension and don't get you that much.
+- ignore: { name: Use tuple-section }
+
+# We prefer `Maybe.fromMaybe False $ do` than `Just True == (do ..)
+- ignore: { name: Use Just }
+
+# This rule seems broken. If you have `Record <$> pure value <*> monadicValue` hlint will suggest
+# you don't use <$>
+- ignore: { name: Redundant <$> }
+
+# By default deny using any flags, then selectively allow some.
+- flags:
+    - default: false
+
+# By default deny using any extensions, then selectively allow some.
+- extensions:
+    - default: false
+
+# By default allow using any function, then deny some that cause problems.
+- functions:
+    - default: true
+    - within: []
+      name:
+        - error
+        - fromJust
+        - init
+        - last
+        - tail
+        - head
+        - undefined
+        - unsafePerformIO
+        - Data.List.NonEmpty.fromList

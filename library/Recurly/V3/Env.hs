@@ -1,5 +1,7 @@
 module Recurly.V3.Env where
 
+import Recurlude
+
 import qualified System.Envy as Envy
 
 import qualified Recurly.V3.Env.ApiUri as Env

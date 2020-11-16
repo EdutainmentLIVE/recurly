@@ -1,13 +1,16 @@
 module Recurly.V3.Webhook.Webhook where
 
+import Recurlude
+
 import qualified Control.Lens as Lens
 import qualified Data.ByteString.Lazy as LazyByteString
 import qualified Data.Foldable as Foldable
 import qualified Data.Monoid as Monoid
 import qualified Data.String as String
+import qualified Data.Text as Text
 import qualified Text.XML as Xml
-import Text.XML.Lens ((...))
 import qualified Text.XML.Lens as Lens
+import Text.XML.Lens ((...))
 
 import qualified Recurly.V3.API.Types as Types
 
@@ -231,6 +234,6 @@ getNotificationAccountCode body = case Xml.parseLBS Xml.def body of
   Left _ -> Left InvalidXml
 
 documentNameToString :: Xml.Document -> String
-documentNameToString = textToString . Xml.nameLocalName . Xml.elementName . Xml.documentRoot
+documentNameToString = Text.unpack . Xml.nameLocalName . Xml.elementName . Xml.documentRoot
 
 type Getter from to = Lens.Getting (Monoid.First to) from to

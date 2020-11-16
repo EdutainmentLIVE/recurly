@@ -11,8 +11,7 @@ instance ToJSON PaymentMethodAccountType where
   toJSON = toJSON . paymentmethodAccountTypeToText
 
 instance FromJSON PaymentMethodAccountType where
-  parseJSON =
-    withText "PaymentMethodAccountType" $ eitherFail . textToPaymentMethodAccountType
+  parseJSON = withText "PaymentMethodAccountType" $ eitherFail . textToPaymentMethodAccountType
 
 paymentmethodAccountTypeToText :: PaymentMethodAccountType -> Text
 paymentmethodAccountTypeToText paymentmethodAccountType = case paymentmethodAccountType of

@@ -1,5 +1,7 @@
 module Recurly.V3.API.Types.PaymentMethod.LastFour where
 
+import Recurlude
+
 newtype PaymentMethodLastFour =
     PaymentMethodLastFour Text
     deriving (Eq, Show, FromJSON)

@@ -1,5 +1,7 @@
 module Recurly.V3.API.Types.AccountLineItem.UnitAmount where
 
+import Recurlude
+
 import qualified Recurly.V3.API.Types.Money.Money as Money
 
 -- Note: This value can be negative or positive and recurly does not care, its value

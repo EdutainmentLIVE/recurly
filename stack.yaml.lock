@@ -3,39 +3,7 @@
 # For more information, please see the documentation at:
 #   https://docs.haskellstack.org/en/stable/lock_files
 
-packages:
-- completed:
-    hackage: prolude-0.0.0.8@sha256:a87202f0624f1a8d4eb2f3f230d676a1c13c91545fa9df10d62963978ceba75b,1268
-    pantry-tree:
-      size: 1014
-      sha256: 7170a14452f87a147fc22e4ee542cf77cb8c00b78bf28ba45ea8811c618dc563
-  original:
-    hackage: prolude-0.0.0.8
-- completed:
-    hackage: persistent-mongoDB-2.11.0.0@sha256:420527b91d03f695954d250de9b7fee9fcc80862c972aa989f6c9f574d27b6ce,2842
-    pantry-tree:
-      size: 593
-      sha256: fb8a72c5681a9c3c3bd220c59b6700a65b251380c27769e4bb469c125af02143
-  original:
-    hackage: persistent-mongoDB-2.11.0.0
-- completed:
-    hackage: persistent-2.11.0.0@sha256:887f4d03de223375079f1a14f7fda4541f43172d595bdd13a5b63a7c3fd2af9a,4702
-    pantry-tree:
-      size: 2099
-      sha256: 171774284ce3d2d5aa5ea9ee417bce2eeb662eb5cb743ba2d2f15255194a6ff6
-  original:
-    hackage: persistent-2.11.0.0
-- completed:
-    name: base-noprelude
-    version: 4.14.1.0
-    git: https://github.com/aschmois/base-noprelude
-    pantry-tree:
-      size: 823
-      sha256: 66c42f941bd5db227921c6d320b6f83f40980a8d18d15011e2f72a9cbc8b43e2
-    commit: ae0653af5285323c400f23e599f762922187d341
-  original:
-    git: https://github.com/aschmois/base-noprelude
-    commit: ae0653af5285323c400f23e599f762922187d341
+packages: []
 snapshots:
 - completed:
     size: 550745

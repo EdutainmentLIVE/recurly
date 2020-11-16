@@ -1,5 +1,7 @@
 module Recurly.V3.API.Types.Account.Code where
 
+import Recurlude
+
 import qualified Data.Csv as Csv
 
 newtype AccountCode =

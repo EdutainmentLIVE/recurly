@@ -4,12 +4,3 @@ resolver: nightly-2020-11-16
 
 packages:
   - .
-
-extra-deps:
-  - prolude-0.0.0.8
-  - persistent-mongoDB-2.11.0.0
-  - persistent-2.11.0.0
-
-  # https://github.com/haskell-hvr/base-noprelude/pull/12
-  - git: https://github.com/aschmois/base-noprelude
-    commit: ae0653af5285323c400f23e599f762922187d341

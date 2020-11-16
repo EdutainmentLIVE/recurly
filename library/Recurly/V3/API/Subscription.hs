@@ -1,7 +1,8 @@
 module Recurly.V3.API.Subscription where
 
+import Recurlude
+
 import qualified Network.HTTP.Client as Client
-import qualified Network.HTTP.Types as Http
 
 import qualified Recurly.V3.API.Types as Types
 import qualified Recurly.V3.Http as RecurlyApi
@@ -31,4 +32,4 @@ cancelSubscription
 cancelSubscription subscriptionUuid = Recurly.liftRecurly $ do
   request <- RecurlyApi.makeRequest
     ["subscriptions", Types.subscriptionUuidToRecurlyText subscriptionUuid, "cancel"]
-  RecurlyApi.sendRequest request { Client.method = Http.methodPut }
+  RecurlyApi.sendRequest request { Client.method = methodPut }

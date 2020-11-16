@@ -1,5 +1,7 @@
 module Recurly.V3.API.Types.Subscription.Uuid where
 
+import Recurlude
+
 newtype SubscriptionUuid =
     SubscriptionUuid Text
     deriving (Eq, Show, FromJSON)

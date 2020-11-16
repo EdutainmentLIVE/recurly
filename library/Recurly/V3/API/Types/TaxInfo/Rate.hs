@@ -1,5 +1,7 @@
 module Recurly.V3.API.Types.TaxInfo.Rate where
 
+import Recurlude
+
 import qualified Data.Scientific as Scientific
 
 newtype TaxInfoRate =
