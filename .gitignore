@@ -2,3 +2,5 @@
 cabal.project.freeze
 dist-newstyle/
 tools/cache/
+.tags
+TAGS

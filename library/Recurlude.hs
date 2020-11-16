@@ -82,6 +82,7 @@ logLn message = do
       Time.formatTime Time.defaultTimeLocale (Time.iso8601DateFormat $ Just "%T%3Q%z") now
   liftIO . Logger.noticeM "Recurly" $ timestamp <> " " <> message
 
+{- hlint ignore logInitRef "Avoid restricted function" -}
 -- We are hacking a state in haskell here to keep a global boolean to save if
 -- logger has been initalized yet or not. The noinline is required so that
 -- haskell does not recreate the IORef every single time you retrieve it.

@@ -13,8 +13,8 @@ set -o errexit
 script=$1
 shift
 # number of cpu cores - 1
-cpus=$(($( ls -d /sys/devices/system/cpu/cpu[[:digit:]]* | wc -w )-1))
+cpus=$(($(ls -d /sys/devices/system/cpu/cpu[[:digit:]]* | wc -w) - 1))
 
 find library -name '*.hs' -print0 |
   xargs -I{} --max-args 1 --max-procs "$cpus" --null \
-  "$script" {} "$@"
+    "$script" {} "$@"

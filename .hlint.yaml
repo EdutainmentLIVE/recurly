@@ -39,6 +39,12 @@
     lhs: return
     rhs: pure
 
+# Unless is a lot more confusing than when (not f)
+- ignore: { name: Use unless }
+- error:
+    lhs: unless f
+    rhs: when (not f)
+
 # This encourages writing function pipelines that are easier to read.
 - group: { name: dollar, enabled: true }
 

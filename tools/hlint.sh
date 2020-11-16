@@ -11,12 +11,10 @@ mkdir -p $cache_dir
 
 file=$1
 shift
-key="$cache_dir/hlint-$( cat "$file" ".hlint.yaml" | md5sum | cut --delimiter " " --fields 1 )"
+key="$cache_dir/hlint-$(cat "$file" ".hlint.yaml" | md5sum | cut --delimiter " " --fields 1)"
 
-if test ! -f "$key"
-then
-  if hlint "$@" "$file"
-  then
+if test ! -f "$key"; then
+  if hlint "$@" "$file"; then
     touch "$key"
   else
     exit 1
