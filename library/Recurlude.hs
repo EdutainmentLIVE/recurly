@@ -65,13 +65,13 @@ pShow = LT.unpack . Pretty.pShowNoColor
 
 -- Helpers
 aesonOptional :: FromJSON value => Aeson.Object -> String -> Parser (Maybe value)
-aesonOptional object key = object .:? toText key
+aesonOptional object key = object .:? stringToText key
 
 aesonRequired :: FromJSON value => Aeson.Object -> String -> Parser value
-aesonRequired object key = object .: toText key
+aesonRequired object key = object .: stringToText key
 
 aesonPair :: (ToJSON value, Aeson.KeyValue pair) => String -> value -> pair
-aesonPair key value = toText key .= value
+aesonPair key value = stringToText key .= value
 
 aesonPairHelper :: [(String, record -> JsonValue)] -> record -> JsonValue
 aesonPairHelper fields record =
@@ -91,7 +91,7 @@ maybeFailWith message c = maybe (fail message) (pure . c)
 
 -- | Converts a UTF-8 encoded ByteString into String.
 utf8ToString :: B.ByteString -> Either String String
-utf8ToString = fmap fromText . utf8ToText
+utf8ToString = fmap textToString . utf8ToText
 
 -- | Converts a UTF-8 encoded ByteString into Text.
 utf8ToText :: B.ByteString -> Either String Text

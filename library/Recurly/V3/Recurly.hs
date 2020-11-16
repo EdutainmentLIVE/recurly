@@ -11,8 +11,6 @@ module Recurly.V3.Recurly
   )
 where
 
-import Recurlude
-
 import qualified Control.Applicative as Applicative
 import qualified Control.Monad as Monad
 import qualified Control.Monad.Base as Base

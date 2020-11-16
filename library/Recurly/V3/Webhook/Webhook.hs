@@ -231,6 +231,6 @@ getNotificationAccountCode body = case Xml.parseLBS Xml.def body of
   Left _ -> Left InvalidXml
 
 documentNameToString :: Xml.Document -> String
-documentNameToString = fromText . Xml.nameLocalName . Xml.elementName . Xml.documentRoot
+documentNameToString = textToString . Xml.nameLocalName . Xml.elementName . Xml.documentRoot
 
 type Getter from to = Lens.Getting (Monoid.First to) from to

@@ -1,5 +1,5 @@
 name: recurly
-version: 0.0.0
+version: 0.0.0.1
 category: Recurly
 synopsis: Access recurly v3 api
 description: Library to access recurly v3 api. This is partially done and unfinished.

@@ -5,12 +5,26 @@
 
 packages:
 - completed:
-    hackage: prolude-0.0.0.4@sha256:f1d684796882ddcba58c1553ec7e3233b0141d901429fc7ade93ec3578e62b40,1071
+    hackage: prolude-0.0.0.8@sha256:a87202f0624f1a8d4eb2f3f230d676a1c13c91545fa9df10d62963978ceba75b,1268
     pantry-tree:
-      size: 728
-      sha256: 7e44f59e9de379235637166c39952f7ebaf37222d4d9e2d7e6349f2b5381f1c5
+      size: 1014
+      sha256: 7170a14452f87a147fc22e4ee542cf77cb8c00b78bf28ba45ea8811c618dc563
   original:
-    hackage: prolude-0.0.0.4
+    hackage: prolude-0.0.0.8
+- completed:
+    hackage: persistent-mongoDB-2.11.0.0@sha256:420527b91d03f695954d250de9b7fee9fcc80862c972aa989f6c9f574d27b6ce,2842
+    pantry-tree:
+      size: 593
+      sha256: fb8a72c5681a9c3c3bd220c59b6700a65b251380c27769e4bb469c125af02143
+  original:
+    hackage: persistent-mongoDB-2.11.0.0
+- completed:
+    hackage: persistent-2.11.0.0@sha256:887f4d03de223375079f1a14f7fda4541f43172d595bdd13a5b63a7c3fd2af9a,4702
+    pantry-tree:
+      size: 2099
+      sha256: 171774284ce3d2d5aa5ea9ee417bce2eeb662eb5cb743ba2d2f15255194a6ff6
+  original:
+    hackage: persistent-2.11.0.0
 - completed:
     name: base-noprelude
     version: 4.14.1.0
@@ -24,7 +38,7 @@ packages:
     commit: ae0653af5285323c400f23e599f762922187d341
 snapshots:
 - completed:
-    size: 541635
-    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/nightly/2020/10/23.yaml
-    sha256: ff158a60ee503b3e282295412894bc01337006cc8f5ab3a55daba0b196bd7288
-  original: nightly-2020-10-23
+    size: 550745
+    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/nightly/2020/11/16.yaml
+    sha256: 370bbd9ffbb3328a696a3dd95d53b8f801535c89e74db18ae3c3e103395bedf5
+  original: nightly-2020-11-16
