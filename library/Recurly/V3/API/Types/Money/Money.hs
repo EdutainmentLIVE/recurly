@@ -15,7 +15,7 @@ instance FromJSON DenseUSD where
       Just dense -> pure $ DenseUSD dense
 
 formatScientificFixed :: Scientific.Scientific -> Text
-formatScientificFixed = toText . Scientific.formatScientific Scientific.Fixed (Just 4)
+formatScientificFixed = stringToText . Scientific.formatScientific Scientific.Fixed (Just 4)
 
 -- | Default ToJSON instance to convert `DenseUSD` into json dollars represented by `Money.defaultDecimalConf`.
 -- Also rounds half up.

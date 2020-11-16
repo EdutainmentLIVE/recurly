@@ -24,7 +24,7 @@ makeRequest :: [Text] -> Recurly.Recurly Client.Request
 makeRequest path = do
   env <- Recurly.env
   let uri = Env.apiUriToUri $ Recurly.recurlyApiUrl env
-  Client.requestFromURI uri { URI.uriPath = fromText $ "/" <> Text.intercalate "/" path }
+  Client.requestFromURI uri { URI.uriPath = textToString $ "/" <> Text.intercalate "/" path }
 
 sendRequest
   :: FromJSON json => Client.Request -> Recurly.Recurly (Client.Response (Either RecurlyError json))
@@ -70,7 +70,7 @@ sendRequestListWith acc request = do
           (True, Just path) -> do
             -- This path could have query params as well, but we are assuming that the query params will already be
             -- url encoded.
-            modifiedRequest <- Client.requestFromURI $ uri { URI.uriPath = fromText path }
+            modifiedRequest <- Client.requestFromURI $ uri { URI.uriPath = textToString path }
             sendRequestListWith accData modifiedRequest
           (_, _) -> pure $ response { Client.responseBody = Right accData }
 

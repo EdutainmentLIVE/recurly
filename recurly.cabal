@@ -4,10 +4,10 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 36c62b471f7f64831213e266e652f00b5ffa278637ce1562efc0de7ca94f64b8
+-- hash: 14ad3e7e71b973018827c3995cef30aa2f732708ec899b3b6f0903a528d3775e
 
 name:           recurly
-version:        0.0.0
+version:        0.0.0.1
 synopsis:       Access recurly v3 api
 description:    Library to access recurly v3 api. This is partially done and unfinished.
 category:       Recurly
