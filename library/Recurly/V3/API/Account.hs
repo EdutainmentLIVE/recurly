@@ -1,7 +1,9 @@
 module Recurly.V3.API.Account where
 
+import Recurlude
+
+import qualified Data.Aeson as Aeson
 import qualified Network.HTTP.Client as Client
-import qualified Network.HTTP.Types as Http
 
 import qualified Recurly.V3.API.Types as Types
 import qualified Recurly.V3.Http as RecurlyApi
@@ -43,8 +45,8 @@ postAccount
 postAccount account = do
   request <- RecurlyApi.makeRequest ["accounts"]
   RecurlyApi.sendRequest request
-    { Client.method = Http.methodPost
-    , Client.requestBody = Client.RequestBodyLBS $ jsonEncode account
+    { Client.method = methodPost
+    , Client.requestBody = Client.RequestBodyLBS $ Aeson.encode account
     }
 
 putAccount
@@ -55,8 +57,8 @@ putAccount
 putAccount accountCode account = Recurly.liftRecurly $ do
   request <- RecurlyApi.makeRequest ["accounts", Types.accountCodeToRecurlyText accountCode]
   RecurlyApi.sendRequest request
-    { Client.method = Http.methodPut
-    , Client.requestBody = Client.RequestBodyLBS $ jsonEncode account
+    { Client.method = methodPut
+    , Client.requestBody = Client.RequestBodyLBS $ Aeson.encode account
     }
 
 postAccountLineItem
@@ -67,8 +69,8 @@ postAccountLineItem accountCode accountLineItem = do
   request <- RecurlyApi.makeRequest
     ["accounts", Types.accountCodeToRecurlyText accountCode, "line_items"]
   RecurlyApi.sendRequest request
-    { Client.method = Http.methodPost
-    , Client.requestBody = Client.RequestBodyLBS $ jsonEncode accountLineItem
+    { Client.method = methodPost
+    , Client.requestBody = Client.RequestBodyLBS $ Aeson.encode accountLineItem
     }
 
 deleteActiveCouponRedemptions
@@ -78,4 +80,4 @@ deleteActiveCouponRedemptions
 deleteActiveCouponRedemptions accountCode = Recurly.liftRecurly $ do
   request <- RecurlyApi.makeRequest
     ["accounts", Types.accountCodeToRecurlyText accountCode, "coupon_redemptions", "active"]
-  RecurlyApi.sendRequest request { Client.method = Http.methodDelete }
+  RecurlyApi.sendRequest request { Client.method = methodDelete }

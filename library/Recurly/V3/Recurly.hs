@@ -8,8 +8,9 @@ module Recurly.V3.Recurly
   , env
   , liftRecurly
   , runRecurlySync
-  )
-where
+  ) where
+
+import Recurlude
 
 import qualified Control.Applicative as Applicative
 import qualified Control.Monad as Monad

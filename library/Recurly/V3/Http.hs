@@ -3,6 +3,7 @@ module Recurly.V3.Http where
 import Recurlude
 
 import qualified Control.Concurrent as Concurrent
+import qualified Control.Exception as Exception
 import qualified Data.Aeson as Aeson
 import qualified Data.ByteString as ByteString
 import qualified Data.Text as Text
@@ -24,7 +25,7 @@ makeRequest :: [Text] -> Recurly.Recurly Client.Request
 makeRequest path = do
   env <- Recurly.env
   let uri = Env.apiUriToUri $ Recurly.recurlyApiUrl env
-  Client.requestFromURI uri { URI.uriPath = textToString $ "/" <> Text.intercalate "/" path }
+  Client.requestFromURI uri { URI.uriPath = Text.unpack $ "/" <> Text.intercalate "/" path }
 
 sendRequest
   :: FromJSON json => Client.Request -> Recurly.Recurly (Client.Response (Either RecurlyError json))
@@ -70,7 +71,7 @@ sendRequestListWith acc request = do
           (True, Just path) -> do
             -- This path could have query params as well, but we are assuming that the query params will already be
             -- url encoded.
-            modifiedRequest <- Client.requestFromURI $ uri { URI.uriPath = textToString path }
+            modifiedRequest <- Client.requestFromURI $ uri { URI.uriPath = Text.unpack path }
             sendRequestListWith accData modifiedRequest
           (_, _) -> pure $ response { Client.responseBody = Right accData }
 
@@ -106,7 +107,7 @@ sendRequestWith requestId attempt request = do
     <> " of "
     <> show maxAttempts
     <> ")"
-  result <- liftIO . tryJust keepResponseTimeout $ Client.httpLbs request manager
+  result <- liftIO . Exception.tryJust keepResponseTimeout $ Client.httpLbs request manager
   case result of
     Left exception -> handleTimeout requestId attempt request exception
     Right response -> do
@@ -116,10 +117,10 @@ sendRequestWith requestId attempt request = do
         status
           | Http.statusIsServerError status -> handleServerError requestId attempt request response
           | Http.statusIsSuccessful status -> do
-            decodedBody <- either (fail . (<> show body)) pure $ jsonEitherDecode body
+            decodedBody <- either (fail . (<> show body)) pure $ Aeson.eitherDecode body
             pure $ response { Client.responseBody = Right decodedBody }
           | otherwise -> do
-            decodedBody <- either (fail . (<> show body)) pure $ jsonEitherDecode body
+            decodedBody <- either (fail . (<> show body)) pure $ Aeson.eitherDecode body
             pure $ response { Client.responseBody = Left decodedBody }
 
 data RecurlyError = RecurlyError
@@ -227,15 +228,15 @@ logLn' :: MonadIO io => RequestId -> String -> io ()
 logLn' requestId message = logLn $ "[recurly-api-v3] " <> show requestId <> ": " <> message
 
 requestMethod :: Client.Request -> String
-requestMethod = either (const "?") identity . utf8ToString . Client.method
+requestMethod = either (const "?") id . utf8ToString . Client.method
 
 requestPath :: Client.Request -> String
-requestPath = either (const "?") identity . utf8ToString . Client.path
+requestPath = either (const "?") id . utf8ToString . Client.path
 
 responseCode :: Client.Response a -> Int
-responseCode = Http.statusCode . Client.responseStatus
+responseCode = statusCode . Client.responseStatus
 
-withRequestHeader :: Http.HeaderName -> ByteString.ByteString -> Client.Request -> Client.Request
+withRequestHeader :: HeaderName -> ByteString.ByteString -> Client.Request -> Client.Request
 withRequestHeader name value req =
   req { Client.requestHeaders = (name, value) : Client.requestHeaders req }
 

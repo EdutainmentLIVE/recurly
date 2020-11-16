@@ -1,9 +1,11 @@
 module Recurly.V3.Env.ApiUri where
 
+import Recurlude
+
 import qualified Network.URI as Uri
 import qualified System.Envy as Envy
 
-newtype ApiUri = ApiUri Uri.URI deriving (Show)
+newtype ApiUri = ApiUri URI deriving (Show)
 
 instance Envy.Var ApiUri where
   toVar = show
@@ -12,5 +14,5 @@ instance Envy.Var ApiUri where
 stringToApiUri :: String -> Maybe ApiUri
 stringToApiUri = fmap ApiUri . Uri.parseAbsoluteURI
 
-apiUriToUri :: ApiUri -> Uri.URI
+apiUriToUri :: ApiUri -> URI
 apiUriToUri (ApiUri uri) = uri

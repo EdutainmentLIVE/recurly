@@ -1,5 +1,7 @@
 module Recurly.V3.Env.Token where
 
+import Recurlude
+
 import qualified Data.ByteString as ByteString
 import qualified Data.Text.Encoding as Text
 import qualified System.Envy as Envy

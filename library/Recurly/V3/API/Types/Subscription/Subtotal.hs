@@ -1,5 +1,7 @@
 module Recurly.V3.API.Types.Subscription.Subtotal where
 
+import Recurlude
+
 import qualified Recurly.V3.API.Types.Money.Money as Money
 
 newtype SubscriptionSubtotal =

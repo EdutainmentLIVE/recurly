@@ -1,5 +1,7 @@
 module Recurly.V3.API.Types.Subscription.RemainingPauseCycles where
 
+import Recurlude
+
 newtype SubscriptionRemainingPauseCycles =
     SubscriptionRemainingPauseCycles Integer
     deriving (Eq, Show, FromJSON)
