@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: aa68f4c68f369e0f086031da312d02e7c65696da78da3afd3988cf387c23afd8
+-- hash: 1d3772cbbbfba678dde9c6ec4b9c463e15f1f2690da6398f0baaf12a2d2efee4
 
 name:           recurly
 version:        0.0.0.1
@@ -179,12 +179,12 @@ library
   hs-source-dirs:
       library
   default-extensions: ConstraintKinds DataKinds DeriveGeneric FlexibleContexts GeneralizedNewtypeDeriving MultiParamTypeClasses OverloadedStrings ScopedTypeVariables TypeApplications
-  ghc-options: -Weverything -Wno-all-missed-specializations -Wno-implicit-prelude -Wno-missed-specialisations -Wno-missing-deriving-strategies -Wno-missing-exported-signatures -Wno-missing-export-lists -Wno-missing-import-lists -Wno-missing-safe-haskell-mode -Wno-prepositive-qualified-module -Wno-redundant-constraints -Wno-safe -Wno-unsafe -Wno-unused-packages
+  ghc-options: -Weverything -Wno-all-missed-specializations -Wno-implicit-prelude -Wno-missed-specialisations -Wno-missing-deriving-strategies -Wno-missing-export-lists -Wno-missing-exported-signatures -Wno-missing-import-lists -Wno-missing-safe-haskell-mode -Wno-prepositive-qualified-module -Wno-redundant-constraints -Wno-safe -Wno-unsafe
   build-tool-depends:
       autoexporter:autoexporter >=1.1.19 && <1.2
   build-depends:
       aeson >=1.5.4 && <1.6
-    , base >=4.14.1 && <4.15
+    , base >=4.14.0 && <4.15
     , bytestring >=0.10.10 && <0.11
     , cassava >=0.5.2 && <0.6
     , containers >=0.6.2 && <0.7

@@ -19,7 +19,7 @@ default-extensions:
 
 dependencies:
   aeson: ">=1.5.4 && <1.6"
-  base: ">=4.14.1 && <4.15"
+  base: ">=4.14.0 && <4.15"
   bytestring: ">=0.10.10 && <0.11"
   cassava: ">=0.5.2 && <0.6"
   containers: ">=0.6.2 && <0.7"
@@ -49,8 +49,6 @@ library:
   build-tools:
     autoexporter: ">=1.1.19 && <1.2"
   source-dirs: library
-  other-modules:
-    - Paths_recurly
 
 ghc-options:
   - -Weverything
@@ -66,5 +64,3 @@ ghc-options:
   - -Wno-redundant-constraints
   - -Wno-safe
   - -Wno-unsafe
-  - -Wno-unused-imports
-  - -Wno-unused-packages
