@@ -4,6 +4,7 @@ import Recurlude
 
 import qualified Control.Lens as Lens
 import qualified Data.ByteString.Lazy as LazyByteString
+import Data.CaseInsensitive (CI)
 import qualified Data.Foldable as Foldable
 import qualified Data.Monoid as Monoid
 import qualified Data.String as String
@@ -128,12 +129,12 @@ documentToNotification document = Foldable.asum $ fmap
   , getDunningInfo DunningEventNew "new_dunning_event_notification"
   ]
 
-getAccountInfo :: (Types.AccountCode -> notif) -> Xml.Name -> Xml.Document -> Maybe notif
+getAccountInfo :: (Types.AccountCode -> notif) -> CI Text -> Xml.Document -> Maybe notif
 getAccountInfo notif rootName document = notif <$> previewEl getAccountCode rootName document
 
 getSubscriptionInfo
   :: (Types.AccountCode -> Types.SubscriptionUuid -> notif)
-  -> Xml.Name
+  -> CI Text
   -> Xml.Document
   -> Maybe notif
 getSubscriptionInfo notif rootName document =
@@ -142,12 +143,12 @@ getSubscriptionInfo notif rootName document =
     <*> previewEl getSubscriptionUuid rootName document
 
 getInvoiceInfo
-  :: (Types.AccountCode -> Types.InvoiceId -> notif) -> Xml.Name -> Xml.Document -> Maybe notif
+  :: (Types.AccountCode -> Types.InvoiceId -> notif) -> CI Text -> Xml.Document -> Maybe notif
 getInvoiceInfo notif rootName document =
   notif <$> previewEl getAccountCode rootName document <*> previewEl getInvoiceId rootName document
 
 getPaymentInfo
-  :: (Types.AccountCode -> Types.TransactionId -> notif) -> Xml.Name -> Xml.Document -> Maybe notif
+  :: (Types.AccountCode -> Types.TransactionId -> notif) -> CI Text -> Xml.Document -> Maybe notif
 getPaymentInfo notif rootName document =
   notif
     <$> previewEl getAccountCode rootName document
@@ -155,7 +156,7 @@ getPaymentInfo notif rootName document =
 
 getCreditPaymentInfo
   :: (Types.AccountCode -> Types.CreditPaymentUuid -> notif)
-  -> Xml.Name
+  -> CI Text
   -> Xml.Document
   -> Maybe notif
 getCreditPaymentInfo notif rootName document =
@@ -170,7 +171,7 @@ getLegacyDunningInfo
      -> Types.TransactionId
      -> notif
      )
-  -> Xml.Name
+  -> CI Text
   -> Xml.Document
   -> Maybe notif
 getLegacyDunningInfo notif rootName document =
@@ -182,7 +183,7 @@ getLegacyDunningInfo notif rootName document =
 
 getDunningInfo
   :: (Types.AccountCode -> Types.InvoiceId -> Types.SubscriptionUuid -> notif)
-  -> Xml.Name
+  -> CI Text
   -> Xml.Document
   -> Maybe notif
 getDunningInfo notif rootName document =
@@ -191,29 +192,34 @@ getDunningInfo notif rootName document =
     <*> previewEl getInvoiceId rootName document
     <*> previewEl getSubscriptionUuid rootName document
 
-getAccountCode :: Xml.Name -> Getter Xml.Document Types.AccountCode
+getAccountCode :: CI Text -> Getter Xml.Document Types.AccountCode
 getAccountCode rootName = getEl rootName "account" "account_code" Types.textToAccountCode
 
-getSubscriptionUuid :: Xml.Name -> Getter Xml.Document Types.SubscriptionUuid
+getSubscriptionUuid :: CI Text -> Getter Xml.Document Types.SubscriptionUuid
 getSubscriptionUuid rootName = getEl rootName "subscription" "uuid" Types.textToSubscriptionUuid
 
 -- Invoices don't have a uuid, not sure why the xml says uuid
-getInvoiceId :: Xml.Name -> Getter Xml.Document Types.InvoiceId
+getInvoiceId :: CI Text -> Getter Xml.Document Types.InvoiceId
 getInvoiceId rootName = getEl rootName "invoice" "uuid" Types.textToInvoiceId
 
-getTransactionId :: Xml.Name -> Getter Xml.Document Types.TransactionId
+getTransactionId :: CI Text -> Getter Xml.Document Types.TransactionId
 getTransactionId rootName = getEl rootName "transaction" "id" Types.textToTransactionId
 
-getCreditPaymentUuid :: Xml.Name -> Getter Xml.Document Types.CreditPaymentUuid
+getCreditPaymentUuid :: CI Text -> Getter Xml.Document Types.CreditPaymentUuid
 getCreditPaymentUuid rootName =
   getEl rootName "credit_payment" "uuid" Types.textToCreditPaymentUuid
 
-previewEl :: (Xml.Name -> Getter Xml.Document a) -> Xml.Name -> Xml.Document -> Maybe a
+previewEl :: (CI Text -> Getter Xml.Document a) -> CI Text -> Xml.Document -> Maybe a
 previewEl getter = Lens.preview . getter
 
-getEl :: Xml.Name -> Xml.Name -> Xml.Name -> (Text -> a) -> Getter Xml.Document a
+getEl :: CI Text -> CI Text -> CI Text -> (Text -> a) -> Getter Xml.Document a
 getEl rootName subName idName to =
-  Lens.root . Lens.el rootName ... Lens.el subName ... Lens.el idName . Lens.text . Lens.to to
+  Lens.root
+    . Lens.named rootName
+    ... Lens.named subName
+    ... Lens.named idName
+    . Lens.text
+    . Lens.to to
 
 getNotificationType :: LazyByteString.ByteString -> Either WebhookError Notification
 getNotificationType body = case Xml.parseLBS Xml.def body of

@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 1d3772cbbbfba678dde9c6ec4b9c463e15f1f2690da6398f0baaf12a2d2efee4
+-- hash: 462a52fcc77907c640280af27415f161e986a32c436d9c93594676c33b18b99a
 
 name:           recurly
 version:        0.0.0.1
@@ -186,6 +186,7 @@ library
       aeson >=1.5.4 && <1.6
     , base >=4.14.0 && <4.15
     , bytestring >=0.10.10 && <0.11
+    , case-insensitive >=1.2 && <1.3
     , cassava >=0.5.2 && <0.6
     , containers >=0.6.2 && <0.7
     , envy >=2.1.0 && <2.2
@@ -198,7 +199,7 @@ library
     , monad-control >=1.0.2 && <1.1
     , mtl >=2.2.2 && <2.3
     , network-uri >=2.6.3 && <2.7
-    , pretty-simple >=3.3.0 && <3.4
+    , pretty-simple >=3.3.0 && <4.1
     , random >=1.1 && <1.2
     , safe-money >=0.9 && <0.10
     , scientific >=0.3.6 && <0.4
@@ -208,5 +209,5 @@ library
     , transformers-base >=0.4.5 && <0.5
     , unliftio-core >=0.2.0 && <0.3
     , xml-conduit >=1.9.0 && <2.0
-    , xml-lens >=0.2 && <0.3
+    , xml-lens >=0.2 && <0.4
   default-language: Haskell2010
