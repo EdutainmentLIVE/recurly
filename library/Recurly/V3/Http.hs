@@ -228,10 +228,10 @@ logLn' :: MonadIO io => RequestId -> String -> io ()
 logLn' requestId message = logLn $ "[recurly-api-v3] " <> show requestId <> ": " <> message
 
 requestMethod :: Client.Request -> String
-requestMethod = either (const "?") id . utf8ToString . Client.method
+requestMethod = fromRight "?" . utf8ToString . Client.method
 
 requestPath :: Client.Request -> String
-requestPath = either (const "?") id . utf8ToString . Client.path
+requestPath = fromRight "?" . utf8ToString . Client.path
 
 responseCode :: Client.Response a -> Int
 responseCode = statusCode . Client.responseStatus

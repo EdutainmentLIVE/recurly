@@ -6,12 +6,13 @@
 #
 # > tools/brittany.sh some-file.hs --write-mode inplace
 
-cache_dir="tools/cache"
-mkdir -p $cache_dir
-
+seed=$(md5sum brittany.yaml | cut --delimiter " " --fields 1)
 file=$1
 shift
-key="$cache_dir/brittany-$(cat "$file" "brittany.yaml" | md5sum | cut --delimiter " " --fields 1)"
+cache=tools/cache/brittany/$seed
+key="$cache/$(md5sum "$file" | cut --delimiter " " --fields 1)"
+
+mkdir -p "$cache"
 
 if test ! -f "$key"; then
   if brittany "$@" "$file"; then

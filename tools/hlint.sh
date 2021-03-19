@@ -6,12 +6,13 @@
 #
 # > tools/hlint.sh some-file.hs --color
 
-cache_dir="tools/cache"
-mkdir -p $cache_dir
-
+seed=$(md5sum .hlint.yaml | cut --delimiter " " --fields 1)
 file=$1
 shift
-key="$cache_dir/hlint-$(cat "$file" ".hlint.yaml" | md5sum | cut --delimiter " " --fields 1)"
+cache=tools/cache/hlint/$seed
+key="$cache/$(md5sum "$file" | cut --delimiter " " --fields 1)"
+
+mkdir -p "$cache"
 
 if test ! -f "$key"; then
   if hlint "$@" "$file"; then

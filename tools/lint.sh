@@ -1,16 +1,16 @@
 #! /usr/bin/env sh
 set -o errexit
 
-say() {
-  echo "$(date '+%Y-%m-%d %H:%M:%S')" "$@"
+say () {
+  printf '%s %s\n' "$( date '+%Y-%m-%d %H:%M:%S' )" "$@"
 }
 
-die() {
+die () {
   printf '\033[0;31m*** %s ***\033[0m\n' "$@"
   exit 1
 }
 
-say "File changed: $1"
+printf '%s \033[0;33mFile changed: %s\033[0m\n' "$( date '+%Y-%m-%d %H:%M:%S' )" "$1"
 . tools/docker-tools-tag.sh
 
 tools/docker-run.sh "itprotv/hasktags:$DOCKER_TOOLS_TAG" \
@@ -18,15 +18,15 @@ tools/docker-run.sh "itprotv/hasktags:$DOCKER_TOOLS_TAG" \
 tools/docker-run.sh "itprotv/hasktags:$DOCKER_TOOLS_TAG" \
   hasktags --etags . &
 
-say 'Running HLint ...'
+printf '%s \033[0;33mRunning HLint ...\033[0m\n' "$( date '+%Y-%m-%d %H:%M:%S' )"
 tools/docker-run.sh "itprotv/hlint:$DOCKER_TOOLS_TAG" \
   tools/for-each.sh tools/hlint.sh --color --no-summary ||
   die 'HLINT FAILED'
 
-say 'Running Brittany ...'
+printf '%s \033[0;33mRunning Brittany ...\033[0m\n' "$( date '+%Y-%m-%d %H:%M:%S' )"
 tools/docker-run.sh "itprotv/brittany:$DOCKER_TOOLS_TAG" \
   tools/for-each.sh tools/brittany.sh --check-mode ||
   die 'BRITTANY FAILED'
 
 wait
-say 'Done. Waiting for file changes.'
+printf '%s \033[0;32mSuccessfully linted!\033[0m\n' "$( date '+%Y-%m-%d %H:%M:%S' )"
