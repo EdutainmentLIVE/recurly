@@ -13,6 +13,6 @@ exec docker run \
   --env LANG=C.UTF-8 \
   --net host \
   --rm \
-  --volume "$(pwd):$(pwd)" \
-  --workdir "$(pwd)" \
+  --volume "$( pwd ):$( pwd )" \
+  --workdir "$( pwd )" \
   "$@"
