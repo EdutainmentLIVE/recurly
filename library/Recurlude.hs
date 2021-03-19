@@ -5,6 +5,7 @@ module Recurlude
   , module Control.Monad.IO.Class
   , module Data.Aeson
   , module Data.ByteString
+  , module Data.Either
   , module Data.Map
   , module Data.Maybe
   , module Data.Text
@@ -36,13 +37,14 @@ import Control.Monad.Catch (MonadCatch, MonadThrow)
 import Control.Monad.IO.Class (MonadIO, liftIO)
 import Data.Aeson (FromJSON, ToJSON, parseJSON, toJSON, withObject, withText)
 import Data.ByteString (ByteString)
+import Data.Either (fromLeft, fromRight)
 import Data.Map (Map)
 import Data.Maybe (fromMaybe)
 import Data.Text (Text)
 import Data.Time (UTCTime)
 import GHC.Generics (Generic)
 import Network.HTTP.Types
-  (Method, HeaderName, methodGet, methodPost, methodPut, methodDelete, statusCode)
+  (HeaderName, Method, methodDelete, methodGet, methodPost, methodPut, statusCode)
 import Network.URI (URI)
 
 
