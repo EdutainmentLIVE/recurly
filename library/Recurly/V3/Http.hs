@@ -130,6 +130,8 @@ data RecurlyError = RecurlyError
   }
   deriving (Eq, Show)
 
+instance Exception RecurlyError
+
 instance FromJSON RecurlyError where
   parseJSON = withObject "RecurlyError" $ \obj -> do
     err <- aesonRequired obj "error"
