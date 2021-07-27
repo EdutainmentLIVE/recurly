@@ -1,10 +1,10 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.33.0.
+-- This file has been generated from package.yaml by hpack version 0.34.4.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 462a52fcc77907c640280af27415f161e986a32c436d9c93594676c33b18b99a
+-- hash: 5721317678c534be06c4c4f725ee67caf1f7edb9e26b3770e48aee10509e211b
 
 name:           recurly
 version:        0.0.0.1
@@ -178,7 +178,16 @@ library
       Paths_recurly
   hs-source-dirs:
       library
-  default-extensions: ConstraintKinds DataKinds DeriveGeneric FlexibleContexts GeneralizedNewtypeDeriving MultiParamTypeClasses OverloadedStrings ScopedTypeVariables TypeApplications
+  default-extensions:
+      ConstraintKinds
+      DataKinds
+      DeriveGeneric
+      FlexibleContexts
+      GeneralizedNewtypeDeriving
+      MultiParamTypeClasses
+      OverloadedStrings
+      ScopedTypeVariables
+      TypeApplications
   ghc-options: -Weverything -Wno-all-missed-specializations -Wno-implicit-prelude -Wno-missed-specialisations -Wno-missing-deriving-strategies -Wno-missing-export-lists -Wno-missing-exported-signatures -Wno-missing-import-lists -Wno-missing-safe-haskell-mode -Wno-prepositive-qualified-module -Wno-redundant-constraints -Wno-safe -Wno-unsafe
   build-tool-depends:
       autoexporter:autoexporter >=1.1.19 && <1.2
@@ -186,7 +195,7 @@ library
       aeson >=1.5.4 && <1.6
     , base >=4.14.0 && <4.15
     , bytestring >=0.10.10 && <0.11
-    , case-insensitive >=1.2 && <1.3
+    , case-insensitive ==1.2.*
     , cassava >=0.5.2 && <0.6
     , containers >=0.6.2 && <0.7
     , envy >=2.1.0 && <2.2
@@ -200,8 +209,8 @@ library
     , mtl >=2.2.2 && <2.3
     , network-uri >=2.6.3 && <2.7
     , pretty-simple >=3.3.0 && <4.1
-    , random >=1.1 && <1.2
-    , safe-money >=0.9 && <0.10
+    , random ==1.1.*
+    , safe-money ==0.9.*
     , scientific >=0.3.6 && <0.4
     , text >=1.2.3 && <1.3
     , time >=1.9.3 && <1.10
