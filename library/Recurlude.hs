@@ -24,9 +24,11 @@ module Recurlude
   , aesonPair
   , aesonPairHelper
   , eitherFail
+  , eitherFailWith
   , maybeFail
   , maybeFailWith
   , utf8ToString
+  , utf8ToText
   , getCurrentTime
   ) where
 
