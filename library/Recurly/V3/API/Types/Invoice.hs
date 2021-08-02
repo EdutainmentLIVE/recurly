@@ -2,10 +2,10 @@ module Recurly.V3.API.Types.Invoice where
 
 import Recurlude
 
+import qualified Recurly.V3.API.Types.Invoice.CreatedAt as Types
 import qualified Recurly.V3.API.Types.Invoice.Id as Types
 import qualified Recurly.V3.API.Types.Invoice.State as Types
 import qualified Recurly.V3.API.Types.Invoice.Type as Types
-import qualified Recurly.V3.API.Types.Invoice.CreatedAt as Types
 
 data Invoice = Invoice
   { invoiceId :: Types.InvoiceId
@@ -21,4 +21,9 @@ instance FromJSON Invoice where
     type_ <- aesonRequired obj "type"
     state <- aesonRequired obj "state"
     createdAt <- aesonRequired obj "created_at"
-    pure Invoice { invoiceId = id_, invoiceType = type_, invoiceState = state, invoiceCreatedAt = createdAt }
+    pure Invoice
+      { invoiceId = id_
+      , invoiceType = type_
+      , invoiceState = state
+      , invoiceCreatedAt = createdAt
+      }

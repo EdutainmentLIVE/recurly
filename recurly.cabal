@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 5721317678c534be06c4c4f725ee67caf1f7edb9e26b3770e48aee10509e211b
+-- hash: cc0be2eb42dd7ba1d5370924a2f54a38c7cb7ce2a02ca17dab4fe386d489be1d
 
 name:           recurly
 version:        0.0.0.1
@@ -27,6 +27,7 @@ library
       Recurlude
       Recurly.V3.API.Account
       Recurly.V3.API.Coupon
+      Recurly.V3.API.Invoice
       Recurly.V3.API.Subscription
       Recurly.V3.API.Types
       Recurly.V3.API.Types.Account
@@ -41,6 +42,7 @@ library
       Recurly.V3.API.Types.AccountLineItem.Id
       Recurly.V3.API.Types.AccountLineItem.Type
       Recurly.V3.API.Types.AccountLineItem.UnitAmount
+      Recurly.V3.API.Types.Base64
       Recurly.V3.API.Types.Coupon
       Recurly.V3.API.Types.Coupon.AppliesToAllPlans
       Recurly.V3.API.Types.Coupon.Code
@@ -205,6 +207,7 @@ library
     , http-client-tls >=0.3.5 && <0.4
     , http-types >=0.12.3 && <0.13
     , lens >=4.19.2 && <4.20
+    , memory >=0.15.0 && <0.16
     , monad-control >=1.0.2 && <1.1
     , mtl >=2.2.2 && <2.3
     , network-uri >=2.6.3 && <2.7
