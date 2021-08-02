@@ -1,7 +1,5 @@
 module Recurly.V3.API.Invoice where
 
--- import Recurlude
-
 import qualified Network.HTTP.Client as Client
 
 import qualified Recurly.V3.API.Types as Types
