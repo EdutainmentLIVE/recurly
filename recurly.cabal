@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 78d1cac0e0a56610fab66885f470e85d2edb6ae4b20b317a8b21f81c1b9caca2
+-- hash: cc0be2eb42dd7ba1d5370924a2f54a38c7cb7ce2a02ca17dab4fe386d489be1d
 
 name:           recurly
 version:        0.0.0.1
@@ -207,7 +207,7 @@ library
     , http-client-tls >=0.3.5 && <0.4
     , http-types >=0.12.3 && <0.13
     , lens >=4.19.2 && <4.20
-    , memory
+    , memory >=0.15.0 && <0.16
     , monad-control >=1.0.2 && <1.1
     , mtl >=2.2.2 && <2.3
     , network-uri >=2.6.3 && <2.7
