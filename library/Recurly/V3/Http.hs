@@ -6,6 +6,7 @@ import qualified Control.Concurrent as Concurrent
 import qualified Control.Exception as Exception
 import qualified Data.Aeson as Aeson
 import qualified Data.ByteString as ByteString
+import qualified Data.ByteString.Lazy as LazyByteString
 import qualified Data.Text as Text
 import qualified Data.Word as Word
 import qualified Network.HTTP.Client as Client
@@ -33,6 +34,18 @@ sendRequest request = do
   token <- fmap Recurly.recurlyToken Recurly.env
   requestId <- liftIO Random.randomIO
   sendRequestWith requestId 1
+    . withRequestHeader Http.hAccept "application/vnd.recurly.v2019-10-10+json"
+    . withRequestHeader Http.hContentType "application/json"
+    . Client.applyBasicAuth (Env.tokenToByteString token) ByteString.empty
+    $ request
+
+sendRequest'
+  :: Client.Request
+  -> Recurly.Recurly (Client.Response (Either RecurlyError LazyByteString.ByteString))
+sendRequest' request = do
+  token <- fmap Recurly.recurlyToken Recurly.env
+  requestId <- liftIO Random.randomIO
+  sendRequestWith' requestId 1
     . withRequestHeader Http.hAccept "application/vnd.recurly.v2019-10-10+json"
     . withRequestHeader Http.hContentType "application/json"
     . Client.applyBasicAuth (Env.tokenToByteString token) ByteString.empty
@@ -123,6 +136,38 @@ sendRequestWith requestId attempt request = do
             decodedBody <- either (fail . (<> show body)) pure $ Aeson.eitherDecode body
             pure $ response { Client.responseBody = Left decodedBody }
 
+sendRequestWith'
+  :: RequestId
+  -> Natural.Natural
+  -> Client.Request
+  -> Recurly.Recurly (Client.Response (Either RecurlyError LazyByteString.ByteString))
+sendRequestWith' requestId attempt request = do
+  maxAttempts <- fmap Recurly.recurlyMaxAttempts Recurly.env
+  manager <- liftIO Tls.getGlobalManager
+  logLn' requestId
+    $ "sending request: "
+    <> requestMethod request
+    <> " "
+    <> requestPath request
+    <> " (attempt "
+    <> show attempt
+    <> " of "
+    <> show maxAttempts
+    <> ")"
+  result <- liftIO . Exception.tryJust keepResponseTimeout $ Client.httpLbs request manager
+  case result of
+    Left exception -> handleTimeout' requestId attempt request exception
+    Right response -> do
+      let body = Client.responseBody response
+      logLn' requestId $ "received response: " <> show (responseCode response)
+      case Client.responseStatus response of
+        status
+          | Http.statusIsServerError status -> handleServerError' requestId attempt request response
+          | Http.statusIsSuccessful status -> pure $ response { Client.responseBody = Right body }
+          | otherwise -> do
+            decodedBody <- either (fail . (<> show body)) pure $ Aeson.eitherDecode body
+            pure $ response { Client.responseBody = Left decodedBody }
+
 data RecurlyError = RecurlyError
   { recurlyErrorType :: ErrorType
   , recurlyErrorMessage :: String
@@ -208,6 +253,25 @@ handleServerError requestId attempt request response = do
   liftIO . Concurrent.threadDelay $ delay * 1000000
   sendRequestWith requestId (attempt + 1) request
 
+handleServerError'
+  :: (Show body)
+  => RequestId
+  -> Natural.Natural
+  -> Client.Request
+  -> Client.Response body
+  -> Recurly.Recurly
+       (Client.Response (Either RecurlyError LazyByteString.ByteString))
+handleServerError' requestId attempt request response = do
+  maxAttempts <- fmap Recurly.recurlyMaxAttempts Recurly.env
+  logLn' requestId $ "Encountered server error with code: " <> show (responseCode response)
+  when (attempt > Env.maxAttemptsToNatural maxAttempts) $ do
+    logLn' requestId $ "Giving up after " <> pluralize "attempt" attempt
+    fail $ unlines ["Recurly API V3 failed", show request, show response]
+  let delay = 1 :: Int
+  logLn' requestId $ "Waiting " <> pluralize "second" delay <> " for good measure"
+  liftIO . Concurrent.threadDelay $ delay * 1000000
+  sendRequestWith' requestId (attempt + 1) request
+
 handleTimeout
   :: FromJSON json
   => RequestId
@@ -222,6 +286,20 @@ handleTimeout requestId attempt request exception = do
     logLn' requestId $ "Giving up after " <> pluralize "attempt" attempt
     fail $ unlines ["Recurly API V3 timed out", show request, show exception]
   sendRequestWith requestId (attempt + 1) request
+
+handleTimeout'
+  :: RequestId
+  -> Natural.Natural
+  -> Client.Request
+  -> Client.HttpException
+  -> Recurly.Recurly (Client.Response (Either RecurlyError LazyByteString.ByteString))
+handleTimeout' requestId attempt request exception = do
+  maxAttempts <- fmap Recurly.recurlyMaxAttempts Recurly.env
+  logLn' requestId "Request timed out"
+  when (attempt > Env.maxAttemptsToNatural maxAttempts) $ do
+    logLn' requestId $ "Giving up after " <> pluralize "attempt" attempt
+    fail $ unlines ["Recurly API V3 timed out", show request, show exception]
+  sendRequestWith' requestId (attempt + 1) request
 
 pluralize :: (Eq count, Num count, Show count) => String -> count -> String
 pluralize word count = concat [show count, " ", word, if count == 1 then "" else "s"]
