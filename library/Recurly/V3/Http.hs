@@ -28,9 +28,10 @@ makeRequest path = do
   let uri = Env.apiUriToUri $ Recurly.recurlyApiUrl env
   Client.requestFromURI uri { URI.uriPath = Text.unpack $ "/" <> Text.intercalate "/" path }
 
-sendRequest
-  :: FromJSON json => Client.Request -> Recurly.Recurly (Client.Response (Either RecurlyError json))
-sendRequest request = do
+sendRequestRaw
+  :: Client.Request
+  -> Recurly.Recurly (Client.Response (Either RecurlyError LazyByteString.ByteString))
+sendRequestRaw request = do
   token <- fmap Recurly.recurlyToken Recurly.env
   requestId <- liftIO Random.randomIO
   sendRequestWith requestId 1
@@ -39,26 +40,24 @@ sendRequest request = do
     . Client.applyBasicAuth (Env.tokenToByteString token) ByteString.empty
     $ request
 
-sendRequest'
-  :: Client.Request
-  -> Recurly.Recurly (Client.Response (Either RecurlyError LazyByteString.ByteString))
-sendRequest' request = do
-  token <- fmap Recurly.recurlyToken Recurly.env
-  requestId <- liftIO Random.randomIO
-  sendRequestWith' requestId 1
-    . withRequestHeader Http.hAccept "application/vnd.recurly.v2019-10-10+json"
-    . withRequestHeader Http.hContentType "application/json"
-    . Client.applyBasicAuth (Env.tokenToByteString token) ByteString.empty
-    $ request
-
 withNotFoundHandler
-  :: Recurly.Recurly (Client.Response (Either RecurlyError (Maybe json)))
-  -> Recurly.Recurly (Client.Response (Either RecurlyError (Maybe json)))
+  :: Recurly.Recurly (Client.Response (Either RecurlyError (Maybe a)))
+  -> Recurly.Recurly (Client.Response (Either RecurlyError (Maybe a)))
 withNotFoundHandler responseM = do
   response <- responseM
   pure $ case Client.responseBody response of
     Left err | recurlyErrorType err == NotFound -> response { Client.responseBody = Right Nothing }
     _ -> response
+
+sendRequest
+  :: FromJSON json => Client.Request -> Recurly.Recurly (Client.Response (Either RecurlyError json))
+sendRequest request = do
+  response <- sendRequestRaw request
+  case Client.responseBody response of
+    Left err -> pure $ response { Client.responseBody = Left err }
+    Right json -> do
+      decodedJson <- either (fail . (<> show json)) pure $ Aeson.eitherDecode json
+      pure $ response { Client.responseBody = Right decodedJson }
 
 sendRequestList
   :: (FromJSON json)
@@ -102,11 +101,10 @@ instance FromJSON a => FromJSON (RecurlyGet a) where
     pure RecurlyGet { recurlyGetHasMore = hasMore, recurlyGetNext = next, recurlyData = data_ }
 
 sendRequestWith
-  :: FromJSON json
-  => RequestId
+  :: RequestId
   -> Natural.Natural
   -> Client.Request
-  -> Recurly.Recurly (Client.Response (Either RecurlyError json))
+  -> Recurly.Recurly (Client.Response (Either RecurlyError LazyByteString.ByteString))
 sendRequestWith requestId attempt request = do
   maxAttempts <- fmap Recurly.recurlyMaxAttempts Recurly.env
   manager <- liftIO Tls.getGlobalManager
@@ -130,40 +128,7 @@ sendRequestWith requestId attempt request = do
         status
           | Http.statusIsServerError status -> handleServerError requestId attempt request response
           | Http.statusIsSuccessful status -> do
-            decodedBody <- either (fail . (<> show body)) pure $ Aeson.eitherDecode body
-            pure $ response { Client.responseBody = Right decodedBody }
-          | otherwise -> do
-            decodedBody <- either (fail . (<> show body)) pure $ Aeson.eitherDecode body
-            pure $ response { Client.responseBody = Left decodedBody }
-
-sendRequestWith'
-  :: RequestId
-  -> Natural.Natural
-  -> Client.Request
-  -> Recurly.Recurly (Client.Response (Either RecurlyError LazyByteString.ByteString))
-sendRequestWith' requestId attempt request = do
-  maxAttempts <- fmap Recurly.recurlyMaxAttempts Recurly.env
-  manager <- liftIO Tls.getGlobalManager
-  logLn' requestId
-    $ "sending request: "
-    <> requestMethod request
-    <> " "
-    <> requestPath request
-    <> " (attempt "
-    <> show attempt
-    <> " of "
-    <> show maxAttempts
-    <> ")"
-  result <- liftIO . Exception.tryJust keepResponseTimeout $ Client.httpLbs request manager
-  case result of
-    Left exception -> handleTimeout' requestId attempt request exception
-    Right response -> do
-      let body = Client.responseBody response
-      logLn' requestId $ "received response: " <> show (responseCode response)
-      case Client.responseStatus response of
-        status
-          | Http.statusIsServerError status -> handleServerError' requestId attempt request response
-          | Http.statusIsSuccessful status -> pure $ response { Client.responseBody = Right body }
+            pure $ response { Client.responseBody = Right body }
           | otherwise -> do
             decodedBody <- either (fail . (<> show body)) pure $ Aeson.eitherDecode body
             pure $ response { Client.responseBody = Left decodedBody }
@@ -236,12 +201,13 @@ keepResponseTimeout exception = case exception of
   _ -> Nothing
 
 handleServerError
-  :: (Show body, FromJSON json)
+  :: Show body
   => RequestId
   -> Natural.Natural
   -> Client.Request
   -> Client.Response body
-  -> Recurly.Recurly (Client.Response (Either RecurlyError json))
+  -> Recurly.Recurly
+       (Client.Response (Either RecurlyError LazyByteString.ByteString))
 handleServerError requestId attempt request response = do
   maxAttempts <- fmap Recurly.recurlyMaxAttempts Recurly.env
   logLn' requestId $ "Encountered server error with code: " <> show (responseCode response)
@@ -253,32 +219,12 @@ handleServerError requestId attempt request response = do
   liftIO . Concurrent.threadDelay $ delay * 1000000
   sendRequestWith requestId (attempt + 1) request
 
-handleServerError'
-  :: (Show body)
-  => RequestId
-  -> Natural.Natural
-  -> Client.Request
-  -> Client.Response body
-  -> Recurly.Recurly
-       (Client.Response (Either RecurlyError LazyByteString.ByteString))
-handleServerError' requestId attempt request response = do
-  maxAttempts <- fmap Recurly.recurlyMaxAttempts Recurly.env
-  logLn' requestId $ "Encountered server error with code: " <> show (responseCode response)
-  when (attempt > Env.maxAttemptsToNatural maxAttempts) $ do
-    logLn' requestId $ "Giving up after " <> pluralize "attempt" attempt
-    fail $ unlines ["Recurly API V3 failed", show request, show response]
-  let delay = 1 :: Int
-  logLn' requestId $ "Waiting " <> pluralize "second" delay <> " for good measure"
-  liftIO . Concurrent.threadDelay $ delay * 1000000
-  sendRequestWith' requestId (attempt + 1) request
-
 handleTimeout
-  :: FromJSON json
-  => RequestId
+  :: RequestId
   -> Natural.Natural
   -> Client.Request
   -> Client.HttpException
-  -> Recurly.Recurly (Client.Response (Either RecurlyError json))
+  -> Recurly.Recurly (Client.Response (Either RecurlyError LazyByteString.ByteString))
 handleTimeout requestId attempt request exception = do
   maxAttempts <- fmap Recurly.recurlyMaxAttempts Recurly.env
   logLn' requestId "Request timed out"
@@ -286,20 +232,6 @@ handleTimeout requestId attempt request exception = do
     logLn' requestId $ "Giving up after " <> pluralize "attempt" attempt
     fail $ unlines ["Recurly API V3 timed out", show request, show exception]
   sendRequestWith requestId (attempt + 1) request
-
-handleTimeout'
-  :: RequestId
-  -> Natural.Natural
-  -> Client.Request
-  -> Client.HttpException
-  -> Recurly.Recurly (Client.Response (Either RecurlyError LazyByteString.ByteString))
-handleTimeout' requestId attempt request exception = do
-  maxAttempts <- fmap Recurly.recurlyMaxAttempts Recurly.env
-  logLn' requestId "Request timed out"
-  when (attempt > Env.maxAttemptsToNatural maxAttempts) $ do
-    logLn' requestId $ "Giving up after " <> pluralize "attempt" attempt
-    fail $ unlines ["Recurly API V3 timed out", show request, show exception]
-  sendRequestWith' requestId (attempt + 1) request
 
 pluralize :: (Eq count, Num count, Show count) => String -> count -> String
 pluralize word count = concat [show count, " ", word, if count == 1 then "" else "s"]

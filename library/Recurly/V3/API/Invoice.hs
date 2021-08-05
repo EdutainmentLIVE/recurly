@@ -12,4 +12,4 @@ getInvoicePdf
   -> Recurly.Recurly (Client.Response (Either RecurlyApi.RecurlyError LazyByteString.ByteString))
 getInvoicePdf invoiceId = do
   request <- RecurlyApi.makeRequest ["invoices", Types.invoiceIdToText invoiceId <> ".pdf"]
-  RecurlyApi.sendRequest' request
+  RecurlyApi.sendRequestRaw request
