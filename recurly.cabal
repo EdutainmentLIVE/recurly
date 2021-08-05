@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: cc0be2eb42dd7ba1d5370924a2f54a38c7cb7ce2a02ca17dab4fe386d489be1d
+-- hash: 73f179036bb4ed440188453ad12414ac8033f20216d66d7089b51964aae7b89a
 
 name:           recurly
 version:        0.0.0.1
@@ -42,7 +42,6 @@ library
       Recurly.V3.API.Types.AccountLineItem.Id
       Recurly.V3.API.Types.AccountLineItem.Type
       Recurly.V3.API.Types.AccountLineItem.UnitAmount
-      Recurly.V3.API.Types.Base64
       Recurly.V3.API.Types.Coupon
       Recurly.V3.API.Types.Coupon.AppliesToAllPlans
       Recurly.V3.API.Types.Coupon.Code
@@ -212,7 +211,7 @@ library
     , mtl >=2.2.2 && <2.3
     , network-uri >=2.6.3 && <2.7
     , pretty-simple >=3.3.0 && <4.1
-    , random ==1.1.*
+    , random >=1.1 && <1.3
     , safe-money ==0.9.*
     , scientific >=0.3.6 && <0.4
     , text >=1.2.3 && <1.3
