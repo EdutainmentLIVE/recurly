@@ -35,7 +35,7 @@ sendRequestRaw request = do
   token <- fmap Recurly.recurlyToken Recurly.env
   requestId <- liftIO Random.randomIO
   sendRequestWith requestId 1
-    . withRequestHeader Http.hAccept "application/vnd.recurly.v2019-10-10+json"
+    . withRequestHeader Http.hAccept "application/vnd.recurly.v2021-02-25+json"
     . withRequestHeader Http.hContentType "application/json"
     . Client.applyBasicAuth (Env.tokenToByteString token) ByteString.empty
     $ request
@@ -167,6 +167,7 @@ data ErrorType
   | Validation
   | MissingFeature
   | RateLimited
+  | ServiceNotAvailable
   deriving (Eq, Show)
 
 instance FromJSON ErrorType where
@@ -193,6 +194,7 @@ stringToErrorType errorType = case errorType of
   "validation" -> Right Validation
   "missing_feature" -> Right MissingFeature
   "rate_limited" -> Right RateLimited
+  "service_not_available" -> Right ServiceNotAvailable
   _ -> Left $ "Unknown error type: " <> errorType
 
 keepResponseTimeout :: Client.HttpException -> Maybe Client.HttpException

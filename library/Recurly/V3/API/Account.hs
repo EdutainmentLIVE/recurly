@@ -30,14 +30,11 @@ getAccountCouponRedemptions accountCode = Recurly.liftRecurly $ do
 getActiveAccountCouponRedemption
   :: Recurly.MonadRecurly m
   => Types.AccountCode
-  -> m
-       ( Client.Response
-           (Either RecurlyApi.RecurlyError (Maybe Types.AccountCouponRedemption))
-       )
+  -> m (Client.Response (Either RecurlyApi.RecurlyError [Types.AccountCouponRedemption]))
 getActiveAccountCouponRedemption accountCode = Recurly.liftRecurly $ do
   request <- RecurlyApi.makeRequest
     ["accounts", Types.accountCodeToRecurlyText accountCode, "coupon_redemptions", "active"]
-  RecurlyApi.withNotFoundHandler $ RecurlyApi.sendRequest request
+  RecurlyApi.sendRequestList request
 
 postAccount
   :: Types.PostAccount
