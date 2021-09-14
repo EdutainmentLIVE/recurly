@@ -6,8 +6,6 @@ newtype TransactionIpAddressV4 =
     TransactionIpAddressV4 Text
     deriving (Eq, Show, FromJSON)
 
-transactionIpAddressV4ToText :: TransactionIpAddressV4 -> Text
-transactionIpAddressV4ToText (TransactionIpAddressV4 text) = text
+instance From Text TransactionIpAddressV4
 
-textToTransactionIpAddressV4 :: Text -> TransactionIpAddressV4
-textToTransactionIpAddressV4 = TransactionIpAddressV4
+instance From TransactionIpAddressV4 Text

@@ -10,22 +10,22 @@ data CreditPaymentAction
   deriving (Eq, Show)
 
 instance ToJSON CreditPaymentAction where
-  toJSON = toJSON . creditPaymentActionToText
+  toJSON = toJSON . into @Text
 
 instance FromJSON CreditPaymentAction where
-  parseJSON = withText "CreditPaymentAction" $ eitherFail . textToCreditPaymentAction
+  parseJSON = withText "CreditPaymentAction" $ eitherFail . tryInto @CreditPaymentAction
 
-creditPaymentActionToText :: CreditPaymentAction -> Text
-creditPaymentActionToText creditpaymentaction = case creditpaymentaction of
-  PaymentCreditPaymentAction -> "payment"
-  RefundCreditPaymentAction -> "refund"
-  ReductionCreditPaymentAction -> "reduction"
-  WriteOffCreditPaymentAction -> "write_off"
+instance TryFrom Text CreditPaymentAction where
+  tryFrom = maybeTryFrom $ \creditPaymentAction -> case creditPaymentAction of
+    "payment" -> Just PaymentCreditPaymentAction
+    "refund" -> Just RefundCreditPaymentAction
+    "reduction" -> Just ReductionCreditPaymentAction
+    "write_off" -> Just WriteOffCreditPaymentAction
+    _ -> Nothing
 
-textToCreditPaymentAction :: Text -> Either String CreditPaymentAction
-textToCreditPaymentAction creditpaymentType = case creditpaymentType of
-  "payment" -> Right PaymentCreditPaymentAction
-  "refund" -> Right RefundCreditPaymentAction
-  "reduction" -> Right ReductionCreditPaymentAction
-  "write_off" -> Right WriteOffCreditPaymentAction
-  _ -> Left $ "Failed to parse CreditPaymentAction from text: " <> show creditpaymentType
+instance From CreditPaymentAction Text where
+  from creditPaymentAction = case creditPaymentAction of
+    PaymentCreditPaymentAction -> "payment"
+    RefundCreditPaymentAction -> "refund"
+    ReductionCreditPaymentAction -> "reduction"
+    WriteOffCreditPaymentAction -> "write_off"

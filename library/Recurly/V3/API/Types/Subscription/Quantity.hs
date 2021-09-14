@@ -6,8 +6,6 @@ newtype SubscriptionQuantity =
     SubscriptionQuantity Integer
     deriving (Eq, Show, FromJSON)
 
-subscriptionQuantityToInteger :: SubscriptionQuantity -> Integer
-subscriptionQuantityToInteger (SubscriptionQuantity integer) = integer
+instance From Integer SubscriptionQuantity
 
-integerToSubscriptionQuantity :: Integer -> SubscriptionQuantity
-integerToSubscriptionQuantity = SubscriptionQuantity
+instance From SubscriptionQuantity Integer

@@ -8,18 +8,18 @@ data InvoiceCollectionMethod
   deriving (Eq, Show)
 
 instance ToJSON InvoiceCollectionMethod where
-  toJSON = toJSON . invoiceCollectionMethodToText
+  toJSON = toJSON . into @Text
 
 instance FromJSON InvoiceCollectionMethod where
-  parseJSON = withText "InvoiceCollectionMethod" $ eitherFail . textToInvoiceCollectionMethod
+  parseJSON = withText "InvoiceCollectionMethod" $ eitherFail . tryInto @InvoiceCollectionMethod
 
-invoiceCollectionMethodToText :: InvoiceCollectionMethod -> Text
-invoiceCollectionMethodToText invoiceCollectionMethod = case invoiceCollectionMethod of
-  AutomaticInvoiceCollectionMethod -> "automatic"
-  ManualInvoiceCollectionMethod -> "manual"
+instance TryFrom Text InvoiceCollectionMethod where
+  tryFrom = maybeTryFrom $ \invoiceCollectionMethod -> case invoiceCollectionMethod of
+    "automatic" -> Just AutomaticInvoiceCollectionMethod
+    "manual" -> Just ManualInvoiceCollectionMethod
+    _ -> Nothing
 
-textToInvoiceCollectionMethod :: Text -> Either String InvoiceCollectionMethod
-textToInvoiceCollectionMethod invoiceCollectionMethod = case invoiceCollectionMethod of
-  "automatic" -> Right AutomaticInvoiceCollectionMethod
-  "manual" -> Right ManualInvoiceCollectionMethod
-  _ -> Left $ "Failed to parse InvoiceCollectionMethod from text: " <> show invoiceCollectionMethod
+instance From InvoiceCollectionMethod Text where
+  from invoiceCollectionMethod = case invoiceCollectionMethod of
+    AutomaticInvoiceCollectionMethod -> "automatic"
+    ManualInvoiceCollectionMethod -> "manual"

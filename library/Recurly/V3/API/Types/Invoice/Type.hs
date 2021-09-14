@@ -9,20 +9,20 @@ data InvoiceType
   deriving (Eq, Show)
 
 instance ToJSON InvoiceType where
-  toJSON = toJSON . invoiceTypeToText
+  toJSON = toJSON . into @Text
 
 instance FromJSON InvoiceType where
-  parseJSON = withText "InvoiceType" $ eitherFail . textToInvoiceType
+  parseJSON = withText "InvoiceType" $ eitherFail . tryInto @InvoiceType
 
-invoiceTypeToText :: InvoiceType -> Text
-invoiceTypeToText invoiceType = case invoiceType of
-  ChargeInvoiceType -> "charge"
-  CreditInvoiceType -> "credit"
-  LegacyInvoiceType -> "legacy"
+instance TryFrom Text InvoiceType where
+  tryFrom = maybeTryFrom $ \invoiceType -> case invoiceType of
+    "charge" -> Just ChargeInvoiceType
+    "credit" -> Just CreditInvoiceType
+    "legacy" -> Just LegacyInvoiceType
+    _ -> Nothing
 
-textToInvoiceType :: Text -> Either String InvoiceType
-textToInvoiceType invoiceType = case invoiceType of
-  "charge" -> Right ChargeInvoiceType
-  "credit" -> Right CreditInvoiceType
-  "legacy" -> Right LegacyInvoiceType
-  _ -> Left $ "Failed to parse InvoiceType from text: " <> show invoiceType
+instance From InvoiceType Text where
+  from invoiceType = case invoiceType of
+    ChargeInvoiceType -> "charge"
+    CreditInvoiceType -> "credit"
+    LegacyInvoiceType -> "legacy"

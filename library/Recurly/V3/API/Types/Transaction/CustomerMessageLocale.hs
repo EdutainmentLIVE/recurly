@@ -6,8 +6,6 @@ newtype TransactionCustomerMessageLocale =
     TransactionCustomerMessageLocale Text
     deriving (Eq, Show, FromJSON)
 
-transactionCustomerMessageLocaleToText :: TransactionCustomerMessageLocale -> Text
-transactionCustomerMessageLocaleToText (TransactionCustomerMessageLocale text) = text
+instance From Text TransactionCustomerMessageLocale
 
-textToTransactionCustomerMessageLocale :: Text -> TransactionCustomerMessageLocale
-textToTransactionCustomerMessageLocale = TransactionCustomerMessageLocale
+instance From TransactionCustomerMessageLocale Text

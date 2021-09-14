@@ -8,11 +8,13 @@ module Recurlude
   , module Data.Either
   , module Data.Map
   , module Data.Maybe
+  , module Data.Ratio
   , module Data.Text
   , module Data.Time
   , module GHC.Generics
   , module Network.HTTP.Types
   , module Network.URI
+  , module Witch
   -- IO
   , Moon
   -- Logger
@@ -27,9 +29,8 @@ module Recurlude
   , eitherFailWith
   , maybeFail
   , maybeFailWith
-  , utf8ToString
-  , utf8ToText
   , getCurrentTime
+  , hush
   ) where
 
 -- Re-exports
@@ -37,25 +38,23 @@ import Control.Exception (Exception, displayException)
 import Control.Monad (when)
 import Control.Monad.Catch (MonadCatch, MonadThrow)
 import Control.Monad.IO.Class (MonadIO, liftIO)
-import Data.Aeson (FromJSON, ToJSON, parseJSON, toJSON, withObject, withText)
+import Data.Aeson (FromJSON, ToJSON, parseJSON, toJSON, withObject, withScientific, withText)
 import Data.ByteString (ByteString)
 import Data.Either (fromLeft, fromRight)
 import Data.Map (Map)
 import Data.Maybe (fromMaybe)
+import Data.Ratio ((%))
 import Data.Text (Text)
 import Data.Time (UTCTime)
 import GHC.Generics (Generic)
 import Network.HTTP.Types
   (HeaderName, Method, methodDelete, methodGet, methodPost, methodPut, statusCode)
 import Network.URI (URI)
-
+import Witch (From(..), TryFrom(..), into, maybeTryFrom, tryInto, via)
 
 import qualified Data.Aeson as Aeson
 import qualified Data.Aeson.Types as Aeson
 import qualified Data.IORef as IORef
-import qualified Data.Text as Text
-import qualified Data.Text.Encoding as T
-import qualified Data.Text.Lazy as LT
 import qualified Data.Time as Time
 import qualified System.IO as IO
 import qualified System.IO.Unsafe as Unsafe
@@ -95,17 +94,17 @@ logInitRef = Unsafe.unsafePerformIO $ IORef.newIORef False
 {-# NOINLINE logInitRef #-}
 
 pShow :: Show a => a -> String
-pShow = LT.unpack . Pretty.pShowNoColor
+pShow = into @String . into @Text . Pretty.pShowNoColor
 
 -- Helpers
 aesonOptional :: FromJSON value => Aeson.Object -> String -> Aeson.Parser (Maybe value)
-aesonOptional object key = object Aeson..:? Text.pack key
+aesonOptional object key = object Aeson..:? into @Text key
 
 aesonRequired :: FromJSON value => Aeson.Object -> String -> Aeson.Parser value
-aesonRequired object key = object Aeson..: Text.pack key
+aesonRequired object key = object Aeson..: into @Text key
 
 aesonPair :: (ToJSON value, Aeson.KeyValue pair) => String -> value -> pair
-aesonPair key value = Text.pack key Aeson..= value
+aesonPair key value = into @Text key Aeson..= value
 
 aesonPairHelper :: [(String, record -> Aeson.Value)] -> record -> Aeson.Value
 aesonPairHelper fields record =
@@ -123,14 +122,9 @@ maybeFail message = maybeFailWith message id
 maybeFailWith :: MonadFail m => String -> (a -> b) -> Maybe a -> m b
 maybeFailWith message c = maybe (fail message) (pure . c)
 
--- | Converts a UTF-8 encoded ByteString into String.
-utf8ToString :: ByteString -> Either String String
-utf8ToString = fmap Text.unpack . utf8ToText
-
--- | Converts a UTF-8 encoded ByteString into Text.
-utf8ToText :: ByteString -> Either String Text
-utf8ToText = either (Left . displayException) Right . T.decodeUtf8'
-
 -- | Returns now
 getCurrentTime :: MonadIO m => m UTCTime
 getCurrentTime = liftIO Time.getCurrentTime
+
+hush :: Either b a -> Maybe a
+hush = either (const Nothing) pure

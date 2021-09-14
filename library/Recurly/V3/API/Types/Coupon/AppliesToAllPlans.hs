@@ -6,8 +6,6 @@ newtype CouponAppliesToAllPlans =
     CouponAppliesToAllPlans Bool
     deriving (Eq, Show, FromJSON)
 
-couponAppliesToAllPlansToBool :: CouponAppliesToAllPlans -> Bool
-couponAppliesToAllPlansToBool (CouponAppliesToAllPlans b) = b
+instance From Bool CouponAppliesToAllPlans
 
-boolToCouponAppliesToAllPlans :: Bool -> CouponAppliesToAllPlans
-boolToCouponAppliesToAllPlans = CouponAppliesToAllPlans
+instance From CouponAppliesToAllPlans Bool

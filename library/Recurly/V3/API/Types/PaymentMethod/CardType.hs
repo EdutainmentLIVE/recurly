@@ -18,38 +18,38 @@ data PaymentMethodCardType
   deriving (Eq, Show)
 
 instance ToJSON PaymentMethodCardType where
-  toJSON = toJSON . paymentmethodCardTypeToText
+  toJSON = toJSON . into @Text
 
 instance FromJSON PaymentMethodCardType where
-  parseJSON = withText "PaymentMethodCardType" $ eitherFail . textToPaymentMethodCardType
+  parseJSON = withText "PaymentMethodCardType" $ eitherFail . tryInto @PaymentMethodCardType
 
-paymentmethodCardTypeToText :: PaymentMethodCardType -> Text
-paymentmethodCardTypeToText paymentmethodCardType = case paymentmethodCardType of
-  AmericanExpressCardType -> "American Express"
-  DankortCardType -> "Dankort"
-  DinersClubCardType -> "Diners Club"
-  DiscoverCardType -> "Discover"
-  ForbrugsforeningenCardType -> "Forbrugsforeningen"
-  JCBCardType -> "JCB"
-  LaserCardType -> "Laser"
-  MaestroCardType -> "Maestro"
-  MasterCardCardType -> "MasterCard"
-  TestCardCardType -> "Test Card"
-  UnknownCardType -> "Unknown"
-  VisaCardType -> "Visa"
+instance TryFrom Text PaymentMethodCardType where
+  tryFrom = maybeTryFrom $ \paymentMethodCardType -> case paymentMethodCardType of
+    "American Express" -> Just AmericanExpressCardType
+    "Dankort" -> Just DankortCardType
+    "Diners Club" -> Just DinersClubCardType
+    "Discover" -> Just DiscoverCardType
+    "Forbrugsforeningen" -> Just ForbrugsforeningenCardType
+    "JCB" -> Just JCBCardType
+    "Laser" -> Just LaserCardType
+    "Maestro" -> Just MaestroCardType
+    "MasterCard" -> Just MasterCardCardType
+    "Test Card" -> Just TestCardCardType
+    "Unknown" -> Just UnknownCardType
+    "Visa" -> Just VisaCardType
+    _ -> Nothing
 
-textToPaymentMethodCardType :: Text -> Either String PaymentMethodCardType
-textToPaymentMethodCardType paymentmethodCardType = case paymentmethodCardType of
-  "American Express" -> Right AmericanExpressCardType
-  "Dankort" -> Right DankortCardType
-  "Diners Club" -> Right DinersClubCardType
-  "Discover" -> Right DiscoverCardType
-  "Forbrugsforeningen" -> Right ForbrugsforeningenCardType
-  "JCB" -> Right JCBCardType
-  "Laser" -> Right LaserCardType
-  "Maestro" -> Right MaestroCardType
-  "MasterCard" -> Right MasterCardCardType
-  "Test Card" -> Right TestCardCardType
-  "Unknown" -> Right UnknownCardType
-  "Visa" -> Right VisaCardType
-  _ -> Left $ "Failed to parse PaymentMethodCardType from text: " <> show paymentmethodCardType
+instance From PaymentMethodCardType Text where
+  from paymentMethodCardType = case paymentMethodCardType of
+    AmericanExpressCardType -> "American Express"
+    DankortCardType -> "Dankort"
+    DinersClubCardType -> "Diners Club"
+    DiscoverCardType -> "Discover"
+    ForbrugsforeningenCardType -> "Forbrugsforeningen"
+    JCBCardType -> "JCB"
+    LaserCardType -> "Laser"
+    MaestroCardType -> "Maestro"
+    MasterCardCardType -> "MasterCard"
+    TestCardCardType -> "Test Card"
+    UnknownCardType -> "Unknown"
+    VisaCardType -> "Visa"

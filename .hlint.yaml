@@ -4,6 +4,7 @@
     - -XDataKinds
     - -XDeriveGeneric
     - -XFlexibleContexts
+    - -XFlexibleInstances
     - -XGeneralizedNewtypeDeriving
     - -XMultiParamTypeClasses
     - -XOverloadedStrings

@@ -8,19 +8,18 @@ data PaymentMethodAccountType
   deriving (Eq, Show)
 
 instance ToJSON PaymentMethodAccountType where
-  toJSON = toJSON . paymentmethodAccountTypeToText
+  toJSON = toJSON . into @Text
 
 instance FromJSON PaymentMethodAccountType where
-  parseJSON = withText "PaymentMethodAccountType" $ eitherFail . textToPaymentMethodAccountType
+  parseJSON = withText "PaymentMethodAccountType" $ eitherFail . tryInto @PaymentMethodAccountType
 
-paymentmethodAccountTypeToText :: PaymentMethodAccountType -> Text
-paymentmethodAccountTypeToText paymentmethodAccountType = case paymentmethodAccountType of
-  CheckingPaymentMethodAccountType -> "checking"
-  SavingsPaymentMethodAccountType -> "savings"
+instance TryFrom Text PaymentMethodAccountType where
+  tryFrom = maybeTryFrom $ \paymentMethodAccountType -> case paymentMethodAccountType of
+    "checking" -> Just CheckingPaymentMethodAccountType
+    "savings" -> Just SavingsPaymentMethodAccountType
+    _ -> Nothing
 
-textToPaymentMethodAccountType :: Text -> Either String PaymentMethodAccountType
-textToPaymentMethodAccountType paymentmethodAccountType = case paymentmethodAccountType of
-  "checking" -> Right CheckingPaymentMethodAccountType
-  "savings" -> Right SavingsPaymentMethodAccountType
-  _ ->
-    Left $ "Failed to parse PaymentMethodAccountType from text: " <> show paymentmethodAccountType
+instance From PaymentMethodAccountType Text where
+  from paymentMethodAccountType = case paymentMethodAccountType of
+    CheckingPaymentMethodAccountType -> "checking"
+    SavingsPaymentMethodAccountType -> "savings"

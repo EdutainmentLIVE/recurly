@@ -6,8 +6,6 @@ newtype AccountId =
     AccountId Text
     deriving (Eq, Show, FromJSON, ToJSON)
 
-accountIdToRecurlyText :: AccountId -> Text
-accountIdToRecurlyText (AccountId text) = text
+instance From Text AccountId
 
-textToAccountId :: Text -> AccountId
-textToAccountId = AccountId
+instance From AccountId Text

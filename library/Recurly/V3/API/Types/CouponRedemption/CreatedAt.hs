@@ -6,8 +6,6 @@ newtype CouponRedemptionCreatedAt =
     CouponRedemptionCreatedAt UTCTime
     deriving (Eq, Ord, Show, FromJSON, ToJSON)
 
-couponRedemptionCreatedAtToUtcTime :: CouponRedemptionCreatedAt -> UTCTime
-couponRedemptionCreatedAtToUtcTime (CouponRedemptionCreatedAt time) = time
+instance From UTCTime CouponRedemptionCreatedAt
 
-timeToCouponRedemptionCreatedAt :: UTCTime -> CouponRedemptionCreatedAt
-timeToCouponRedemptionCreatedAt = CouponRedemptionCreatedAt
+instance From CouponRedemptionCreatedAt UTCTime

@@ -6,8 +6,6 @@ newtype SubscriptionCanceledAt =
     SubscriptionCanceledAt UTCTime
     deriving (Eq, Show, FromJSON)
 
-subscriptionCanceledAtToUtcTime :: SubscriptionCanceledAt -> UTCTime
-subscriptionCanceledAtToUtcTime (SubscriptionCanceledAt time) = time
+instance From UTCTime SubscriptionCanceledAt
 
-timeToSubscriptionCanceledAt :: UTCTime -> SubscriptionCanceledAt
-timeToSubscriptionCanceledAt = SubscriptionCanceledAt
+instance From SubscriptionCanceledAt UTCTime

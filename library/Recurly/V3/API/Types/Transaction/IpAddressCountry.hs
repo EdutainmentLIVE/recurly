@@ -6,8 +6,6 @@ newtype TransactionIpAddressCountry =
     TransactionIpAddressCountry Text
     deriving (Eq, Show, FromJSON)
 
-transactionIpAddressCountryToText :: TransactionIpAddressCountry -> Text
-transactionIpAddressCountryToText (TransactionIpAddressCountry text) = text
+instance From Text TransactionIpAddressCountry
 
-textToTransactionIpAddressCountry :: Text -> TransactionIpAddressCountry
-textToTransactionIpAddressCountry = TransactionIpAddressCountry
+instance From TransactionIpAddressCountry Text

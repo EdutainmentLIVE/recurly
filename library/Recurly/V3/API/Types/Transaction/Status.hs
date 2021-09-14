@@ -14,30 +14,30 @@ data TransactionStatus
   deriving (Eq, Show)
 
 instance ToJSON TransactionStatus where
-  toJSON = toJSON . transactionStatusToText
+  toJSON = toJSON . into @Text
 
 instance FromJSON TransactionStatus where
-  parseJSON = withText "TransactionStatus" $ eitherFail . textToTransactionStatus
+  parseJSON = withText "TransactionStatus" $ eitherFail . tryInto @TransactionStatus
 
-transactionStatusToText :: TransactionStatus -> Text
-transactionStatusToText transactionStatus = case transactionStatus of
-  PendingTransactionStatus -> "pending"
-  ScheduledTransactionStatus -> "scheduled"
-  ProcessingTransactionStatus -> "processing"
-  SuccessTransactionStatus -> "success"
-  VoidTransactionStatus -> "void"
-  DeclinedTransactionStatus -> "declined"
-  ErrorTransactionStatus -> "error"
-  ChargebackTransactionStatus -> "chargeback"
+instance TryFrom Text TransactionStatus where
+  tryFrom = maybeTryFrom $ \transactionStatus -> case transactionStatus of
+    "pending" -> Just PendingTransactionStatus
+    "scheduled" -> Just ScheduledTransactionStatus
+    "processing" -> Just ProcessingTransactionStatus
+    "success" -> Just SuccessTransactionStatus
+    "void" -> Just VoidTransactionStatus
+    "declined" -> Just DeclinedTransactionStatus
+    "error" -> Just ErrorTransactionStatus
+    "chargeback" -> Just ChargebackTransactionStatus
+    _ -> Nothing
 
-textToTransactionStatus :: Text -> Either String TransactionStatus
-textToTransactionStatus transactionStatus = case transactionStatus of
-  "pending" -> Right PendingTransactionStatus
-  "scheduled" -> Right ScheduledTransactionStatus
-  "processing" -> Right ProcessingTransactionStatus
-  "success" -> Right SuccessTransactionStatus
-  "void" -> Right VoidTransactionStatus
-  "declined" -> Right DeclinedTransactionStatus
-  "error" -> Right ErrorTransactionStatus
-  "chargeback" -> Right ChargebackTransactionStatus
-  _ -> Left $ "Failed to parse TransactionStatus from text: " <> show transactionStatus
+instance From TransactionStatus Text where
+  from transactionStatus = case transactionStatus of
+    PendingTransactionStatus -> "pending"
+    ScheduledTransactionStatus -> "scheduled"
+    ProcessingTransactionStatus -> "processing"
+    SuccessTransactionStatus -> "success"
+    VoidTransactionStatus -> "void"
+    DeclinedTransactionStatus -> "declined"
+    ErrorTransactionStatus -> "error"
+    ChargebackTransactionStatus -> "chargeback"

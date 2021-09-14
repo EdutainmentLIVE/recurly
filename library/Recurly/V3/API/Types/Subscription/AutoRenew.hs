@@ -6,8 +6,6 @@ newtype SubscriptionAutoRenew =
     SubscriptionAutoRenew Bool
     deriving (Eq, Show, FromJSON)
 
-subscriptionAutoRenewToBool :: SubscriptionAutoRenew -> Bool
-subscriptionAutoRenewToBool (SubscriptionAutoRenew b) = b
+instance From Bool SubscriptionAutoRenew
 
-boolToSubscriptionAutoRenew :: Bool -> SubscriptionAutoRenew
-boolToSubscriptionAutoRenew = SubscriptionAutoRenew
+instance From SubscriptionAutoRenew Bool

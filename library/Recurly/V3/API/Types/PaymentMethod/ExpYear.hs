@@ -6,8 +6,6 @@ newtype PaymentMethodExpYear =
     PaymentMethodExpYear Integer
     deriving (Eq, Show, FromJSON)
 
-paymentmethodExpYearToInteger :: PaymentMethodExpYear -> Integer
-paymentmethodExpYearToInteger (PaymentMethodExpYear integer) = integer
+instance From Integer PaymentMethodExpYear
 
-integerToPaymentMethodExpYear :: Integer -> PaymentMethodExpYear
-integerToPaymentMethodExpYear = PaymentMethodExpYear
+instance From PaymentMethodExpYear Integer

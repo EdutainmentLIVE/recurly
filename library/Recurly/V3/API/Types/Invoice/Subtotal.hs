@@ -8,8 +8,6 @@ newtype InvoiceSubtotal =
     InvoiceSubtotal Money.DenseUSD
     deriving (Eq, Show, FromJSON)
 
-invoiceSubtotalToDenseUSD :: InvoiceSubtotal -> Money.DenseUSD
-invoiceSubtotalToDenseUSD (InvoiceSubtotal denseUSD) = denseUSD
+instance From Money.DenseUSD InvoiceSubtotal
 
-denseUSDToInvoiceSubtotal :: Money.DenseUSD -> InvoiceSubtotal
-denseUSDToInvoiceSubtotal = InvoiceSubtotal
+instance From InvoiceSubtotal Money.DenseUSD

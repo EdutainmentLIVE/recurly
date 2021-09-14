@@ -7,18 +7,18 @@ data CouponRedemptionState = ActiveCouponRedemptionState
   deriving (Eq, Show)
 
 instance ToJSON CouponRedemptionState where
-  toJSON = toJSON . couponRedemptionStateToText
+  toJSON = toJSON . into @Text
 
 instance FromJSON CouponRedemptionState where
-  parseJSON = withText "CouponRedemptionState" $ eitherFail . textToCouponRedemptionState
+  parseJSON = withText "CouponRedemptionState" $ eitherFail . tryInto @CouponRedemptionState
 
-couponRedemptionStateToText :: CouponRedemptionState -> Text
-couponRedemptionStateToText couponredemptionstate = case couponredemptionstate of
-  ActiveCouponRedemptionState -> "active"
-  InactiveCouponRedemptionState -> "inactive"
+instance TryFrom Text CouponRedemptionState where
+  tryFrom = maybeTryFrom $ \couponRedemptionState -> case couponRedemptionState of
+    "active" -> Just ActiveCouponRedemptionState
+    "inactive" -> Just InactiveCouponRedemptionState
+    _ -> Nothing
 
-textToCouponRedemptionState :: Text -> Either String CouponRedemptionState
-textToCouponRedemptionState couponredemptionType = case couponredemptionType of
-  "active" -> Right ActiveCouponRedemptionState
-  "inactive" -> Right InactiveCouponRedemptionState
-  _ -> Left $ "Failed to parse CouponRedemptionState from text: " <> show couponredemptionType
+instance From CouponRedemptionState Text where
+  from couponRedemptionState = case couponRedemptionState of
+    ActiveCouponRedemptionState -> "active"
+    InactiveCouponRedemptionState -> "inactive"

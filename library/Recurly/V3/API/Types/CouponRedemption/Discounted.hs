@@ -8,8 +8,6 @@ newtype CouponRedemptionDiscounted =
     CouponRedemptionDiscounted Money.DenseUSD
     deriving (Eq, Show, FromJSON, ToJSON)
 
-couponRedemptionDiscountedToDenseUSD :: CouponRedemptionDiscounted -> Money.DenseUSD
-couponRedemptionDiscountedToDenseUSD (CouponRedemptionDiscounted denseUSD) = denseUSD
+instance From Money.DenseUSD CouponRedemptionDiscounted
 
-denseUSDToCouponRedemptionDiscounted :: Money.DenseUSD -> CouponRedemptionDiscounted
-denseUSDToCouponRedemptionDiscounted = CouponRedemptionDiscounted
+instance From CouponRedemptionDiscounted Money.DenseUSD

@@ -8,8 +8,6 @@ newtype InvoiceBalance =
     InvoiceBalance Money.DenseUSD
     deriving (Eq, Show, FromJSON)
 
-invoiceBalanceToDenseUSD :: InvoiceBalance -> Money.DenseUSD
-invoiceBalanceToDenseUSD (InvoiceBalance denseUSD) = denseUSD
+instance From Money.DenseUSD InvoiceBalance
 
-denseUSDToInvoiceBalance :: Money.DenseUSD -> InvoiceBalance
-denseUSDToInvoiceBalance = InvoiceBalance
+instance From InvoiceBalance Money.DenseUSD

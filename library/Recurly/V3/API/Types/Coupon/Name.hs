@@ -6,8 +6,6 @@ newtype CouponName =
     CouponName Text
     deriving (Eq, Show, FromJSON, ToJSON)
 
-couponNameToText :: CouponName -> Text
-couponNameToText (CouponName text) = text
+instance From Text CouponName
 
-textToCouponName :: Text -> CouponName
-textToCouponName = CouponName
+instance From CouponName Text

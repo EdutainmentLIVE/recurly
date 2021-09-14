@@ -8,8 +8,6 @@ newtype InvoiceDiscount =
     InvoiceDiscount Money.DenseUSD
     deriving (Eq, Show, FromJSON)
 
-invoiceDiscountToDenseUSD :: InvoiceDiscount -> Money.DenseUSD
-invoiceDiscountToDenseUSD (InvoiceDiscount denseUSD) = denseUSD
+instance From Money.DenseUSD InvoiceDiscount
 
-denseUSDToInvoiceDiscount :: Money.DenseUSD -> InvoiceDiscount
-denseUSDToInvoiceDiscount = InvoiceDiscount
+instance From InvoiceDiscount Money.DenseUSD

@@ -6,8 +6,6 @@ newtype SubscriptionCurrentPeriodStartedAt =
     SubscriptionCurrentPeriodStartedAt UTCTime
     deriving (Eq, Show, FromJSON)
 
-subscriptionCurrentPeriodStartedAtToUtcTime :: SubscriptionCurrentPeriodStartedAt -> UTCTime
-subscriptionCurrentPeriodStartedAtToUtcTime (SubscriptionCurrentPeriodStartedAt time) = time
+instance From UTCTime SubscriptionCurrentPeriodStartedAt
 
-timeToSubscriptionCurrentPeriodStartedAt :: UTCTime -> SubscriptionCurrentPeriodStartedAt
-timeToSubscriptionCurrentPeriodStartedAt = SubscriptionCurrentPeriodStartedAt
+instance From SubscriptionCurrentPeriodStartedAt UTCTime

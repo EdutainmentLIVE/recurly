@@ -6,8 +6,6 @@ newtype TaxInfoType =
     TaxInfoType Text
     deriving (Eq, Show, FromJSON, ToJSON)
 
-taxInfoTypeToText :: TaxInfoType -> Text
-taxInfoTypeToText (TaxInfoType text) = text
+instance From Text TaxInfoType
 
-textToTaxInfoType :: Text -> TaxInfoType
-textToTaxInfoType = TaxInfoType
+instance From TaxInfoType Text

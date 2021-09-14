@@ -1,5 +1,7 @@
 module Recurly.V3.API.Invoice where
 
+import Recurlude
+
 import qualified Data.ByteString.Lazy as LazyByteString
 import qualified Network.HTTP.Client as Client
 
@@ -11,5 +13,5 @@ getInvoicePdf
   :: Types.InvoiceId
   -> Recurly.Recurly (Client.Response (Either RecurlyApi.RecurlyError LazyByteString.ByteString))
 getInvoicePdf invoiceId = do
-  request <- RecurlyApi.makeRequest ["invoices", Types.invoiceIdToText invoiceId <> ".pdf"]
+  request <- RecurlyApi.makeRequest ["invoices", into @Text invoiceId <> ".pdf"]
   RecurlyApi.sendRequestRaw request

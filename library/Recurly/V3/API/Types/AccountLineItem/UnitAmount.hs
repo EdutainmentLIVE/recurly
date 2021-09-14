@@ -13,8 +13,6 @@ newtype AccountLineItemUnitAmount =
     AccountLineItemUnitAmount Money.DenseUSD
     deriving (Eq, Show, FromJSON, ToJSON)
 
-accountLineItemUnitAmountToDenseUSD :: AccountLineItemUnitAmount -> Money.DenseUSD
-accountLineItemUnitAmountToDenseUSD (AccountLineItemUnitAmount denseUSD) = denseUSD
+instance From Money.DenseUSD AccountLineItemUnitAmount
 
-denseUSDToAccountLineItemUnitAmount :: Money.DenseUSD -> AccountLineItemUnitAmount
-denseUSDToAccountLineItemUnitAmount = AccountLineItemUnitAmount
+instance From AccountLineItemUnitAmount Money.DenseUSD

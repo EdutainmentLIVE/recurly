@@ -6,8 +6,6 @@ newtype InvoiceCreatedAt =
     InvoiceCreatedAt UTCTime
     deriving (Eq, Show, FromJSON)
 
-invoiceCreatedAtToUtcTime :: InvoiceCreatedAt -> UTCTime
-invoiceCreatedAtToUtcTime (InvoiceCreatedAt time) = time
+instance From UTCTime InvoiceCreatedAt
 
-timeToInvoiceCreatedAt :: UTCTime -> InvoiceCreatedAt
-timeToInvoiceCreatedAt = InvoiceCreatedAt
+instance From InvoiceCreatedAt UTCTime

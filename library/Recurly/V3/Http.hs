@@ -19,14 +19,13 @@ import qualified Text.Printf as Printf
 
 import qualified Recurly.V3.Env.ApiUri as Env
 import qualified Recurly.V3.Env.MaxAttempts as Env
-import qualified Recurly.V3.Env.Token as Env
 import qualified Recurly.V3.Recurly as Recurly
 
 makeRequest :: [Text] -> Recurly.Recurly Client.Request
 makeRequest path = do
   env <- Recurly.env
   let uri = Env.apiUriToUri $ Recurly.recurlyApiUrl env
-  Client.requestFromURI uri { URI.uriPath = Text.unpack $ "/" <> Text.intercalate "/" path }
+  Client.requestFromURI uri { URI.uriPath = into @String $ "/" <> Text.intercalate "/" path }
 
 sendRequestRaw
   :: Client.Request
@@ -37,7 +36,7 @@ sendRequestRaw request = do
   sendRequestWith requestId 1
     . withRequestHeader Http.hAccept "application/vnd.recurly.v2021-02-25+json"
     . withRequestHeader Http.hContentType "application/json"
-    . Client.applyBasicAuth (Env.tokenToByteString token) ByteString.empty
+    . Client.applyBasicAuth (into @ByteString token) ByteString.empty
     $ request
 
 withNotFoundHandler
@@ -83,7 +82,7 @@ sendRequestListWith acc request = do
           (True, Just path) -> do
             -- This path could have query params as well, but we are assuming that the query params will already be
             -- url encoded.
-            modifiedRequest <- Client.requestFromURI $ uri { URI.uriPath = Text.unpack path }
+            modifiedRequest <- Client.requestFromURI $ uri { URI.uriPath = into @String path }
             sendRequestListWith accData modifiedRequest
           (_, _) -> pure $ response { Client.responseBody = Right accData }
 
@@ -242,10 +241,10 @@ logLn' :: MonadIO io => RequestId -> String -> io ()
 logLn' requestId message = logLn $ "[recurly-api-v3] " <> show requestId <> ": " <> message
 
 requestMethod :: Client.Request -> String
-requestMethod = fromRight "?" . utf8ToString . Client.method
+requestMethod = fromRight "?" . tryInto @String . Client.method
 
 requestPath :: Client.Request -> String
-requestPath = fromRight "?" . utf8ToString . Client.path
+requestPath = fromRight "?" . tryInto @String . Client.path
 
 responseCode :: Client.Response a -> Int
 responseCode = statusCode . Client.responseStatus

@@ -8,8 +8,6 @@ newtype InvoiceTax =
     InvoiceTax Money.DenseUSD
     deriving (Eq, Show, FromJSON)
 
-invoiceTaxToDenseUSD :: InvoiceTax -> Money.DenseUSD
-invoiceTaxToDenseUSD (InvoiceTax denseUSD) = denseUSD
+instance From Money.DenseUSD InvoiceTax
 
-denseUSDToInvoiceTax :: Money.DenseUSD -> InvoiceTax
-denseUSDToInvoiceTax = InvoiceTax
+instance From InvoiceTax Money.DenseUSD

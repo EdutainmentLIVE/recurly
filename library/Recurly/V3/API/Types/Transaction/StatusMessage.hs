@@ -6,8 +6,6 @@ newtype TransactionStatusMessage =
     TransactionStatusMessage Text
     deriving (Eq, Show, FromJSON)
 
-transactionStatusMessageToText :: TransactionStatusMessage -> Text
-transactionStatusMessageToText (TransactionStatusMessage text) = text
+instance From Text TransactionStatusMessage
 
-textToTransactionStatusMessage :: Text -> TransactionStatusMessage
-textToTransactionStatusMessage = TransactionStatusMessage
+instance From TransactionStatusMessage Text

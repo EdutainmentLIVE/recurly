@@ -6,8 +6,6 @@ newtype TransactionGatewayMessage =
     TransactionGatewayMessage Text
     deriving (Eq, Show, FromJSON)
 
-transactionGatewayMessageToText :: TransactionGatewayMessage -> Text
-transactionGatewayMessageToText (TransactionGatewayMessage text) = text
+instance From Text TransactionGatewayMessage
 
-textToTransactionGatewayMessage :: Text -> TransactionGatewayMessage
-textToTransactionGatewayMessage = TransactionGatewayMessage
+instance From TransactionGatewayMessage Text

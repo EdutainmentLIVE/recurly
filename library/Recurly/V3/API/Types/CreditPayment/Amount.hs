@@ -8,8 +8,6 @@ newtype CreditPaymentAmount =
     CreditPaymentAmount Money.DenseUSD
     deriving (Eq, Show, FromJSON)
 
-creditPaymentAmountToDenseUSD :: CreditPaymentAmount -> Money.DenseUSD
-creditPaymentAmountToDenseUSD (CreditPaymentAmount denseUSD) = denseUSD
+instance From Money.DenseUSD CreditPaymentAmount
 
-denseUSDToCreditPaymentAmount :: Money.DenseUSD -> CreditPaymentAmount
-denseUSDToCreditPaymentAmount = CreditPaymentAmount
+instance From CreditPaymentAmount Money.DenseUSD

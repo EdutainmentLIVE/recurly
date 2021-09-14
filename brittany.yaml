@@ -17,6 +17,7 @@ conf_forward:
     - -XDataKinds
     - -XDeriveGeneric
     - -XFlexibleContexts
+    - -XFlexibleInstances
     - -XGeneralizedNewtypeDeriving
     - -XMultiParamTypeClasses
     - -XOverloadedStrings

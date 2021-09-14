@@ -2,15 +2,15 @@ module Recurly.V3.API.Types.Subscription.Uuid where
 
 import Recurlude
 
+import qualified Recurly.V3.API.Types.RecurlyText as RecurlyText
+
 newtype SubscriptionUuid =
     SubscriptionUuid Text
     deriving (Eq, Show, FromJSON)
 
-subscriptionUuidToText :: SubscriptionUuid -> Text
-subscriptionUuidToText (SubscriptionUuid text) = text
+instance From Text SubscriptionUuid
 
-subscriptionUuidToRecurlyText :: SubscriptionUuid -> Text
-subscriptionUuidToRecurlyText (SubscriptionUuid text) = "uuid-" <> text
+instance From SubscriptionUuid Text
 
-textToSubscriptionUuid :: Text -> SubscriptionUuid
-textToSubscriptionUuid = SubscriptionUuid
+instance From SubscriptionUuid RecurlyText.RecurlyText where
+  from = RecurlyText.RecurlyText "uuid-" . into @Text

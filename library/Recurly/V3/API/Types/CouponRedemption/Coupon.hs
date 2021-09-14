@@ -34,6 +34,6 @@ instance FromJSON CouponRedemptionCoupon where
       , couponRedemptionCouponDiscountType = discountType
       , couponRedemptionCouponPlans = fromMaybe [] plans
       , couponRedemptionCouponAppliesToAllPlans = fromMaybe
-        (Types.boolToCouponAppliesToAllPlans False)
+        (into @Types.CouponAppliesToAllPlans False)
         appliesToAllPlans
       }

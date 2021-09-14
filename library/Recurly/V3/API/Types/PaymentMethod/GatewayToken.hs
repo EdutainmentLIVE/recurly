@@ -6,8 +6,6 @@ newtype PaymentMethodGatewayToken =
     PaymentMethodGatewayToken Text
     deriving (Eq, Show, FromJSON)
 
-paymentmethodGatewayTokenToText :: PaymentMethodGatewayToken -> Text
-paymentmethodGatewayTokenToText (PaymentMethodGatewayToken text) = text
+instance From Text PaymentMethodGatewayToken
 
-textToPaymentMethodGatewayToken :: Text -> PaymentMethodGatewayToken
-textToPaymentMethodGatewayToken = PaymentMethodGatewayToken
+instance From PaymentMethodGatewayToken Text

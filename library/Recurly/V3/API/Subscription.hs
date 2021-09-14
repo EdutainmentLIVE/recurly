@@ -5,6 +5,7 @@ import Recurlude
 import qualified Network.HTTP.Client as Client
 
 import qualified Recurly.V3.API.Types as Types
+import qualified Recurly.V3.API.Types.RecurlyText as RecurlyText
 import qualified Recurly.V3.Http as RecurlyApi
 import qualified Recurly.V3.Recurly as Recurly
 
@@ -13,7 +14,7 @@ getSubscription
   -> Recurly.Recurly (Client.Response (Either RecurlyApi.RecurlyError Types.Subscription))
 getSubscription subscriptionUuid = do
   request <- RecurlyApi.makeRequest
-    ["subscriptions", Types.subscriptionUuidToRecurlyText subscriptionUuid]
+    ["subscriptions", into @Text $ into @RecurlyText.RecurlyText subscriptionUuid]
   RecurlyApi.sendRequest request
 
 getSubscriptionInvoices
@@ -22,7 +23,7 @@ getSubscriptionInvoices
   -> m (Client.Response (Either RecurlyApi.RecurlyError [Types.Invoice]))
 getSubscriptionInvoices subscriptionUuid = Recurly.liftRecurly $ do
   request <- RecurlyApi.makeRequest
-    ["subscriptions", Types.subscriptionUuidToRecurlyText subscriptionUuid, "invoices"]
+    ["subscriptions", into @Text $ into @RecurlyText.RecurlyText subscriptionUuid, "invoices"]
   RecurlyApi.sendRequestList request
 
 cancelSubscription
@@ -31,5 +32,5 @@ cancelSubscription
   -> m (Client.Response (Either RecurlyApi.RecurlyError Types.Subscription))
 cancelSubscription subscriptionUuid = Recurly.liftRecurly $ do
   request <- RecurlyApi.makeRequest
-    ["subscriptions", Types.subscriptionUuidToRecurlyText subscriptionUuid, "cancel"]
+    ["subscriptions", into @Text $ into @RecurlyText.RecurlyText subscriptionUuid, "cancel"]
   RecurlyApi.sendRequest request { Client.method = methodPut }

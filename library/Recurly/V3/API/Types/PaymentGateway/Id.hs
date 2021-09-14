@@ -6,8 +6,6 @@ newtype PaymentGatewayId =
     PaymentGatewayId Text
     deriving (Eq, Show, FromJSON, ToJSON)
 
-paymentGatewayIdToText :: PaymentGatewayId -> Text
-paymentGatewayIdToText (PaymentGatewayId text) = text
+instance From Text PaymentGatewayId
 
-textToPaymentGatewayId :: Text -> PaymentGatewayId
-textToPaymentGatewayId = PaymentGatewayId
+instance From PaymentGatewayId Text

@@ -16,34 +16,34 @@ data TransactionOrigin
   deriving (Eq, Show)
 
 instance ToJSON TransactionOrigin where
-  toJSON = toJSON . transactionOriginToText
+  toJSON = toJSON . into @Text
 
 instance FromJSON TransactionOrigin where
-  parseJSON = withText "TransactionOrigin" $ eitherFail . textToTransactionOrigin
+  parseJSON = withText "TransactionOrigin" $ eitherFail . tryInto @TransactionOrigin
 
-transactionOriginToText :: TransactionOrigin -> Text
-transactionOriginToText transactionOrigin = case transactionOrigin of
-  ApiTransactionOrigin -> "api"
-  HppTransactionOrigin -> "hpp"
-  MerchantTransactionOrigin -> "merchant"
-  RecurlyAdminTransactionOrigin -> "recurly_admin"
-  RecurlyjsTransactionOrigin -> "recurlyjs"
-  RecurringTransactionOrigin -> "recurring"
-  TransparentTransactionOrigin -> "transparent"
-  ForceCollectTransactionOrigin -> "force_collect"
-  RefundedExternallyTransactionOrigin -> "refunded_externally"
-  ChargebackTransactionOrigin -> "chargeback"
+instance TryFrom Text TransactionOrigin where
+  tryFrom = maybeTryFrom $ \transactionOrigin -> case transactionOrigin of
+    "api" -> Just ApiTransactionOrigin
+    "hpp" -> Just HppTransactionOrigin
+    "merchant" -> Just MerchantTransactionOrigin
+    "recurly_admin" -> Just RecurlyAdminTransactionOrigin
+    "recurlyjs" -> Just RecurlyjsTransactionOrigin
+    "recurring" -> Just RecurringTransactionOrigin
+    "transparent" -> Just TransparentTransactionOrigin
+    "force_collect" -> Just ForceCollectTransactionOrigin
+    "refunded_externally" -> Just RefundedExternallyTransactionOrigin
+    "chargeback" -> Just ChargebackTransactionOrigin
+    _ -> Nothing
 
-textToTransactionOrigin :: Text -> Either String TransactionOrigin
-textToTransactionOrigin transactionOrigin = case transactionOrigin of
-  "api" -> Right ApiTransactionOrigin
-  "hpp" -> Right HppTransactionOrigin
-  "merchant" -> Right MerchantTransactionOrigin
-  "recurly_admin" -> Right RecurlyAdminTransactionOrigin
-  "recurlyjs" -> Right RecurlyjsTransactionOrigin
-  "recurring" -> Right RecurringTransactionOrigin
-  "transparent" -> Right TransparentTransactionOrigin
-  "force_collect" -> Right ForceCollectTransactionOrigin
-  "refunded_externally" -> Right RefundedExternallyTransactionOrigin
-  "chargeback" -> Right ChargebackTransactionOrigin
-  _ -> Left $ "Failed to parse TransactionOrigin from text: " <> show transactionOrigin
+instance From TransactionOrigin Text where
+  from transactionOrigin = case transactionOrigin of
+    ApiTransactionOrigin -> "api"
+    HppTransactionOrigin -> "hpp"
+    MerchantTransactionOrigin -> "merchant"
+    RecurlyAdminTransactionOrigin -> "recurly_admin"
+    RecurlyjsTransactionOrigin -> "recurlyjs"
+    RecurringTransactionOrigin -> "recurring"
+    TransparentTransactionOrigin -> "transparent"
+    ForceCollectTransactionOrigin -> "force_collect"
+    RefundedExternallyTransactionOrigin -> "refunded_externally"
+    ChargebackTransactionOrigin -> "chargeback"

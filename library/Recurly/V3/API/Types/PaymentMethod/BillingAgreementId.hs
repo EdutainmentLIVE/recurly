@@ -6,8 +6,6 @@ newtype PaymentMethodBillingAgreementId =
     PaymentMethodBillingAgreementId Text
     deriving (Eq, Show, FromJSON)
 
-paymentmethodBillingAgreementIdToText :: PaymentMethodBillingAgreementId -> Text
-paymentmethodBillingAgreementIdToText (PaymentMethodBillingAgreementId text) = text
+instance From Text PaymentMethodBillingAgreementId
 
-textToPaymentMethodBillingAgreementId :: Text -> PaymentMethodBillingAgreementId
-textToPaymentMethodBillingAgreementId = PaymentMethodBillingAgreementId
+instance From PaymentMethodBillingAgreementId Text

@@ -6,8 +6,6 @@ newtype TransactionUuid =
     TransactionUuid Text
     deriving (Eq, Show, FromJSON)
 
-transactionUuidToText :: TransactionUuid -> Text
-transactionUuidToText (TransactionUuid text) = text
+instance From Text TransactionUuid
 
-textToTransactionUuid :: Text -> TransactionUuid
-textToTransactionUuid = TransactionUuid
+instance From TransactionUuid Text

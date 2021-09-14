@@ -6,18 +6,18 @@ data AccountLineItemType = Charge | Credit
   deriving (Eq, Show)
 
 instance ToJSON AccountLineItemType where
-  toJSON = toJSON . accountLineItemTypeToText
+  toJSON = toJSON . into @Text
 
 instance FromJSON AccountLineItemType where
-  parseJSON = withText "AccountLineItemType" $ eitherFail . textToAccountLineItemType
+  parseJSON = withText "AccountLineItemType" $ eitherFail . tryInto @AccountLineItemType
 
-accountLineItemTypeToText :: AccountLineItemType -> Text
-accountLineItemTypeToText accountlineitemtype = case accountlineitemtype of
-  Charge -> "charge"
-  Credit -> "credit"
+instance TryFrom Text AccountLineItemType where
+  tryFrom = maybeTryFrom $ \accountLineItemType -> case accountLineItemType of
+    "charge" -> Just Charge
+    "credit" -> Just Credit
+    _ -> Nothing
 
-textToAccountLineItemType :: Text -> Either String AccountLineItemType
-textToAccountLineItemType accountLineItemType = case accountLineItemType of
-  "charge" -> Right Charge
-  "credit" -> Right Credit
-  _ -> Left $ "Failed to parse AccountLineItemType from text: " <> show accountLineItemType
+instance From AccountLineItemType Text where
+  from accountLineItemType = case accountLineItemType of
+    Charge -> "charge"
+    Credit -> "credit"

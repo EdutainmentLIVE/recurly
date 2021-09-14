@@ -8,22 +8,19 @@ data TransactionCollectionMethod
   deriving (Eq, Show)
 
 instance ToJSON TransactionCollectionMethod where
-  toJSON = toJSON . transactionCollectionMethodToText
+  toJSON = toJSON . into @Text
 
 instance FromJSON TransactionCollectionMethod where
   parseJSON =
-    withText "TransactionCollectionMethod" $ eitherFail . textToTransactionCollectionMethod
+    withText "TransactionCollectionMethod" $ eitherFail . tryInto @TransactionCollectionMethod
 
-transactionCollectionMethodToText :: TransactionCollectionMethod -> Text
-transactionCollectionMethodToText transactionCollectionMethod = case transactionCollectionMethod of
-  AutomaticTransactionCollectionMethod -> "automatic"
-  ManualTransactionCollectionMethod -> "manual"
+instance TryFrom Text TransactionCollectionMethod where
+  tryFrom = maybeTryFrom $ \transactionCollectionMethod -> case transactionCollectionMethod of
+    "automatic" -> Just AutomaticTransactionCollectionMethod
+    "manual" -> Just ManualTransactionCollectionMethod
+    _ -> Nothing
 
-textToTransactionCollectionMethod :: Text -> Either String TransactionCollectionMethod
-textToTransactionCollectionMethod transactionCollectionMethod = case transactionCollectionMethod of
-  "automatic" -> Right AutomaticTransactionCollectionMethod
-  "manual" -> Right ManualTransactionCollectionMethod
-  _ ->
-    Left
-      $ "Failed to parse TransactionCollectionMethod from text: "
-      <> show transactionCollectionMethod
+instance From TransactionCollectionMethod Text where
+  from transactionCollectionMethod = case transactionCollectionMethod of
+    AutomaticTransactionCollectionMethod -> "automatic"
+    ManualTransactionCollectionMethod -> "manual"

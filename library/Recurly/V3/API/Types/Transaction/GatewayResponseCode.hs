@@ -6,8 +6,6 @@ newtype TransactionGatewayResponseCode =
     TransactionGatewayResponseCode Text
     deriving (Eq, Show, FromJSON)
 
-transactionGatewayResponseCodeToText :: TransactionGatewayResponseCode -> Text
-transactionGatewayResponseCodeToText (TransactionGatewayResponseCode text) = text
+instance From Text TransactionGatewayResponseCode
 
-textToTransactionGatewayResponseCode :: Text -> TransactionGatewayResponseCode
-textToTransactionGatewayResponseCode = TransactionGatewayResponseCode
+instance From TransactionGatewayResponseCode Text
