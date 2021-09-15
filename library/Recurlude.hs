@@ -94,7 +94,7 @@ logInitRef = Unsafe.unsafePerformIO $ IORef.newIORef False
 {-# NOINLINE logInitRef #-}
 
 pShow :: Show a => a -> String
-pShow = into @String . into @Text . Pretty.pShowNoColor
+pShow = into @String . Pretty.pShowNoColor
 
 -- Helpers
 aesonOptional :: FromJSON value => Aeson.Object -> String -> Aeson.Parser (Maybe value)
