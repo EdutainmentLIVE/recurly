@@ -9,6 +9,7 @@ module Recurlude
   , module Data.Map
   , module Data.Maybe
   , module Data.Ratio
+  , module Data.String
   , module Data.Text
   , module Data.Time
   , module GHC.Generics
@@ -44,6 +45,7 @@ import Data.Either (fromLeft, fromRight)
 import Data.Map (Map)
 import Data.Maybe (fromMaybe)
 import Data.Ratio ((%))
+import Data.String (IsString)
 import Data.Text (Text)
 import Data.Time (UTCTime)
 import GHC.Generics (Generic)

@@ -3,7 +3,7 @@ module Recurly.V3.API.Types.Account.Code where
 import Recurlude
 
 import qualified Data.Csv as Csv
-import qualified Recurly.V3.API.Types.RecurlyText as RecurlyText
+import qualified Recurly.V3.API.Types.PathPiece as PathPiece
 
 newtype AccountCode =
     AccountCode Text
@@ -13,5 +13,5 @@ instance From Text AccountCode
 
 instance From AccountCode Text
 
-instance From AccountCode RecurlyText.RecurlyText where
-  from = RecurlyText.RecurlyText "code-" . into @Text
+instance From AccountCode PathPiece.PathPiece where
+  from code = into @PathPiece.PathPiece $ "code-" <> into @Text code

@@ -17,15 +17,18 @@ import qualified Numeric.Natural as Natural
 import qualified System.Random as Random
 import qualified Text.Printf as Printf
 
+import qualified Recurly.V3.API.Types.PathPiece as PathPiece
 import qualified Recurly.V3.Env.ApiUri as Env
 import qualified Recurly.V3.Env.MaxAttempts as Env
 import qualified Recurly.V3.Recurly as Recurly
 
-makeRequest :: [Text] -> Recurly.Recurly Client.Request
+makeRequest :: [PathPiece.PathPiece] -> Recurly.Recurly Client.Request
 makeRequest path = do
   env <- Recurly.env
-  let uri = Env.apiUriToUri $ Recurly.recurlyApiUrl env
-  Client.requestFromURI uri { URI.uriPath = into @String $ "/" <> Text.intercalate "/" path }
+  let
+    uri = Env.apiUriToUri $ Recurly.recurlyApiUrl env
+    pathValues = fmap (into @Text) path
+  Client.requestFromURI uri { URI.uriPath = into @String $ "/" <> Text.intercalate "/" pathValues }
 
 sendRequestRaw
   :: Client.Request

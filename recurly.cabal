@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: c86c6dea82c67f91185c6bd70edc6655b71cdf71693588a11ae831dde4a67253
+-- hash: 8aac37182495412872c6e44e5899c1e7ff168aad30565086d01ab3b744d18e31
 
 name:           recurly
 version:        0.0.0.1
@@ -86,6 +86,7 @@ library
       Recurly.V3.API.Types.Invoice.Type
       Recurly.V3.API.Types.Invoice.UpdatedAt
       Recurly.V3.API.Types.Money.Money
+      Recurly.V3.API.Types.PathPiece
       Recurly.V3.API.Types.PaymentGateway.Id
       Recurly.V3.API.Types.PaymentGateway.Name
       Recurly.V3.API.Types.PaymentGateway.Type
@@ -109,7 +110,6 @@ library
       Recurly.V3.API.Types.PostAccountLineItem
       Recurly.V3.API.Types.PostCoupon
       Recurly.V3.API.Types.PutAccount
-      Recurly.V3.API.Types.RecurlyText
       Recurly.V3.API.Types.Subscription
       Recurly.V3.API.Types.Subscription.Account
       Recurly.V3.API.Types.Subscription.ActivatedAt
