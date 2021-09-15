@@ -9,11 +9,11 @@ import qualified Recurly.V3.API.Types.PathPiece as PathPiece
 import Recurly.V3.API.Types.Subscription (Subscription)
 import qualified Recurly.V3.API.Types.Subscription as Subscription
 import qualified Recurly.V3.Http as RecurlyApi
+import Recurly.V3.Http (RecurlyError)
 import qualified Recurly.V3.Recurly as Recurly
 
 getSubscription
-  :: Subscription.Uuid
-  -> Recurly.Recurly (Client.Response (Either RecurlyApi.RecurlyError Subscription))
+  :: Subscription.Uuid -> Recurly.Recurly (Client.Response (Either RecurlyError Subscription))
 getSubscription subscriptionUuid = do
   request <- RecurlyApi.makeRequest ["subscriptions", into @PathPiece.PathPiece subscriptionUuid]
   RecurlyApi.sendRequest request
@@ -21,7 +21,7 @@ getSubscription subscriptionUuid = do
 getSubscriptionInvoices
   :: Recurly.MonadRecurly m
   => Subscription.Uuid
-  -> m (Client.Response (Either RecurlyApi.RecurlyError [Invoice]))
+  -> m (Client.Response (Either RecurlyError [Invoice]))
 getSubscriptionInvoices subscriptionUuid = Recurly.liftRecurly $ do
   request <- RecurlyApi.makeRequest
     ["subscriptions", into @PathPiece.PathPiece subscriptionUuid, "invoices"]
@@ -30,7 +30,7 @@ getSubscriptionInvoices subscriptionUuid = Recurly.liftRecurly $ do
 cancelSubscription
   :: Recurly.MonadRecurly m
   => Subscription.Uuid
-  -> m (Client.Response (Either RecurlyApi.RecurlyError Subscription))
+  -> m (Client.Response (Either RecurlyError Subscription))
 cancelSubscription subscriptionUuid = Recurly.liftRecurly $ do
   request <- RecurlyApi.makeRequest
     ["subscriptions", into @PathPiece.PathPiece subscriptionUuid, "cancel"]
