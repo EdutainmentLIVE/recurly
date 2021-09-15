@@ -2,24 +2,24 @@ module Recurly.V3.API.Types.Invoice.CollectionMethod where
 
 import Recurlude
 
-data InvoiceCollectionMethod
-  = AutomaticInvoiceCollectionMethod
-  | ManualInvoiceCollectionMethod
+data CollectionMethod
+  = Automatic
+  | Manual
   deriving (Eq, Show)
 
-instance ToJSON InvoiceCollectionMethod where
+instance ToJSON CollectionMethod where
   toJSON = toJSON . into @Text
 
-instance FromJSON InvoiceCollectionMethod where
-  parseJSON = withText "InvoiceCollectionMethod" $ eitherFail . tryInto @InvoiceCollectionMethod
+instance FromJSON CollectionMethod where
+  parseJSON = withText "InvoiceCollectionMethod" $ eitherFail . tryInto @CollectionMethod
 
-instance TryFrom Text InvoiceCollectionMethod where
-  tryFrom = maybeTryFrom $ \invoiceCollectionMethod -> case invoiceCollectionMethod of
-    "automatic" -> Just AutomaticInvoiceCollectionMethod
-    "manual" -> Just ManualInvoiceCollectionMethod
+instance TryFrom Text CollectionMethod where
+  tryFrom = maybeTryFrom $ \collectionMethod -> case collectionMethod of
+    "automatic" -> Just Automatic
+    "manual" -> Just Manual
     _ -> Nothing
 
-instance From InvoiceCollectionMethod Text where
-  from invoiceCollectionMethod = case invoiceCollectionMethod of
-    AutomaticInvoiceCollectionMethod -> "automatic"
-    ManualInvoiceCollectionMethod -> "manual"
+instance From CollectionMethod Text where
+  from collectionMethod = case collectionMethod of
+    Automatic -> "automatic"
+    Manual -> "manual"

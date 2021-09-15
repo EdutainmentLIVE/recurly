@@ -2,10 +2,9 @@ module Recurly.V3.API.Types.Transaction.CustomerMessageLocale where
 
 import Recurlude
 
-newtype TransactionCustomerMessageLocale =
-    TransactionCustomerMessageLocale Text
+newtype CustomerMessageLocale = CustomerMessageLocale Text
     deriving (Eq, Show, FromJSON)
 
-instance From Text TransactionCustomerMessageLocale
+instance From Text CustomerMessageLocale
 
-instance From TransactionCustomerMessageLocale Text
+instance From CustomerMessageLocale Text

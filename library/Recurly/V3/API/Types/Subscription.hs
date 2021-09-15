@@ -1,63 +1,91 @@
-module Recurly.V3.API.Types.Subscription where
+module Recurly.V3.API.Types.Subscription
+  ( module Recurly.V3.API.Types.Subscription
+  , CouponRedemption.CouponRedemption
+  , Subscription.Account
+  , Subscription.ActivatedAt
+  , Subscription.AutoRenew
+  , Subscription.CanceledAt
+  , Subscription.CreatedAt
+  , Subscription.CurrentPeriodEndsAt
+  , Subscription.CurrentPeriodStartedAt
+  , Subscription.CurrentTermEndsAt
+  , Subscription.CurrentTermStartedAt
+  , Subscription.ExpiresAt
+  , Subscription.Id
+  , Subscription.PausedAt
+  , Subscription.Plan
+  , Subscription.Quantity
+  , Subscription.RemainingBillingCycles
+  , Subscription.RemainingPauseCycles
+  , Subscription.RenewalBillingCycles
+  , Subscription.State
+  , Subscription.Subtotal
+  , Subscription.TotalBillingCycles
+  , Subscription.TrialEndsAt
+  , Subscription.TrialStartedAt
+  , Subscription.UnitAmount
+  , Subscription.UpdatedAt
+  , Subscription.Uuid
+  ) where
 
 import Recurlude
 
-import qualified Recurly.V3.API.Types.Currency as Types
-import qualified Recurly.V3.API.Types.Subscription.Account as Types
-import qualified Recurly.V3.API.Types.Subscription.ActivatedAt as Types
-import qualified Recurly.V3.API.Types.Subscription.AutoRenew as Types
-import qualified Recurly.V3.API.Types.Subscription.CanceledAt as Types
-import qualified Recurly.V3.API.Types.Subscription.CouponRedemption as Types
-import qualified Recurly.V3.API.Types.Subscription.CreatedAt as Types
-import qualified Recurly.V3.API.Types.Subscription.CurrentPeriodEndsAt as Types
-import qualified Recurly.V3.API.Types.Subscription.CurrentPeriodStartedAt as Types
-import qualified Recurly.V3.API.Types.Subscription.CurrentTermEndsAt as Types
-import qualified Recurly.V3.API.Types.Subscription.CurrentTermStartedAt as Types
-import qualified Recurly.V3.API.Types.Subscription.ExpiresAt as Types
-import qualified Recurly.V3.API.Types.Subscription.Id as Types
-import qualified Recurly.V3.API.Types.Subscription.PausedAt as Types
-import qualified Recurly.V3.API.Types.Subscription.Plan as Types
-import qualified Recurly.V3.API.Types.Subscription.Quantity as Types
-import qualified Recurly.V3.API.Types.Subscription.RemainingBillingCycles as Types
-import qualified Recurly.V3.API.Types.Subscription.RemainingPauseCycles as Types
-import qualified Recurly.V3.API.Types.Subscription.RenewalBillingCycles as Types
-import qualified Recurly.V3.API.Types.Subscription.State as Types
-import qualified Recurly.V3.API.Types.Subscription.Subtotal as Types
-import qualified Recurly.V3.API.Types.Subscription.TotalBillingCycles as Types
-import qualified Recurly.V3.API.Types.Subscription.TrialEndsAt as Types
-import qualified Recurly.V3.API.Types.Subscription.TrialStartedAt as Types
-import qualified Recurly.V3.API.Types.Subscription.UnitAmount as Types
-import qualified Recurly.V3.API.Types.Subscription.UpdatedAt as Types
-import qualified Recurly.V3.API.Types.Subscription.Uuid as Types
+import qualified Recurly.V3.API.Types.CouponRedemption as CouponRedemption
+import qualified Recurly.V3.API.Types.Currency as Currency
+import qualified Recurly.V3.API.Types.Subscription.Account as Subscription
+import qualified Recurly.V3.API.Types.Subscription.ActivatedAt as Subscription
+import qualified Recurly.V3.API.Types.Subscription.AutoRenew as Subscription
+import qualified Recurly.V3.API.Types.Subscription.CanceledAt as Subscription
+import qualified Recurly.V3.API.Types.Subscription.CreatedAt as Subscription
+import qualified Recurly.V3.API.Types.Subscription.CurrentPeriodEndsAt as Subscription
+import qualified Recurly.V3.API.Types.Subscription.CurrentPeriodStartedAt as Subscription
+import qualified Recurly.V3.API.Types.Subscription.CurrentTermEndsAt as Subscription
+import qualified Recurly.V3.API.Types.Subscription.CurrentTermStartedAt as Subscription
+import qualified Recurly.V3.API.Types.Subscription.ExpiresAt as Subscription
+import qualified Recurly.V3.API.Types.Subscription.Id as Subscription
+import qualified Recurly.V3.API.Types.Subscription.PausedAt as Subscription
+import qualified Recurly.V3.API.Types.Subscription.Plan as Subscription
+import qualified Recurly.V3.API.Types.Subscription.Quantity as Subscription
+import qualified Recurly.V3.API.Types.Subscription.RemainingBillingCycles as Subscription
+import qualified Recurly.V3.API.Types.Subscription.RemainingPauseCycles as Subscription
+import qualified Recurly.V3.API.Types.Subscription.RenewalBillingCycles as Subscription
+import qualified Recurly.V3.API.Types.Subscription.State as Subscription
+import qualified Recurly.V3.API.Types.Subscription.Subtotal as Subscription
+import qualified Recurly.V3.API.Types.Subscription.TotalBillingCycles as Subscription
+import qualified Recurly.V3.API.Types.Subscription.TrialEndsAt as Subscription
+import qualified Recurly.V3.API.Types.Subscription.TrialStartedAt as Subscription
+import qualified Recurly.V3.API.Types.Subscription.UnitAmount as Subscription
+import qualified Recurly.V3.API.Types.Subscription.UpdatedAt as Subscription
+import qualified Recurly.V3.API.Types.Subscription.Uuid as Subscription
 
 data Subscription = Subscription
-  { subscriptionId :: Types.SubscriptionId
-  , subscriptionUuid :: Types.SubscriptionUuid
-  , subscriptionAccount :: Types.SubscriptionAccount
-  , subscriptionPlan :: Types.SubscriptionPlan
-  , subscriptionState :: Types.SubscriptionState
-  , subscriptionCouponRedemptions :: [Types.SubscriptionCouponRedemption]
-  , subscriptionCurrentPeriodStartedAt :: Types.SubscriptionCurrentPeriodStartedAt
-  , subscriptionCurrentPeriodEndsAt :: Types.SubscriptionCurrentPeriodEndsAt
-  , subscriptionCurrentTermStartedAt :: Maybe Types.SubscriptionCurrentTermStartedAt
-  , subscriptionCurrentTermEndsAt :: Maybe Types.SubscriptionCurrentTermEndsAt
-  , subscriptionTrialStartedAt :: Maybe Types.SubscriptionTrialStartedAt
-  , subscriptionTrialEndsAt :: Maybe Types.SubscriptionTrialEndsAt
-  , subscriptionRemainingBillingCycles :: Maybe Types.SubscriptionRemainingBillingCycles
-  , subscriptionTotalBillingCycles :: Maybe Types.SubscriptionTotalBillingCycles
-  , subscriptionRenewalBillingCycles :: Maybe Types.SubscriptionRenewalBillingCycles
-  , subscriptionAutoRenew :: Maybe Types.SubscriptionAutoRenew
-  , subscriptionPausedAt :: Maybe Types.SubscriptionPausedAt
-  , subscriptionRemainingPauseCycles :: Maybe Types.SubscriptionRemainingPauseCycles
-  , subscriptionCurrency :: Types.Currency
-  , subscriptionUnitAmount :: Types.SubscriptionUnitAmount
-  , subscriptionQuantity :: Types.SubscriptionQuantity
-  , subscriptionSubtotal :: Types.SubscriptionSubtotal
-  , subscriptionCreatedAt :: Types.SubscriptionCreatedAt
-  , subscriptionUpdatedAt :: Types.SubscriptionUpdatedAt
-  , subscriptionActivatedAt :: Types.SubscriptionActivatedAt
-  , subscriptionCanceledAt :: Maybe Types.SubscriptionCanceledAt
-  , subscriptionExpiresAt :: Maybe Types.SubscriptionExpiresAt
+  { id_ :: Subscription.Id
+  , uuid :: Subscription.Uuid
+  , account :: Subscription.Account
+  , plan :: Subscription.Plan
+  , state :: Subscription.State
+  , couponRedemptions :: [CouponRedemption.CouponRedemption]
+  , currentPeriodStartedAt :: Subscription.CurrentPeriodStartedAt
+  , currentPeriodEndsAt :: Subscription.CurrentPeriodEndsAt
+  , currentTermStartedAt :: Maybe Subscription.CurrentTermStartedAt
+  , currentTermEndsAt :: Maybe Subscription.CurrentTermEndsAt
+  , trialStartedAt :: Maybe Subscription.TrialStartedAt
+  , trialEndsAt :: Maybe Subscription.TrialEndsAt
+  , remainingBillingCycles :: Maybe Subscription.RemainingBillingCycles
+  , totalBillingCycles :: Maybe Subscription.TotalBillingCycles
+  , renewalBillingCycles :: Maybe Subscription.RenewalBillingCycles
+  , autoRenew :: Maybe Subscription.AutoRenew
+  , pausedAt :: Maybe Subscription.PausedAt
+  , remainingPauseCycles :: Maybe Subscription.RemainingPauseCycles
+  , currency :: Currency.Currency
+  , unitAmount :: Subscription.UnitAmount
+  , quantity :: Subscription.Quantity
+  , subtotal :: Subscription.Subtotal
+  , createdAt :: Subscription.CreatedAt
+  , updatedAt :: Subscription.UpdatedAt
+  , activatedAt :: Subscription.ActivatedAt
+  , canceledAt :: Maybe Subscription.CanceledAt
+  , expiresAt :: Maybe Subscription.ExpiresAt
   }
   deriving Show
 
@@ -91,31 +119,31 @@ instance FromJSON Subscription where
     canceledAt <- aesonOptional obj "canceled_at"
     expiresAt <- aesonOptional obj "expires_at"
     pure Subscription
-      { subscriptionId = id_
-      , subscriptionUuid = uuid
-      , subscriptionAccount = account
-      , subscriptionPlan = plan
-      , subscriptionState = state
-      , subscriptionCouponRedemptions = couponRedemptions
-      , subscriptionCurrentPeriodStartedAt = currentPeriodStartedAt
-      , subscriptionCurrentPeriodEndsAt = currentPeriodEndsAt
-      , subscriptionCurrentTermStartedAt = currentTermStartedAt
-      , subscriptionCurrentTermEndsAt = currentTermEndsAt
-      , subscriptionTrialStartedAt = trialStartedAt
-      , subscriptionTrialEndsAt = trialEndsAt
-      , subscriptionRemainingBillingCycles = remainingBillingCycles
-      , subscriptionTotalBillingCycles = totalBillingCycles
-      , subscriptionRenewalBillingCycles = renewalBillingCycles
-      , subscriptionAutoRenew = autoRenew
-      , subscriptionPausedAt = pausedAt
-      , subscriptionRemainingPauseCycles = remainingPauseCycles
-      , subscriptionCurrency = currency
-      , subscriptionUnitAmount = unitAmount
-      , subscriptionQuantity = quantity
-      , subscriptionSubtotal = subtotal
-      , subscriptionCreatedAt = createdAt
-      , subscriptionUpdatedAt = updatedAt
-      , subscriptionActivatedAt = activatedAt
-      , subscriptionCanceledAt = canceledAt
-      , subscriptionExpiresAt = expiresAt
+      { id_
+      , uuid
+      , account
+      , plan
+      , state
+      , couponRedemptions
+      , currentPeriodStartedAt
+      , currentPeriodEndsAt
+      , currentTermStartedAt
+      , currentTermEndsAt
+      , trialStartedAt
+      , trialEndsAt
+      , remainingBillingCycles
+      , totalBillingCycles
+      , renewalBillingCycles
+      , autoRenew
+      , pausedAt
+      , remainingPauseCycles
+      , currency
+      , unitAmount
+      , quantity
+      , subtotal
+      , createdAt
+      , updatedAt
+      , activatedAt
+      , canceledAt
+      , expiresAt
       }

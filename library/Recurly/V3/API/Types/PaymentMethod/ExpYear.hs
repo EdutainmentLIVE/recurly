@@ -2,10 +2,9 @@ module Recurly.V3.API.Types.PaymentMethod.ExpYear where
 
 import Recurlude
 
-newtype PaymentMethodExpYear =
-    PaymentMethodExpYear Integer
+newtype ExpYear = ExpYear Integer
     deriving (Eq, Show, FromJSON)
 
-instance From Integer PaymentMethodExpYear
+instance From Integer ExpYear
 
-instance From PaymentMethodExpYear Integer
+instance From ExpYear Integer

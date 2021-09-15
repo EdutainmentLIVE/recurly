@@ -4,10 +4,9 @@ import Recurlude
 
 import qualified Recurly.V3.API.Types.Money.Money as Money
 
-newtype CouponRedemptionDiscounted =
-    CouponRedemptionDiscounted Money.DenseUSD
+newtype Discounted = Discounted Money.DenseUSD
     deriving (Eq, Show, FromJSON, ToJSON)
 
-instance From Money.DenseUSD CouponRedemptionDiscounted
+instance From Money.DenseUSD Discounted
 
-instance From CouponRedemptionDiscounted Money.DenseUSD
+instance From Discounted Money.DenseUSD

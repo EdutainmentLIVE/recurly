@@ -2,10 +2,9 @@ module Recurly.V3.API.Types.Transaction.GatewayApprovalCode where
 
 import Recurlude
 
-newtype TransactionGatewayApprovalCode =
-    TransactionGatewayApprovalCode Text
+newtype GatewayApprovalCode = GatewayApprovalCode Text
     deriving (Eq, Show, FromJSON)
 
-instance From Text TransactionGatewayApprovalCode
+instance From Text GatewayApprovalCode
 
-instance From TransactionGatewayApprovalCode Text
+instance From GatewayApprovalCode Text

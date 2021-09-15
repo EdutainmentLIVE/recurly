@@ -2,10 +2,9 @@ module Recurly.V3.API.Types.PaymentMethod.FirstSix where
 
 import Recurlude
 
-newtype PaymentMethodFirstSix =
-    PaymentMethodFirstSix Text
+newtype FirstSix = FirstSix Text
     deriving (Eq, Show, FromJSON)
 
-instance From Text PaymentMethodFirstSix
+instance From Text FirstSix
 
-instance From PaymentMethodFirstSix Text
+instance From FirstSix Text

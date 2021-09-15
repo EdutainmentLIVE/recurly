@@ -2,10 +2,9 @@ module Recurly.V3.API.Types.Invoice.ClosedAt where
 
 import Recurlude
 
-newtype InvoiceClosedAt =
-    InvoiceClosedAt UTCTime
+newtype CloseAt = CloseAt UTCTime
     deriving (Eq, Show, FromJSON)
 
-instance From UTCTime InvoiceClosedAt
+instance From UTCTime CloseAt
 
-instance From InvoiceClosedAt UTCTime
+instance From CloseAt UTCTime

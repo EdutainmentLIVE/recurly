@@ -2,25 +2,24 @@ module Recurly.V3.API.Types.AccountLineItem.CreditReason where
 
 import Recurlude
 
-data AccountLineItemCreditReason = General | Service | Promotional
+data CreditReason = General | Service | Promotional
   deriving (Eq, Show)
 
-instance ToJSON AccountLineItemCreditReason where
+instance ToJSON CreditReason where
   toJSON = toJSON . into @Text
 
-instance FromJSON AccountLineItemCreditReason where
-  parseJSON =
-    withText "AccountLineItemCreditReason" $ eitherFail . tryInto @AccountLineItemCreditReason
+instance FromJSON CreditReason where
+  parseJSON = withText "AccountLineItemCreditReason" $ eitherFail . tryInto @CreditReason
 
-instance TryFrom Text AccountLineItemCreditReason where
-  tryFrom = maybeTryFrom $ \accountLineItemCreditReason -> case accountLineItemCreditReason of
+instance TryFrom Text CreditReason where
+  tryFrom = maybeTryFrom $ \creditReason -> case creditReason of
     "general" -> Just General
     "service" -> Just Service
     "promotional" -> Just Promotional
     _ -> Nothing
 
-instance From AccountLineItemCreditReason Text where
-  from accountLineItemCreditReason = case accountLineItemCreditReason of
+instance From CreditReason Text where
+  from creditReason = case creditReason of
     General -> "general"
     Service -> "service"
     Promotional -> "promotional"

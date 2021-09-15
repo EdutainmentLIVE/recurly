@@ -2,10 +2,9 @@ module Recurly.V3.API.Types.PaymentMethod.BillingAgreementId where
 
 import Recurlude
 
-newtype PaymentMethodBillingAgreementId =
-    PaymentMethodBillingAgreementId Text
+newtype BillingAgreementId = BillingAgreementId Text
     deriving (Eq, Show, FromJSON)
 
-instance From Text PaymentMethodBillingAgreementId
+instance From Text BillingAgreementId
 
-instance From PaymentMethodBillingAgreementId Text
+instance From BillingAgreementId Text

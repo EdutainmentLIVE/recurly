@@ -4,10 +4,9 @@ import Recurlude
 
 import qualified Recurly.V3.API.Types.Money.Money as Money
 
-newtype InvoiceBalance =
-    InvoiceBalance Money.DenseUSD
+newtype Balance = Balance Money.DenseUSD
     deriving (Eq, Show, FromJSON)
 
-instance From Money.DenseUSD InvoiceBalance
+instance From Money.DenseUSD Balance
 
-instance From InvoiceBalance Money.DenseUSD
+instance From Balance Money.DenseUSD

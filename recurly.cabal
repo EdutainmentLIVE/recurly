@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 8aac37182495412872c6e44e5899c1e7ff168aad30565086d01ab3b744d18e31
+-- hash: 8ce2425e6e853011af609d26ddeb46675475ba5c4aa89fd1dd39d9b60fd8ae8f
 
 name:           recurly
 version:        0.0.0.1
@@ -29,7 +29,6 @@ library
       Recurly.V3.API.Coupon
       Recurly.V3.API.Invoice
       Recurly.V3.API.Subscription
-      Recurly.V3.API.Types
       Recurly.V3.API.Types.Account
       Recurly.V3.API.Types.Account.Code
       Recurly.V3.API.Types.Account.Email
@@ -49,6 +48,7 @@ library
       Recurly.V3.API.Types.Coupon.Id
       Recurly.V3.API.Types.Coupon.Name
       Recurly.V3.API.Types.Coupon.Plan
+      Recurly.V3.API.Types.CouponRedemption
       Recurly.V3.API.Types.CouponRedemption.Account
       Recurly.V3.API.Types.CouponRedemption.Coupon
       Recurly.V3.API.Types.CouponRedemption.CreatedAt
@@ -57,6 +57,7 @@ library
       Recurly.V3.API.Types.CouponRedemption.RemovedAt
       Recurly.V3.API.Types.CouponRedemption.State
       Recurly.V3.API.Types.CouponRedemptionType
+      Recurly.V3.API.Types.CreditPayment
       Recurly.V3.API.Types.CreditPayment.Account
       Recurly.V3.API.Types.CreditPayment.Action
       Recurly.V3.API.Types.CreditPayment.Amount
@@ -115,7 +116,6 @@ library
       Recurly.V3.API.Types.Subscription.ActivatedAt
       Recurly.V3.API.Types.Subscription.AutoRenew
       Recurly.V3.API.Types.Subscription.CanceledAt
-      Recurly.V3.API.Types.Subscription.CouponRedemption
       Recurly.V3.API.Types.Subscription.CreatedAt
       Recurly.V3.API.Types.Subscription.CurrentPeriodEndsAt
       Recurly.V3.API.Types.Subscription.CurrentPeriodStartedAt
@@ -140,6 +140,7 @@ library
       Recurly.V3.API.Types.TaxInfo.Rate
       Recurly.V3.API.Types.TaxInfo.Region
       Recurly.V3.API.Types.TaxInfo.Type
+      Recurly.V3.API.Types.Transaction
       Recurly.V3.API.Types.Transaction.Account
       Recurly.V3.API.Types.Transaction.Amount
       Recurly.V3.API.Types.Transaction.CollectionMethod
@@ -193,8 +194,6 @@ library
       ScopedTypeVariables
       TypeApplications
   ghc-options: -Weverything -Wno-all-missed-specializations -Wno-implicit-prelude -Wno-missed-specialisations -Wno-missing-deriving-strategies -Wno-missing-export-lists -Wno-missing-exported-signatures -Wno-missing-import-lists -Wno-missing-safe-haskell-mode -Wno-prepositive-qualified-module -Wno-redundant-constraints -Wno-safe -Wno-unsafe
-  build-tool-depends:
-      autoexporter:autoexporter >=1.1.19 && <1.2
   build-depends:
       aeson >=1.5.4 && <1.6
     , base >=4.14.0 && <4.15

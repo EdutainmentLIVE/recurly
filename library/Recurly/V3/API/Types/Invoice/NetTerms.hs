@@ -2,12 +2,10 @@ module Recurly.V3.API.Types.Invoice.NetTerms where
 
 import Recurlude
 
-newtype InvoiceNetTerms =
-    InvoiceNetTerms Integer
+newtype NetTerms = NetTerms Integer
     deriving (Eq, Show, FromJSON)
 
-instance TryFrom Integer InvoiceNetTerms where
-  tryFrom = maybeTryFrom $ \invoiceNetTerms ->
-    if invoiceNetTerms >= 0 then Just $ InvoiceNetTerms invoiceNetTerms else Nothing
+instance TryFrom Integer NetTerms where
+  tryFrom = maybeTryFrom $ \netTerms -> if netTerms >= 0 then Just $ NetTerms netTerms else Nothing
 
-instance From InvoiceNetTerms Integer
+instance From NetTerms Integer

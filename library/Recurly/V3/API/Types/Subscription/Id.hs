@@ -2,10 +2,9 @@ module Recurly.V3.API.Types.Subscription.Id where
 
 import Recurlude
 
-newtype SubscriptionId =
-    SubscriptionId Text
+newtype Id = Id Text
     deriving (Eq, Show, FromJSON)
 
-instance From Text SubscriptionId
+instance From Text Id
 
-instance From SubscriptionId Text
+instance From Id Text

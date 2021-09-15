@@ -5,13 +5,13 @@ import Recurlude
 import qualified Data.Aeson as Aeson
 import qualified Network.HTTP.Client as Client
 
-import qualified Recurly.V3.API.Types as Types
+import Recurly.V3.API.Types.Coupon (Coupon)
+import Recurly.V3.API.Types.PostCoupon (PostCoupon)
 import qualified Recurly.V3.Http as RecurlyApi
+import Recurly.V3.Http (RecurlyError)
 import qualified Recurly.V3.Recurly as Recurly
 
-postCoupon
-  :: Types.PostCoupon
-  -> Recurly.Recurly (Client.Response (Either RecurlyApi.RecurlyError Types.Coupon))
+postCoupon :: PostCoupon -> Recurly.Recurly (Client.Response (Either RecurlyError Coupon))
 postCoupon coupon = do
   request <- RecurlyApi.makeRequest ["coupons"]
   RecurlyApi.sendRequest request

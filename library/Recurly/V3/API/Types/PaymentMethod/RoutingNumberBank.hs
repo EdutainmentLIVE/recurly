@@ -2,10 +2,9 @@ module Recurly.V3.API.Types.PaymentMethod.RoutingNumberBank where
 
 import Recurlude
 
-newtype PaymentMethodRoutingNumberBank =
-    PaymentMethodRoutingNumberBank Text
+newtype RoutingNumberBank = RoutingNumberBank Text
     deriving (Eq, Show, FromJSON)
 
-instance From Text PaymentMethodRoutingNumberBank
+instance From Text RoutingNumberBank
 
-instance From PaymentMethodRoutingNumberBank Text
+instance From RoutingNumberBank Text

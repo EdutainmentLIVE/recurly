@@ -5,26 +5,25 @@ import Recurlude
 import qualified Data.Scientific as Scientific
 import qualified Numeric.Natural as Natural
 
-import qualified Recurly.V3.API.Types.Currency as Types
-import qualified Recurly.V3.API.Types.Money.Money as Types
-import qualified Recurly.V3.API.Types.Subscription.UnitAmount as Types
+import qualified Recurly.V3.API.Types.Currency as Currency
+import qualified Recurly.V3.API.Types.Money.Money as Money
+import qualified Recurly.V3.API.Types.Subscription.UnitAmount as Subscription
 
 -- | This should be a number between 1 and 100 inclusive. Zero is not allowed.
 -- Fractional parts of percents are not allowed. This number represents the
 -- percent discount to be applied at checkout. For example if you would pay $29
--- but you have a 10% discount (@CouponDiscountPercentValue 10@), you would
+-- but you have a 10% discount (@PercentValue 10@), you would
 -- only pay $26.10.
-newtype CouponDiscountPercentValue =
-  CouponDiscountPercentValue Natural.Natural
+newtype PercentValue = PercentValue Natural.Natural
   deriving (Eq, Show, ToJSON)
 
-instance TryFrom Natural.Natural CouponDiscountPercentValue where
-  tryFrom = maybeTryFrom $ \percent ->
-    if percent > 0 && percent <= 100 then Just $ CouponDiscountPercentValue percent else Nothing
+instance TryFrom Natural.Natural PercentValue where
+  tryFrom = maybeTryFrom
+    $ \percent -> if percent > 0 && percent <= 100 then Just $ PercentValue percent else Nothing
 
-instance From CouponDiscountPercentValue Natural.Natural
+instance From PercentValue Natural.Natural
 
-instance From CouponDiscountPercentValue Integer where
+instance From PercentValue Integer where
   from = via @Natural.Natural
 
 -- | This should be a decimal number greater than or equal to 0. Note that
@@ -32,32 +31,30 @@ instance From CouponDiscountPercentValue Integer where
 -- Recurly API does not show the decimal places if they would be 0. So a
 -- discount of $10 would be sent as @10@, not @10.00@. This number represents
 -- the price to be subtracted at checkout. For example if you would pay $29 but
--- you have a $10 discount (@CouponDiscountFixedValue 10@), you would only pay
+-- you have a $10 discount (@FixedValue 10@), you would only pay
 -- $19.
-newtype CouponDiscountFixedValue =
-  CouponDiscountFixedValue Types.DenseUSD
+newtype FixedValue = FixedValue Money.DenseUSD
   deriving (Eq, Show, ToJSON)
 
-instance TryFrom Types.DenseUSD CouponDiscountFixedValue where
-  tryFrom =
-    maybeTryFrom $ \fixed -> if fixed >= 0 then Just $ CouponDiscountFixedValue fixed else Nothing
+instance TryFrom Money.DenseUSD FixedValue where
+  tryFrom = maybeTryFrom $ \fixed -> if fixed >= 0 then Just $ FixedValue fixed else Nothing
 
-instance From CouponDiscountFixedValue Types.DenseUSD
+instance From FixedValue Money.DenseUSD
 
-data CouponDiscountType = Percent CouponDiscountPercentValue | Fixed CouponDiscountFixedValue
+data DiscountType = Percent PercentValue | Fixed FixedValue
   deriving (Eq, Show)
 
-instance FromJSON CouponDiscountType where
+instance FromJSON DiscountType where
   parseJSON = withObject "CouponDiscountType" $ \object -> do
-    tipe <- aesonRequired object "type"
-    case tipe :: Text of
+    type_ <- aesonRequired object "type"
+    case type_ :: Text of
       "fixed" -> do
         currencies <- aesonRequired object "currencies"
         let
           maybeFixedValue = case filter isUsd currencies of
             [currency] -> do
-              couponDiscountFixedValue <-
-                hush . tryInto @CouponDiscountFixedValue $ discountCurrencyAmount currency
+              couponDiscountFixedValue <- hush . tryInto @FixedValue $ discountCurrencyAmount
+                currency
               Just $ Fixed couponDiscountFixedValue
             _ -> Nothing
         maybeFail ("invalid fixed coupon: " <> show object) maybeFixedValue
@@ -65,29 +62,29 @@ instance FromJSON CouponDiscountType where
         percent <- aesonRequired object "percent"
         maybeFailWith ("invalid percent coupon: " <> show object) Percent
           . hush
-          $ tryInto @CouponDiscountPercentValue @Natural.Natural percent
-      _ -> fail $ "unknown CouponDiscountType: " <> show tipe
+          $ tryInto @PercentValue @Natural.Natural percent
+      _ -> fail $ "unknown DiscountType: " <> show type_
 
 -- | This is a value between 0 (not inclusive) and 1
-couponDiscountPercentValueToRational :: CouponDiscountPercentValue -> Rational
-couponDiscountPercentValueToRational percent = into @Integer percent % 100
+percentToRational :: PercentValue -> Rational
+percentToRational percent = into @Integer percent % 100
 
-getDiscountFromSub :: CouponDiscountType -> Types.SubscriptionUnitAmount -> Types.DenseUSD
+getDiscountFromSub :: DiscountType -> Subscription.UnitAmount -> Money.DenseUSD
 getDiscountFromSub discountType subscriptionUnitAmount =
   let
-    subUnitAmountDenseUSD = into @Types.DenseUSD subscriptionUnitAmount
+    subUnitAmountDenseUSD = into @Money.DenseUSD subscriptionUnitAmount
     discountedDenseUSD = case discountType of
       Percent percent ->
         let
-          rationalPercent = couponDiscountPercentValueToRational percent
-          rationalSubUnitAmount = Types.denseUSDToRationalDollars subUnitAmountDenseUSD
-        in Types.rationalDollarsToDenseUSD' $ rationalSubUnitAmount * rationalPercent
-      Fixed value -> into @Types.DenseUSD value
+          rationalPercent = percentToRational percent
+          rationalSubUnitAmount = Money.denseUSDToRationalDollars subUnitAmountDenseUSD
+        in Money.rationalDollarsToDenseUSD' $ rationalSubUnitAmount * rationalPercent
+      Fixed value -> into @Money.DenseUSD value
   in subUnitAmountDenseUSD - discountedDenseUSD
 
 data DiscountCurrency = DiscountCurrency
-  { discountCurrencyAmount :: Types.DenseUSD
-  , discountCurrencyCurrency :: Types.Currency
+  { discountCurrencyAmount :: Money.DenseUSD
+  , discountCurrencyCurrency :: Currency.Currency
   }
   deriving (Eq, Show)
 
@@ -97,8 +94,8 @@ instance FromJSON DiscountCurrency where
     currency <- aesonRequired object "currency"
     let
       denseUsd =
-        Types.rationalDollarsToDenseUSD' $ toRational @Scientific.Scientific amountInDollars
+        Money.rationalDollarsToDenseUSD' $ toRational @Scientific.Scientific amountInDollars
     pure DiscountCurrency { discountCurrencyAmount = denseUsd, discountCurrencyCurrency = currency }
 
 isUsd :: DiscountCurrency -> Bool
-isUsd = (== Types.USD) . discountCurrencyCurrency
+isUsd = (== Currency.USD) . discountCurrencyCurrency

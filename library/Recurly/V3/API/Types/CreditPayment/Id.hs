@@ -2,10 +2,9 @@ module Recurly.V3.API.Types.CreditPayment.Id where
 
 import Recurlude
 
-newtype CreditPaymentId =
-    CreditPaymentId Text
+newtype Id = Id Text
     deriving (Eq, Show, FromJSON, ToJSON)
 
-instance From Text CreditPaymentId
+instance From Text Id
 
-instance From CreditPaymentId Text
+instance From Id Text

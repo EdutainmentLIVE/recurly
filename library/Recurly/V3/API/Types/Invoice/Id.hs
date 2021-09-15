@@ -2,10 +2,9 @@ module Recurly.V3.API.Types.Invoice.Id where
 
 import Recurlude
 
-newtype InvoiceId =
-    InvoiceId Text
+newtype Id = Id Text
     deriving (Eq, Show, FromJSON, ToJSON)
 
-instance From Text InvoiceId
+instance From Text Id
 
-instance From InvoiceId Text
+instance From Id Text

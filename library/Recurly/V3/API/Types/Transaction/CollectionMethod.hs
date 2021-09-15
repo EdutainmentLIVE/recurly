@@ -2,25 +2,24 @@ module Recurly.V3.API.Types.Transaction.CollectionMethod where
 
 import Recurlude
 
-data TransactionCollectionMethod
-  = AutomaticTransactionCollectionMethod
-  | ManualTransactionCollectionMethod
+data CollectionMethod
+  = Automatic
+  | Manual
   deriving (Eq, Show)
 
-instance ToJSON TransactionCollectionMethod where
+instance ToJSON CollectionMethod where
   toJSON = toJSON . into @Text
 
-instance FromJSON TransactionCollectionMethod where
-  parseJSON =
-    withText "TransactionCollectionMethod" $ eitherFail . tryInto @TransactionCollectionMethod
+instance FromJSON CollectionMethod where
+  parseJSON = withText "TransactionCollectionMethod" $ eitherFail . tryInto @CollectionMethod
 
-instance TryFrom Text TransactionCollectionMethod where
+instance TryFrom Text CollectionMethod where
   tryFrom = maybeTryFrom $ \transactionCollectionMethod -> case transactionCollectionMethod of
-    "automatic" -> Just AutomaticTransactionCollectionMethod
-    "manual" -> Just ManualTransactionCollectionMethod
+    "automatic" -> Just Automatic
+    "manual" -> Just Manual
     _ -> Nothing
 
-instance From TransactionCollectionMethod Text where
+instance From CollectionMethod Text where
   from transactionCollectionMethod = case transactionCollectionMethod of
-    AutomaticTransactionCollectionMethod -> "automatic"
-    ManualTransactionCollectionMethod -> "manual"
+    Automatic -> "automatic"
+    Manual -> "manual"

@@ -2,10 +2,9 @@ module Recurly.V3.API.Types.Subscription.Quantity where
 
 import Recurlude
 
-newtype SubscriptionQuantity =
-    SubscriptionQuantity Integer
+newtype Quantity = Quantity Integer
     deriving (Eq, Show, FromJSON)
 
-instance From Integer SubscriptionQuantity
+instance From Integer Quantity
 
-instance From SubscriptionQuantity Integer
+instance From Quantity Integer

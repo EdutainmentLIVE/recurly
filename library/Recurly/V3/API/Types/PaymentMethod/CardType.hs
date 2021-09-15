@@ -2,54 +2,54 @@ module Recurly.V3.API.Types.PaymentMethod.CardType where
 
 import Recurlude
 
-data PaymentMethodCardType
-  = AmericanExpressCardType
-  | DankortCardType
-  | DinersClubCardType
-  | DiscoverCardType
-  | ForbrugsforeningenCardType
-  | JCBCardType
-  | LaserCardType
-  | MaestroCardType
-  | MasterCardCardType
-  | TestCardCardType
-  | UnknownCardType
-  | VisaCardType
+data CardType
+  = AmericanExpress
+  | Dankort
+  | DinersClub
+  | Discover
+  | Forbrugsforeningen
+  | JCB
+  | Laser
+  | Maestro
+  | MasterCard
+  | TestCard
+  | Unknown
+  | Visa
   deriving (Eq, Show)
 
-instance ToJSON PaymentMethodCardType where
+instance ToJSON CardType where
   toJSON = toJSON . into @Text
 
-instance FromJSON PaymentMethodCardType where
-  parseJSON = withText "PaymentMethodCardType" $ eitherFail . tryInto @PaymentMethodCardType
+instance FromJSON CardType where
+  parseJSON = withText "PaymentMethodCardType" $ eitherFail . tryInto @CardType
 
-instance TryFrom Text PaymentMethodCardType where
-  tryFrom = maybeTryFrom $ \paymentMethodCardType -> case paymentMethodCardType of
-    "American Express" -> Just AmericanExpressCardType
-    "Dankort" -> Just DankortCardType
-    "Diners Club" -> Just DinersClubCardType
-    "Discover" -> Just DiscoverCardType
-    "Forbrugsforeningen" -> Just ForbrugsforeningenCardType
-    "JCB" -> Just JCBCardType
-    "Laser" -> Just LaserCardType
-    "Maestro" -> Just MaestroCardType
-    "MasterCard" -> Just MasterCardCardType
-    "Test Card" -> Just TestCardCardType
-    "Unknown" -> Just UnknownCardType
-    "Visa" -> Just VisaCardType
+instance TryFrom Text CardType where
+  tryFrom = maybeTryFrom $ \cardType -> case cardType of
+    "American Express" -> Just AmericanExpress
+    "Dankort" -> Just Dankort
+    "Diners Club" -> Just DinersClub
+    "Discover" -> Just Discover
+    "Forbrugsforeningen" -> Just Forbrugsforeningen
+    "JCB" -> Just JCB
+    "Laser" -> Just Laser
+    "Maestro" -> Just Maestro
+    "MasterCard" -> Just MasterCard
+    "Test Card" -> Just TestCard
+    "Unknown" -> Just Unknown
+    "Visa" -> Just Visa
     _ -> Nothing
 
-instance From PaymentMethodCardType Text where
-  from paymentMethodCardType = case paymentMethodCardType of
-    AmericanExpressCardType -> "American Express"
-    DankortCardType -> "Dankort"
-    DinersClubCardType -> "Diners Club"
-    DiscoverCardType -> "Discover"
-    ForbrugsforeningenCardType -> "Forbrugsforeningen"
-    JCBCardType -> "JCB"
-    LaserCardType -> "Laser"
-    MaestroCardType -> "Maestro"
-    MasterCardCardType -> "MasterCard"
-    TestCardCardType -> "Test Card"
-    UnknownCardType -> "Unknown"
-    VisaCardType -> "Visa"
+instance From CardType Text where
+  from cardType = case cardType of
+    AmericanExpress -> "American Express"
+    Dankort -> "Dankort"
+    DinersClub -> "Diners Club"
+    Discover -> "Discover"
+    Forbrugsforeningen -> "Forbrugsforeningen"
+    JCB -> "JCB"
+    Laser -> "Laser"
+    Maestro -> "Maestro"
+    MasterCard -> "MasterCard"
+    TestCard -> "Test Card"
+    Unknown -> "Unknown"
+    Visa -> "Visa"

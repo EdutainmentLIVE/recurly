@@ -2,10 +2,9 @@ module Recurly.V3.API.Types.Invoice.DueAt where
 
 import Recurlude
 
-newtype InvoiceDueAt =
-    InvoiceDueAt UTCTime
+newtype DueAt = DueAt UTCTime
     deriving (Eq, Show, FromJSON)
 
-instance From UTCTime InvoiceDueAt
+instance From UTCTime DueAt
 
-instance From InvoiceDueAt UTCTime
+instance From DueAt UTCTime

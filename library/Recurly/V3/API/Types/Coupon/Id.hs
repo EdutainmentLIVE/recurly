@@ -2,10 +2,9 @@ module Recurly.V3.API.Types.Coupon.Id where
 
 import Recurlude
 
-newtype CouponId =
-    CouponId Text
+newtype Id = Id Text
     deriving (Eq, Show, FromJSON, ToJSON)
 
-instance From Text CouponId
+instance From Text Id
 
-instance From CouponId Text
+instance From Id Text

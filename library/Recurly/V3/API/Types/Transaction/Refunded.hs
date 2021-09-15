@@ -2,10 +2,9 @@ module Recurly.V3.API.Types.Transaction.Refunded where
 
 import Recurlude
 
-newtype TransactionRefunded =
-    TransactionRefunded Bool
+newtype Refunded = Refunded Bool
     deriving (Eq, Show, FromJSON)
 
-instance From Bool TransactionRefunded
+instance From Bool Refunded
 
-instance From TransactionRefunded Bool
+instance From Refunded Bool

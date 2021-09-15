@@ -24,6 +24,7 @@ module Recurlude
   -- Helpers
   , aesonOptional
   , aesonRequired
+  , aesonWDefault
   , aesonPair
   , aesonPairHelper
   , eitherFail
@@ -104,6 +105,9 @@ aesonOptional object key = object Aeson..:? into @Text key
 
 aesonRequired :: FromJSON value => Aeson.Object -> String -> Aeson.Parser value
 aesonRequired object key = object Aeson..: into @Text key
+
+aesonWDefault :: FromJSON value => value -> Aeson.Object -> String -> Aeson.Parser value
+aesonWDefault f object key = fmap (fromMaybe f) $ object Aeson..:? into @Text key
 
 aesonPair :: (ToJSON value, Aeson.KeyValue pair) => String -> value -> pair
 aesonPair key value = into @Text key Aeson..= value

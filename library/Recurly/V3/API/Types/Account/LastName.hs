@@ -2,10 +2,9 @@ module Recurly.V3.API.Types.Account.LastName where
 
 import Recurlude
 
-newtype AccountLastName =
-    AccountLastName Text
+newtype LastName = LastName Text
     deriving (Eq, Show, FromJSON, ToJSON)
 
-instance From Text AccountLastName
+instance From Text LastName
 
-instance From AccountLastName Text
+instance From LastName Text

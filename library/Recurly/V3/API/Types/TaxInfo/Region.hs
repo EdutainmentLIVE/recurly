@@ -2,10 +2,9 @@ module Recurly.V3.API.Types.TaxInfo.Region where
 
 import Recurlude
 
-newtype TaxInfoRegion =
-    TaxInfoRegion Text
+newtype Region = Region Text
     deriving (Eq, Show, FromJSON, ToJSON)
 
-instance From Text TaxInfoRegion
+instance From Text Region
 
-instance From TaxInfoRegion Text
+instance From Region Text

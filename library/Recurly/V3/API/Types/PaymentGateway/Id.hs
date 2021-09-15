@@ -2,10 +2,9 @@ module Recurly.V3.API.Types.PaymentGateway.Id where
 
 import Recurlude
 
-newtype PaymentGatewayId =
-    PaymentGatewayId Text
+newtype Id = Id Text
     deriving (Eq, Show, FromJSON, ToJSON)
 
-instance From Text PaymentGatewayId
+instance From Text Id
 
-instance From PaymentGatewayId Text
+instance From Id Text

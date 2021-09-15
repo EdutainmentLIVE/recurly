@@ -2,35 +2,35 @@ module Recurly.V3.API.Types.Subscription.State where
 
 import Recurlude
 
-data SubscriptionState = ActiveSubscriptionState
-                       | CanceledSubscriptionState
-                       | ExpiredSubscriptionState
-                       | FailedSubscriptionState
-                       | FutureSubscriptionState
-                       | PausedSubscriptionState
+data State = Active
+           | Canceled
+           | Expired
+           | Failed
+           | Future
+           | Paused
   deriving (Eq, Show)
 
-instance ToJSON SubscriptionState where
+instance ToJSON State where
   toJSON = toJSON . into @Text
 
-instance FromJSON SubscriptionState where
-  parseJSON = withText "SubscriptionState" $ eitherFail . tryInto @SubscriptionState
+instance FromJSON State where
+  parseJSON = withText "SubscriptionState" $ eitherFail . tryInto @State
 
-instance TryFrom Text SubscriptionState where
-  tryFrom = maybeTryFrom $ \subscriptionState -> case subscriptionState of
-    "active" -> Just ActiveSubscriptionState
-    "canceled" -> Just CanceledSubscriptionState
-    "expired" -> Just ExpiredSubscriptionState
-    "failed" -> Just FailedSubscriptionState
-    "future" -> Just FutureSubscriptionState
-    "paused" -> Just PausedSubscriptionState
+instance TryFrom Text State where
+  tryFrom = maybeTryFrom $ \state -> case state of
+    "active" -> Just Active
+    "canceled" -> Just Canceled
+    "expired" -> Just Expired
+    "failed" -> Just Failed
+    "future" -> Just Future
+    "paused" -> Just Paused
     _ -> Nothing
 
-instance From SubscriptionState Text where
-  from subscriptionState = case subscriptionState of
-    ActiveSubscriptionState -> "active"
-    CanceledSubscriptionState -> "canceled"
-    ExpiredSubscriptionState -> "expired"
-    FailedSubscriptionState -> "failed"
-    FutureSubscriptionState -> "future"
-    PausedSubscriptionState -> "paused"
+instance From State Text where
+  from state = case state of
+    Active -> "active"
+    Canceled -> "canceled"
+    Expired -> "expired"
+    Failed -> "failed"
+    Future -> "future"
+    Paused -> "paused"

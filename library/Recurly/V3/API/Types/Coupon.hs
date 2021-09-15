@@ -1,17 +1,23 @@
-module Recurly.V3.API.Types.Coupon where
+module Recurly.V3.API.Types.Coupon
+  ( module Recurly.V3.API.Types.Coupon
+  , Coupon.Code
+  , Coupon.DiscountType
+  , Coupon.Id
+  , Coupon.Name
+  ) where
 
 import Recurlude
 
-import qualified Recurly.V3.API.Types.Coupon.Code as Types
-import qualified Recurly.V3.API.Types.Coupon.DiscountType as Types
-import qualified Recurly.V3.API.Types.Coupon.Id as Types
-import qualified Recurly.V3.API.Types.Coupon.Name as Types
+import qualified Recurly.V3.API.Types.Coupon.Code as Coupon
+import qualified Recurly.V3.API.Types.Coupon.DiscountType as Coupon
+import qualified Recurly.V3.API.Types.Coupon.Id as Coupon
+import qualified Recurly.V3.API.Types.Coupon.Name as Coupon
 
 data Coupon = Coupon
-  { couponId :: Types.CouponId
-  , couponName :: Types.CouponName
-  , couponCode :: Types.CouponCode
-  , couponDiscountType :: Types.CouponDiscountType
+  { id_ :: Coupon.Id
+  , name :: Coupon.Name
+  , code :: Coupon.Code
+  , discountType :: Coupon.DiscountType
   }
   deriving (Eq, Show)
 
@@ -21,9 +27,4 @@ instance FromJSON Coupon where
     name <- aesonRequired obj "name"
     code <- aesonRequired obj "code"
     discountType <- aesonRequired obj "discount"
-    pure Coupon
-      { couponId = id_
-      , couponName = name
-      , couponCode = code
-      , couponDiscountType = discountType
-      }
+    pure Coupon { id_, name, code, discountType }

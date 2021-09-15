@@ -2,10 +2,10 @@ module Recurly.V3.API.Types.Transaction.GatewayResponseCode where
 
 import Recurlude
 
-newtype TransactionGatewayResponseCode =
-    TransactionGatewayResponseCode Text
+newtype GatewayResponseCode =
+    GatewayResponseCode Text
     deriving (Eq, Show, FromJSON)
 
-instance From Text TransactionGatewayResponseCode
+instance From Text GatewayResponseCode
 
-instance From TransactionGatewayResponseCode Text
+instance From GatewayResponseCode Text

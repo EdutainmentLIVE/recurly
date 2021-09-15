@@ -2,10 +2,9 @@ module Recurly.V3.API.Types.PaymentGateway.Name where
 
 import Recurlude
 
-newtype PaymentGatewayName =
-    PaymentGatewayName Text
+newtype Name = Name Text
     deriving (Eq, Show, FromJSON, ToJSON)
 
-instance From Text PaymentGatewayName
+instance From Text Name
 
-instance From PaymentGatewayName Text
+instance From Name Text

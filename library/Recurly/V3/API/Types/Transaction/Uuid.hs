@@ -2,10 +2,9 @@ module Recurly.V3.API.Types.Transaction.Uuid where
 
 import Recurlude
 
-newtype TransactionUuid =
-    TransactionUuid Text
+newtype Uuid = Uuid Text
     deriving (Eq, Show, FromJSON)
 
-instance From Text TransactionUuid
+instance From Text Uuid
 
-instance From TransactionUuid Text
+instance From Uuid Text

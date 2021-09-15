@@ -1,17 +1,23 @@
-module Recurly.V3.API.Types.Invoice where
+module Recurly.V3.API.Types.Invoice
+  ( module Recurly.V3.API.Types.Invoice
+  , Invoice.CreatedAt
+  , Invoice.Id
+  , Invoice.State
+  , Invoice.Type
+  ) where
 
 import Recurlude
 
-import qualified Recurly.V3.API.Types.Invoice.CreatedAt as Types
-import qualified Recurly.V3.API.Types.Invoice.Id as Types
-import qualified Recurly.V3.API.Types.Invoice.State as Types
-import qualified Recurly.V3.API.Types.Invoice.Type as Types
+import qualified Recurly.V3.API.Types.Invoice.CreatedAt as Invoice
+import qualified Recurly.V3.API.Types.Invoice.Id as Invoice
+import qualified Recurly.V3.API.Types.Invoice.State as Invoice
+import qualified Recurly.V3.API.Types.Invoice.Type as Invoice
 
 data Invoice = Invoice
-  { invoiceId :: Types.InvoiceId
-  , invoiceType :: Types.InvoiceType
-  , invoiceState :: Types.InvoiceState
-  , invoiceCreatedAt :: Types.InvoiceCreatedAt
+  { id_ :: Invoice.Id
+  , type_ :: Invoice.Type
+  , state :: Invoice.State
+  , createdAt :: Invoice.CreatedAt
   }
   deriving Show
 
@@ -21,9 +27,4 @@ instance FromJSON Invoice where
     type_ <- aesonRequired obj "type"
     state <- aesonRequired obj "state"
     createdAt <- aesonRequired obj "created_at"
-    pure Invoice
-      { invoiceId = id_
-      , invoiceType = type_
-      , invoiceState = state
-      , invoiceCreatedAt = createdAt
-      }
+    pure Invoice { id_, type_, state, createdAt }

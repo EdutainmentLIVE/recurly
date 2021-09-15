@@ -2,38 +2,38 @@ module Recurly.V3.API.Types.Transaction.PaymentMethod where
 
 import Recurlude
 
-import qualified Recurly.V3.API.Types.PaymentMethod.AccountType as Types
-import qualified Recurly.V3.API.Types.PaymentMethod.BillingAgreementId as Types
-import qualified Recurly.V3.API.Types.PaymentMethod.CardType as Types
-import qualified Recurly.V3.API.Types.PaymentMethod.ExpMonth as Types
-import qualified Recurly.V3.API.Types.PaymentMethod.ExpYear as Types
-import qualified Recurly.V3.API.Types.PaymentMethod.FirstSix as Types
-import qualified Recurly.V3.API.Types.PaymentMethod.GatewayCode as Types
-import qualified Recurly.V3.API.Types.PaymentMethod.GatewayToken as Types
-import qualified Recurly.V3.API.Types.PaymentMethod.LastFour as Types
-import qualified Recurly.V3.API.Types.PaymentMethod.LastTwo as Types
-import qualified Recurly.V3.API.Types.PaymentMethod.Object as Types
-import qualified Recurly.V3.API.Types.PaymentMethod.RoutingNumber as Types
-import qualified Recurly.V3.API.Types.PaymentMethod.RoutingNumberBank as Types
+import qualified Recurly.V3.API.Types.PaymentMethod.AccountType as PaymentMethod
+import qualified Recurly.V3.API.Types.PaymentMethod.BillingAgreementId as PaymentMethod
+import qualified Recurly.V3.API.Types.PaymentMethod.CardType as PaymentMethod
+import qualified Recurly.V3.API.Types.PaymentMethod.ExpMonth as PaymentMethod
+import qualified Recurly.V3.API.Types.PaymentMethod.ExpYear as PaymentMethod
+import qualified Recurly.V3.API.Types.PaymentMethod.FirstSix as PaymentMethod
+import qualified Recurly.V3.API.Types.PaymentMethod.GatewayCode as PaymentMethod
+import qualified Recurly.V3.API.Types.PaymentMethod.GatewayToken as PaymentMethod
+import qualified Recurly.V3.API.Types.PaymentMethod.LastFour as PaymentMethod
+import qualified Recurly.V3.API.Types.PaymentMethod.LastTwo as PaymentMethod
+import qualified Recurly.V3.API.Types.PaymentMethod.Object as PaymentMethod
+import qualified Recurly.V3.API.Types.PaymentMethod.RoutingNumber as PaymentMethod
+import qualified Recurly.V3.API.Types.PaymentMethod.RoutingNumberBank as PaymentMethod
 
-data TransactionPaymentMethod = TransactionPaymentMethod
-  { transactionPaymentMethodObject :: Types.PaymentMethodObject
-  , transactionPaymentMethodCardType :: Types.PaymentMethodCardType
-  , transactionPaymentMethodFirstSix :: Types.PaymentMethodFirstSix
-  , transactionPaymentMethodLastFour :: Types.PaymentMethodLastFour
-  , transactionPaymentMethodLastTwo :: Types.PaymentMethodLastTwo
-  , transactionPaymentMethodExpMonth :: Types.PaymentMethodExpMonth
-  , transactionPaymentMethodExpYear :: Types.PaymentMethodExpYear
-  , transactionPaymentMethodGatewayToken :: Types.PaymentMethodGatewayToken
-  , transactionPaymentMethodGatewayCode :: Types.PaymentMethodGatewayCode
-  , transactionPaymentMethodBillingAgreementId :: Types.PaymentMethodBillingAgreementId
-  , transactionPaymentMethodAccountType :: Types.PaymentMethodAccountType
-  , transactionPaymentMethodRoutingNumber :: Types.PaymentMethodRoutingNumber
-  , transactionPaymentMethodRoutingNumberBank :: Types.PaymentMethodRoutingNumberBank
+data PaymentMethod = PaymentMethod
+  { object :: PaymentMethod.Object
+  , cardType :: PaymentMethod.CardType
+  , firstSix :: PaymentMethod.FirstSix
+  , lastFour :: PaymentMethod.LastFour
+  , lastTwo :: PaymentMethod.LastTwo
+  , expMonth :: PaymentMethod.ExpMonth
+  , expYear :: PaymentMethod.ExpYear
+  , gatewayToken :: PaymentMethod.GatewayToken
+  , gatewayCode :: PaymentMethod.GatewayCode
+  , billingAgreementId :: PaymentMethod.BillingAgreementId
+  , accountType :: PaymentMethod.AccountType
+  , routingNumber :: PaymentMethod.RoutingNumber
+  , routingNumberBank :: PaymentMethod.RoutingNumberBank
   }
   deriving (Eq, Show)
 
-instance FromJSON TransactionPaymentMethod where
+instance FromJSON PaymentMethod where
   parseJSON = withObject "TransactionPaymentMethod" $ \obj -> do
     object <- aesonRequired obj "object"
     cardType <- aesonRequired obj "card_type"
@@ -48,18 +48,18 @@ instance FromJSON TransactionPaymentMethod where
     accountType <- aesonRequired obj "account_type"
     routingNumber <- aesonRequired obj "routing_number"
     routingNumberBank <- aesonRequired obj "routing_number_bank"
-    pure TransactionPaymentMethod
-      { transactionPaymentMethodObject = object
-      , transactionPaymentMethodCardType = cardType
-      , transactionPaymentMethodFirstSix = firstSix
-      , transactionPaymentMethodLastFour = lastFour
-      , transactionPaymentMethodLastTwo = lastTwo
-      , transactionPaymentMethodExpMonth = expMonth
-      , transactionPaymentMethodExpYear = expYear
-      , transactionPaymentMethodGatewayToken = gatewayToken
-      , transactionPaymentMethodGatewayCode = gatewayCode
-      , transactionPaymentMethodBillingAgreementId = billingAgreementId
-      , transactionPaymentMethodAccountType = accountType
-      , transactionPaymentMethodRoutingNumber = routingNumber
-      , transactionPaymentMethodRoutingNumberBank = routingNumberBank
+    pure PaymentMethod
+      { object
+      , cardType
+      , firstSix
+      , lastFour
+      , lastTwo
+      , expMonth
+      , expYear
+      , gatewayToken
+      , gatewayCode
+      , billingAgreementId
+      , accountType
+      , routingNumber
+      , routingNumberBank
       }
