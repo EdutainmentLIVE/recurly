@@ -6,8 +6,6 @@ newtype PlanId =
     PlanId Text
     deriving (Eq, Show, FromJSON, ToJSON)
 
-planIdToText :: PlanId -> Text
-planIdToText (PlanId text) = text
+instance From Text PlanId
 
-textToPlanId :: Text -> PlanId
-textToPlanId = PlanId
+instance From PlanId Text

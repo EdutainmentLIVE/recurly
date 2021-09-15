@@ -6,8 +6,6 @@ newtype TaxInfoRegion =
     TaxInfoRegion Text
     deriving (Eq, Show, FromJSON, ToJSON)
 
-taxInfoRegionToText :: TaxInfoRegion -> Text
-taxInfoRegionToText (TaxInfoRegion text) = text
+instance From Text TaxInfoRegion
 
-textToTaxInfoRegion :: Text -> TaxInfoRegion
-textToTaxInfoRegion = TaxInfoRegion
+instance From TaxInfoRegion Text

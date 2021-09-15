@@ -15,30 +15,30 @@ data TransactionCvvCheck
   deriving (Eq, Show)
 
 instance ToJSON TransactionCvvCheck where
-  toJSON = toJSON . transactionCvvCheckToText
+  toJSON = toJSON . into @Text
 
 instance FromJSON TransactionCvvCheck where
-  parseJSON = withText "TransactionCvvCheck" $ eitherFail . textToTransactionCvvCheck
+  parseJSON = withText "TransactionCvvCheck" $ eitherFail . tryInto @TransactionCvvCheck
 
-transactionCvvCheckToText :: TransactionCvvCheck -> Text
-transactionCvvCheckToText transactionCvvCheck = case transactionCvvCheck of
-  DTransactionCvvCheck -> "D"
-  ITransactionCvvCheck -> "I"
-  MTransactionCvvCheck -> "M"
-  NTransactionCvvCheck -> "N"
-  PTransactionCvvCheck -> "P"
-  STransactionCvvCheck -> "S"
-  UTransactionCvvCheck -> "U"
-  XTransactionCvvCheck -> "X"
+instance TryFrom Text TransactionCvvCheck where
+  tryFrom = maybeTryFrom $ \transactionCvvCheck -> case transactionCvvCheck of
+    "D" -> Just DTransactionCvvCheck
+    "I" -> Just ITransactionCvvCheck
+    "M" -> Just MTransactionCvvCheck
+    "N" -> Just NTransactionCvvCheck
+    "P" -> Just PTransactionCvvCheck
+    "S" -> Just STransactionCvvCheck
+    "U" -> Just UTransactionCvvCheck
+    "X" -> Just XTransactionCvvCheck
+    _ -> Nothing
 
-textToTransactionCvvCheck :: Text -> Either String TransactionCvvCheck
-textToTransactionCvvCheck transactionCvvCheck = case transactionCvvCheck of
-  "D" -> Right DTransactionCvvCheck
-  "I" -> Right ITransactionCvvCheck
-  "M" -> Right MTransactionCvvCheck
-  "N" -> Right NTransactionCvvCheck
-  "P" -> Right PTransactionCvvCheck
-  "S" -> Right STransactionCvvCheck
-  "U" -> Right UTransactionCvvCheck
-  "X" -> Right XTransactionCvvCheck
-  _ -> Left $ "Failed to parse TransactionCvvCheck from text: " <> show transactionCvvCheck
+instance From TransactionCvvCheck Text where
+  from transactionCvvCheck = case transactionCvvCheck of
+    DTransactionCvvCheck -> "D"
+    ITransactionCvvCheck -> "I"
+    MTransactionCvvCheck -> "M"
+    NTransactionCvvCheck -> "N"
+    PTransactionCvvCheck -> "P"
+    STransactionCvvCheck -> "S"
+    UTransactionCvvCheck -> "U"
+    XTransactionCvvCheck -> "X"

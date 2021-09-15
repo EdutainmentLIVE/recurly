@@ -6,8 +6,6 @@ newtype TransactionRefunded =
     TransactionRefunded Bool
     deriving (Eq, Show, FromJSON)
 
-transactionRefundedToBool :: TransactionRefunded -> Bool
-transactionRefundedToBool (TransactionRefunded b) = b
+instance From Bool TransactionRefunded
 
-boolToTransactionRefunded :: Bool -> TransactionRefunded
-boolToTransactionRefunded = TransactionRefunded
+instance From TransactionRefunded Bool

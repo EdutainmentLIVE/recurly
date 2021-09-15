@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 819af18d3ffea87390edd1903e42566ad9741efa8beace4d0f328a523a2a1e38
+-- hash: 8aac37182495412872c6e44e5899c1e7ff168aad30565086d01ab3b744d18e31
 
 name:           recurly
 version:        0.0.0.1
@@ -86,6 +86,7 @@ library
       Recurly.V3.API.Types.Invoice.Type
       Recurly.V3.API.Types.Invoice.UpdatedAt
       Recurly.V3.API.Types.Money.Money
+      Recurly.V3.API.Types.PathPiece
       Recurly.V3.API.Types.PaymentGateway.Id
       Recurly.V3.API.Types.PaymentGateway.Name
       Recurly.V3.API.Types.PaymentGateway.Type
@@ -184,6 +185,7 @@ library
       DataKinds
       DeriveGeneric
       FlexibleContexts
+      FlexibleInstances
       GeneralizedNewtypeDeriving
       MultiParamTypeClasses
       OverloadedStrings
@@ -218,6 +220,7 @@ library
     , transformers >=0.5.6 && <0.6
     , transformers-base >=0.4.5 && <0.5
     , unliftio-core >=0.2.0 && <0.3
+    , witch ==0.3.*
     , xml-conduit >=1.9.0 && <2.0
     , xml-lens >=0.2 && <0.4
   default-language: Haskell2010

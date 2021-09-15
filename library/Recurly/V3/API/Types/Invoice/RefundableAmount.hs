@@ -8,8 +8,6 @@ newtype InvoiceRefundableAmount =
     InvoiceRefundableAmount Money.DenseUSD
     deriving (Eq, Show, FromJSON)
 
-invoiceRefundableAmountToDenseUSD :: InvoiceRefundableAmount -> Money.DenseUSD
-invoiceRefundableAmountToDenseUSD (InvoiceRefundableAmount denseUSD) = denseUSD
+instance From Money.DenseUSD InvoiceRefundableAmount
 
-denseUSDToInvoiceRefundableAmount :: Money.DenseUSD -> InvoiceRefundableAmount
-denseUSDToInvoiceRefundableAmount = InvoiceRefundableAmount
+instance From InvoiceRefundableAmount Money.DenseUSD

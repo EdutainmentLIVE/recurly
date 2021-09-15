@@ -6,8 +6,6 @@ newtype CouponRedemptionId =
     CouponRedemptionId Text
     deriving (Eq, Show, FromJSON, ToJSON)
 
-couponRedemptionIdToText :: CouponRedemptionId -> Text
-couponRedemptionIdToText (CouponRedemptionId text) = text
+instance From Text CouponRedemptionId
 
-textToCouponRedemptionId :: Text -> CouponRedemptionId
-textToCouponRedemptionId = CouponRedemptionId
+instance From CouponRedemptionId Text

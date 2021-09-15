@@ -22,46 +22,46 @@ data PaymentMethodObject
   deriving (Eq, Show)
 
 instance ToJSON PaymentMethodObject where
-  toJSON = toJSON . paymentmethodObjectToText
+  toJSON = toJSON . into @Text
 
 instance FromJSON PaymentMethodObject where
-  parseJSON = withText "PaymentMethodObject" $ eitherFail . textToPaymentMethodObject
+  parseJSON = withText "PaymentMethodObject" $ eitherFail . tryInto @PaymentMethodObject
 
-paymentmethodObjectToText :: PaymentMethodObject -> Text
-paymentmethodObjectToText paymentmethodObject = case paymentmethodObject of
-  CreditCardPaymentMethodObject -> "credit_card"
-  PaypalPaymentMethodObject -> "paypal"
-  AmazonPaymentMethodObject -> "amazon"
-  RokuPaymentMethodObject -> "roku"
-  BankAccountInfoPaymentMethodObject -> "bank_account_info"
-  ApplePayPaymentMethodObject -> "apple_pay"
-  SepadirectdebitPaymentMethodObject -> "sepadirectdebit"
-  EftPaymentMethodObject -> "eft"
-  WireTransferPaymentMethodObject -> "wire_transfer"
-  MoneyOrderPaymentMethodObject -> "money_order"
-  CheckPaymentMethodObject -> "check"
-  AmazonBillingAgreementPaymentMethodObject -> "amazon_billing_agreement"
-  PaypalBillingAgreementPaymentMethodObject -> "paypal_billing_agreement"
-  GatewayTokenPaymentMethodObject -> "gateway_token"
-  IbanBankAccountPaymentMethodObject -> "iban_bank_account"
-  OtherPaymentMethodObject -> "other"
+instance TryFrom Text PaymentMethodObject where
+  tryFrom = maybeTryFrom $ \paymentMethodObject -> case paymentMethodObject of
+    "credit_card" -> Just CreditCardPaymentMethodObject
+    "paypal" -> Just PaypalPaymentMethodObject
+    "amazon" -> Just AmazonPaymentMethodObject
+    "roku" -> Just RokuPaymentMethodObject
+    "bank_account_info" -> Just BankAccountInfoPaymentMethodObject
+    "apple_pay" -> Just ApplePayPaymentMethodObject
+    "sepadirectdebit" -> Just SepadirectdebitPaymentMethodObject
+    "eft" -> Just EftPaymentMethodObject
+    "wire_transfer" -> Just WireTransferPaymentMethodObject
+    "money_order" -> Just MoneyOrderPaymentMethodObject
+    "check" -> Just CheckPaymentMethodObject
+    "amazon_billing_agreement" -> Just AmazonBillingAgreementPaymentMethodObject
+    "paypal_billing_agreement" -> Just PaypalBillingAgreementPaymentMethodObject
+    "gateway_token" -> Just GatewayTokenPaymentMethodObject
+    "iban_bank_account" -> Just IbanBankAccountPaymentMethodObject
+    "other" -> Just OtherPaymentMethodObject
+    _ -> Nothing
 
-textToPaymentMethodObject :: Text -> Either String PaymentMethodObject
-textToPaymentMethodObject paymentmethodObject = case paymentmethodObject of
-  "credit_card" -> Right CreditCardPaymentMethodObject
-  "paypal" -> Right PaypalPaymentMethodObject
-  "amazon" -> Right AmazonPaymentMethodObject
-  "roku" -> Right RokuPaymentMethodObject
-  "bank_account_info" -> Right BankAccountInfoPaymentMethodObject
-  "apple_pay" -> Right ApplePayPaymentMethodObject
-  "sepadirectdebit" -> Right SepadirectdebitPaymentMethodObject
-  "eft" -> Right EftPaymentMethodObject
-  "wire_transfer" -> Right WireTransferPaymentMethodObject
-  "money_order" -> Right MoneyOrderPaymentMethodObject
-  "check" -> Right CheckPaymentMethodObject
-  "amazon_billing_agreement" -> Right AmazonBillingAgreementPaymentMethodObject
-  "paypal_billing_agreement" -> Right PaypalBillingAgreementPaymentMethodObject
-  "gateway_token" -> Right GatewayTokenPaymentMethodObject
-  "iban_bank_account" -> Right IbanBankAccountPaymentMethodObject
-  "other" -> Right OtherPaymentMethodObject
-  _ -> Left $ "Failed to parse PaymentMethodObject from text: " <> show paymentmethodObject
+instance From PaymentMethodObject Text where
+  from paymentMethodObject = case paymentMethodObject of
+    CreditCardPaymentMethodObject -> "credit_card"
+    PaypalPaymentMethodObject -> "paypal"
+    AmazonPaymentMethodObject -> "amazon"
+    RokuPaymentMethodObject -> "roku"
+    BankAccountInfoPaymentMethodObject -> "bank_account_info"
+    ApplePayPaymentMethodObject -> "apple_pay"
+    SepadirectdebitPaymentMethodObject -> "sepadirectdebit"
+    EftPaymentMethodObject -> "eft"
+    WireTransferPaymentMethodObject -> "wire_transfer"
+    MoneyOrderPaymentMethodObject -> "money_order"
+    CheckPaymentMethodObject -> "check"
+    AmazonBillingAgreementPaymentMethodObject -> "amazon_billing_agreement"
+    PaypalBillingAgreementPaymentMethodObject -> "paypal_billing_agreement"
+    GatewayTokenPaymentMethodObject -> "gateway_token"
+    IbanBankAccountPaymentMethodObject -> "iban_bank_account"
+    OtherPaymentMethodObject -> "other"

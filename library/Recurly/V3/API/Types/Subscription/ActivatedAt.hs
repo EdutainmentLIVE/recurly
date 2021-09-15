@@ -6,8 +6,6 @@ newtype SubscriptionActivatedAt =
     SubscriptionActivatedAt UTCTime
     deriving (Eq, Ord, Show, FromJSON)
 
-subscriptionActivatedAtToUtcTime :: SubscriptionActivatedAt -> UTCTime
-subscriptionActivatedAtToUtcTime (SubscriptionActivatedAt time) = time
+instance From UTCTime SubscriptionActivatedAt
 
-timeToSubscriptionActivatedAt :: UTCTime -> SubscriptionActivatedAt
-timeToSubscriptionActivatedAt = SubscriptionActivatedAt
+instance From SubscriptionActivatedAt UTCTime

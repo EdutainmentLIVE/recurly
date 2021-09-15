@@ -6,8 +6,6 @@ newtype SubscriptionTrialEndsAt =
     SubscriptionTrialEndsAt UTCTime
     deriving (Eq, Show, FromJSON)
 
-subscriptionTrialEndsAtToUtcTime :: SubscriptionTrialEndsAt -> UTCTime
-subscriptionTrialEndsAtToUtcTime (SubscriptionTrialEndsAt time) = time
+instance From UTCTime SubscriptionTrialEndsAt
 
-timeToSubscriptionTrialEndsAt :: UTCTime -> SubscriptionTrialEndsAt
-timeToSubscriptionTrialEndsAt = SubscriptionTrialEndsAt
+instance From SubscriptionTrialEndsAt UTCTime

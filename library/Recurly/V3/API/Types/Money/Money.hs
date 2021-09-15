@@ -3,7 +3,6 @@ module Recurly.V3.API.Types.Money.Money where
 import Recurlude
 
 import qualified Data.Scientific as Scientific
-import qualified Data.Text as Text
 import qualified Money
 
 -- | Thin wrapper around `Money.Dense "USD"`.
@@ -18,7 +17,7 @@ instance FromJSON DenseUSD where
       Just dense -> pure $ DenseUSD dense
 
 formatScientificFixed :: Scientific.Scientific -> Text
-formatScientificFixed = Text.pack . Scientific.formatScientific Scientific.Fixed (Just 4)
+formatScientificFixed = into @Text . Scientific.formatScientific Scientific.Fixed (Just 4)
 
 -- | Default ToJSON instance to convert `DenseUSD` into json dollars represented by `Money.defaultDecimalConf`.
 -- Also rounds half up.

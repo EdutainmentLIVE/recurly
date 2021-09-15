@@ -6,8 +6,6 @@ newtype TransactionStatusCode =
     TransactionStatusCode Text
     deriving (Eq, Show, FromJSON)
 
-transactionStatusCodeToText :: TransactionStatusCode -> Text
-transactionStatusCodeToText (TransactionStatusCode text) = text
+instance From Text TransactionStatusCode
 
-textToTransactionStatusCode :: Text -> TransactionStatusCode
-textToTransactionStatusCode = TransactionStatusCode
+instance From TransactionStatusCode Text

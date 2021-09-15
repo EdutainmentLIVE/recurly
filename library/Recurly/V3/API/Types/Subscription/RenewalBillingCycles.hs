@@ -6,8 +6,6 @@ newtype SubscriptionRenewalBillingCycles =
     SubscriptionRenewalBillingCycles Integer
     deriving (Eq, Show, FromJSON)
 
-subscriptionRenewalBillingCyclesToInteger :: SubscriptionRenewalBillingCycles -> Integer
-subscriptionRenewalBillingCyclesToInteger (SubscriptionRenewalBillingCycles integer) = integer
+instance From Integer SubscriptionRenewalBillingCycles
 
-integerToSubscriptionRenewalBillingCycles :: Integer -> SubscriptionRenewalBillingCycles
-integerToSubscriptionRenewalBillingCycles = SubscriptionRenewalBillingCycles
+instance From SubscriptionRenewalBillingCycles Integer

@@ -6,8 +6,6 @@ newtype SubscriptionExpiresAt =
     SubscriptionExpiresAt UTCTime
     deriving (Eq, Show, FromJSON)
 
-subscriptionExpiresAtToUtcTime :: SubscriptionExpiresAt -> UTCTime
-subscriptionExpiresAtToUtcTime (SubscriptionExpiresAt time) = time
+instance From UTCTime SubscriptionExpiresAt
 
-timeToSubscriptionExpiresAt :: UTCTime -> SubscriptionExpiresAt
-timeToSubscriptionExpiresAt = SubscriptionExpiresAt
+instance From SubscriptionExpiresAt UTCTime

@@ -8,8 +8,6 @@ newtype InvoiceTotal =
     InvoiceTotal Money.DenseUSD
     deriving (Eq, Show, FromJSON)
 
-invoiceTotalToDenseUSD :: InvoiceTotal -> Money.DenseUSD
-invoiceTotalToDenseUSD (InvoiceTotal denseUSD) = denseUSD
+instance From Money.DenseUSD InvoiceTotal
 
-denseUSDToInvoiceTotal :: Money.DenseUSD -> InvoiceTotal
-denseUSDToInvoiceTotal = InvoiceTotal
+instance From InvoiceTotal Money.DenseUSD

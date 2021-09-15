@@ -6,8 +6,6 @@ newtype CreditPaymentId =
     CreditPaymentId Text
     deriving (Eq, Show, FromJSON, ToJSON)
 
-creditPaymentIdToText :: CreditPaymentId -> Text
-creditPaymentIdToText (CreditPaymentId text) = text
+instance From Text CreditPaymentId
 
-textToCreditPaymentId :: Text -> CreditPaymentId
-textToCreditPaymentId = CreditPaymentId
+instance From CreditPaymentId Text

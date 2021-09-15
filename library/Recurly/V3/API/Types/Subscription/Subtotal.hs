@@ -8,8 +8,6 @@ newtype SubscriptionSubtotal =
     SubscriptionSubtotal Money.DenseUSD
     deriving (Eq, Show, FromJSON, ToJSON)
 
-subscriptionSubtotalToDenseUSD :: SubscriptionSubtotal -> Money.DenseUSD
-subscriptionSubtotalToDenseUSD (SubscriptionSubtotal denseUSD) = denseUSD
+instance From Money.DenseUSD SubscriptionSubtotal
 
-denseUSDToSubscriptionSubtotal :: Money.DenseUSD -> SubscriptionSubtotal
-denseUSDToSubscriptionSubtotal = SubscriptionSubtotal
+instance From SubscriptionSubtotal Money.DenseUSD

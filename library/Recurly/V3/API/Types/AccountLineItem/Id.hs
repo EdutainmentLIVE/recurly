@@ -6,8 +6,6 @@ newtype AccountLineItemId =
     AccountLineItemId Text
     deriving (Eq, Show, FromJSON, ToJSON)
 
-accountLineItemIdToText :: AccountLineItemId -> Text
-accountLineItemIdToText (AccountLineItemId text) = text
+instance From Text AccountLineItemId
 
-textToAccountLineItemId :: Text -> AccountLineItemId
-textToAccountLineItemId = AccountLineItemId
+instance From AccountLineItemId Text

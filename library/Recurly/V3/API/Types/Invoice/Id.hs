@@ -6,8 +6,6 @@ newtype InvoiceId =
     InvoiceId Text
     deriving (Eq, Show, FromJSON, ToJSON)
 
-invoiceIdToText :: InvoiceId -> Text
-invoiceIdToText (InvoiceId text) = text
+instance From Text InvoiceId
 
-textToInvoiceId :: Text -> InvoiceId
-textToInvoiceId = InvoiceId
+instance From InvoiceId Text

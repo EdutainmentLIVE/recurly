@@ -6,6 +6,7 @@ import qualified Data.Aeson as Aeson
 import qualified Network.HTTP.Client as Client
 
 import qualified Recurly.V3.API.Types as Types
+import qualified Recurly.V3.API.Types.PathPiece as PathPiece
 import qualified Recurly.V3.Http as RecurlyApi
 import qualified Recurly.V3.Recurly as Recurly
 
@@ -15,7 +16,7 @@ getAccountSubscriptions
   -> m (Client.Response (Either RecurlyApi.RecurlyError [Types.Subscription]))
 getAccountSubscriptions accountCode = Recurly.liftRecurly $ do
   request <- RecurlyApi.makeRequest
-    ["accounts", Types.accountCodeToRecurlyText accountCode, "subscriptions"]
+    ["accounts", into @PathPiece.PathPiece accountCode, "subscriptions"]
   RecurlyApi.sendRequestList request
 
 getAccountCouponRedemptions
@@ -24,7 +25,7 @@ getAccountCouponRedemptions
   -> m (Client.Response (Either RecurlyApi.RecurlyError [Types.AccountCouponRedemption]))
 getAccountCouponRedemptions accountCode = Recurly.liftRecurly $ do
   request <- RecurlyApi.makeRequest
-    ["accounts", Types.accountCodeToRecurlyText accountCode, "coupon_redemptions"]
+    ["accounts", into @PathPiece.PathPiece accountCode, "coupon_redemptions"]
   RecurlyApi.sendRequestList request
 
 getActiveAccountCouponRedemption
@@ -33,7 +34,7 @@ getActiveAccountCouponRedemption
   -> m (Client.Response (Either RecurlyApi.RecurlyError [Types.AccountCouponRedemption]))
 getActiveAccountCouponRedemption accountCode = Recurly.liftRecurly $ do
   request <- RecurlyApi.makeRequest
-    ["accounts", Types.accountCodeToRecurlyText accountCode, "coupon_redemptions", "active"]
+    ["accounts", into @PathPiece.PathPiece accountCode, "coupon_redemptions", "active"]
   RecurlyApi.sendRequestList request
 
 postAccount
@@ -52,7 +53,7 @@ putAccount
   -> Types.PutAccount
   -> m (Client.Response (Either RecurlyApi.RecurlyError Types.Account))
 putAccount accountCode account = Recurly.liftRecurly $ do
-  request <- RecurlyApi.makeRequest ["accounts", Types.accountCodeToRecurlyText accountCode]
+  request <- RecurlyApi.makeRequest ["accounts", into @PathPiece.PathPiece accountCode]
   RecurlyApi.sendRequest request
     { Client.method = methodPut
     , Client.requestBody = Client.RequestBodyLBS $ Aeson.encode account
@@ -64,7 +65,7 @@ postAccountLineItem
   -> Recurly.Recurly (Client.Response (Either RecurlyApi.RecurlyError Types.AccountLineItem))
 postAccountLineItem accountCode accountLineItem = do
   request <- RecurlyApi.makeRequest
-    ["accounts", Types.accountCodeToRecurlyText accountCode, "line_items"]
+    ["accounts", into @PathPiece.PathPiece accountCode, "line_items"]
   RecurlyApi.sendRequest request
     { Client.method = methodPost
     , Client.requestBody = Client.RequestBodyLBS $ Aeson.encode accountLineItem
@@ -76,5 +77,5 @@ deleteActiveCouponRedemptions
   -> m (Client.Response (Either RecurlyApi.RecurlyError Types.AccountCouponRedemption))
 deleteActiveCouponRedemptions accountCode = Recurly.liftRecurly $ do
   request <- RecurlyApi.makeRequest
-    ["accounts", Types.accountCodeToRecurlyText accountCode, "coupon_redemptions", "active"]
+    ["accounts", into @PathPiece.PathPiece accountCode, "coupon_redemptions", "active"]
   RecurlyApi.sendRequest request { Client.method = methodDelete }

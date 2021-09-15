@@ -6,8 +6,6 @@ newtype PaymentMethodFirstSix =
     PaymentMethodFirstSix Text
     deriving (Eq, Show, FromJSON)
 
-paymentmethodFirstSixToText :: PaymentMethodFirstSix -> Text
-paymentmethodFirstSixToText (PaymentMethodFirstSix text) = text
+instance From Text PaymentMethodFirstSix
 
-textToPaymentMethodFirstSix :: Text -> PaymentMethodFirstSix
-textToPaymentMethodFirstSix = PaymentMethodFirstSix
+instance From PaymentMethodFirstSix Text

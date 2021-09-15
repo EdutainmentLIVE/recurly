@@ -6,8 +6,6 @@ newtype TransactionGatewayApprovalCode =
     TransactionGatewayApprovalCode Text
     deriving (Eq, Show, FromJSON)
 
-transactionGatewayApprovalCodeToText :: TransactionGatewayApprovalCode -> Text
-transactionGatewayApprovalCodeToText (TransactionGatewayApprovalCode text) = text
+instance From Text TransactionGatewayApprovalCode
 
-textToTransactionGatewayApprovalCode :: Text -> TransactionGatewayApprovalCode
-textToTransactionGatewayApprovalCode = TransactionGatewayApprovalCode
+instance From TransactionGatewayApprovalCode Text

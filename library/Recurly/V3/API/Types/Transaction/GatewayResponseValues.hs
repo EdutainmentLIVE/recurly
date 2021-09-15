@@ -8,5 +8,4 @@ newtype TransactionGatewayResponseValues =
     TransactionGatewayResponseValues (Map String Aeson.Value)
     deriving (Eq, Show, FromJSON)
 
-transactionGatewayResponseValuesToMap :: TransactionGatewayResponseValues -> Map String Aeson.Value
-transactionGatewayResponseValuesToMap (TransactionGatewayResponseValues mahp) = mahp
+instance From TransactionGatewayResponseValues (Map String Aeson.Value) where

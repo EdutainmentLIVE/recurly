@@ -6,8 +6,6 @@ newtype PlanCode =
     PlanCode Text
     deriving (Eq, Show, FromJSON, ToJSON)
 
-planCodeToText :: PlanCode -> Text
-planCodeToText (PlanCode text) = text
+instance From Text PlanCode
 
-textToPlanCode :: Text -> PlanCode
-textToPlanCode = PlanCode
+instance From PlanCode Text

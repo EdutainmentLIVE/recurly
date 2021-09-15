@@ -6,8 +6,8 @@ newtype InvoiceNetTerms =
     InvoiceNetTerms Integer
     deriving (Eq, Show, FromJSON)
 
-invoiceNetTermsToInteger :: InvoiceNetTerms -> Integer
-invoiceNetTermsToInteger (InvoiceNetTerms integer) = integer
+instance TryFrom Integer InvoiceNetTerms where
+  tryFrom = maybeTryFrom $ \invoiceNetTerms ->
+    if invoiceNetTerms >= 0 then Just $ InvoiceNetTerms invoiceNetTerms else Nothing
 
-integerToInvoiceNetTerms :: Integer -> Maybe InvoiceNetTerms
-integerToInvoiceNetTerms integer = if integer >= 0 then Just $ InvoiceNetTerms integer else Nothing
+instance From InvoiceNetTerms Integer

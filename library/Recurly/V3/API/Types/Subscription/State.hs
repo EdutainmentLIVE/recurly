@@ -10,24 +10,27 @@ data SubscriptionState = ActiveSubscriptionState
                        | PausedSubscriptionState
   deriving (Eq, Show)
 
+instance ToJSON SubscriptionState where
+  toJSON = toJSON . into @Text
+
 instance FromJSON SubscriptionState where
-  parseJSON = withText "SubscriptionState" $ eitherFail . textToSubscriptionState
+  parseJSON = withText "SubscriptionState" $ eitherFail . tryInto @SubscriptionState
 
-subscriptionStateToText :: SubscriptionState -> Text
-subscriptionStateToText subscriptionstate = case subscriptionstate of
-  ActiveSubscriptionState -> "active"
-  CanceledSubscriptionState -> "canceled"
-  ExpiredSubscriptionState -> "expired"
-  FailedSubscriptionState -> "failed"
-  FutureSubscriptionState -> "future"
-  PausedSubscriptionState -> "paused"
+instance TryFrom Text SubscriptionState where
+  tryFrom = maybeTryFrom $ \subscriptionState -> case subscriptionState of
+    "active" -> Just ActiveSubscriptionState
+    "canceled" -> Just CanceledSubscriptionState
+    "expired" -> Just ExpiredSubscriptionState
+    "failed" -> Just FailedSubscriptionState
+    "future" -> Just FutureSubscriptionState
+    "paused" -> Just PausedSubscriptionState
+    _ -> Nothing
 
-textToSubscriptionState :: Text -> Either String SubscriptionState
-textToSubscriptionState subscriptionType = case subscriptionType of
-  "active" -> Right ActiveSubscriptionState
-  "canceled" -> Right CanceledSubscriptionState
-  "expired" -> Right ExpiredSubscriptionState
-  "failed" -> Right FailedSubscriptionState
-  "future" -> Right FutureSubscriptionState
-  "paused" -> Right PausedSubscriptionState
-  _ -> Left $ "Failed to parse SubscriptionState from text: " <> show subscriptionType
+instance From SubscriptionState Text where
+  from subscriptionState = case subscriptionState of
+    ActiveSubscriptionState -> "active"
+    CanceledSubscriptionState -> "canceled"
+    ExpiredSubscriptionState -> "expired"
+    FailedSubscriptionState -> "failed"
+    FutureSubscriptionState -> "future"
+    PausedSubscriptionState -> "paused"

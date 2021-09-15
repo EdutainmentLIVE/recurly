@@ -6,16 +6,16 @@ data Currency = USD
   deriving (Eq, Show)
 
 instance ToJSON Currency where
-  toJSON = toJSON . currencyToText
+  toJSON = toJSON . into @Text
 
 instance FromJSON Currency where
-  parseJSON = withText "Currency" $ eitherFail . textToCurrency
+  parseJSON = withText "Currency" $ eitherFail . tryInto @Currency
 
-currencyToText :: Currency -> Text
-currencyToText currency = case currency of
-  USD -> "USD"
+instance TryFrom Text Currency where
+  tryFrom = maybeTryFrom $ \currency -> case currency of
+    "USD" -> Just USD
+    _ -> Nothing
 
-textToCurrency :: Text -> Either String Currency
-textToCurrency currency = case currency of
-  "USD" -> Right USD
-  _ -> Left $ "Failed to parse Currency from text: " <> show currency
+instance From Currency Text where
+  from currency = case currency of
+    USD -> "USD"

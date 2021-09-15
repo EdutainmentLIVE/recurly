@@ -6,8 +6,6 @@ newtype InvoiceNumber =
     InvoiceNumber Text
     deriving (Eq, Show, FromJSON, ToJSON)
 
-invoiceNumberToText :: InvoiceNumber -> Text
-invoiceNumberToText (InvoiceNumber text) = text
+instance From Text InvoiceNumber
 
-textToInvoiceNumber :: Text -> InvoiceNumber
-textToInvoiceNumber = InvoiceNumber
+instance From InvoiceNumber Text

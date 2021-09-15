@@ -8,8 +8,6 @@ newtype TransactionAmount =
     TransactionAmount Money.DenseUSD
     deriving (Eq, Show, FromJSON)
 
-transactionAmountToDenseUSD :: TransactionAmount -> Money.DenseUSD
-transactionAmountToDenseUSD (TransactionAmount denseUSD) = denseUSD
+instance From Money.DenseUSD TransactionAmount
 
-denseUSDToTransactionAmount :: Money.DenseUSD -> TransactionAmount
-denseUSDToTransactionAmount = TransactionAmount
+instance From TransactionAmount Money.DenseUSD

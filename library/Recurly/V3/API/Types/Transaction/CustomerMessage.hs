@@ -6,8 +6,6 @@ newtype TransactionCustomerMessage =
     TransactionCustomerMessage Text
     deriving (Eq, Show, FromJSON)
 
-transactionCustomerMessageToText :: TransactionCustomerMessage -> Text
-transactionCustomerMessageToText (TransactionCustomerMessage text) = text
+instance From Text TransactionCustomerMessage
 
-textToTransactionCustomerMessage :: Text -> TransactionCustomerMessage
-textToTransactionCustomerMessage = TransactionCustomerMessage
+instance From TransactionCustomerMessage Text

@@ -14,30 +14,30 @@ data InvoiceState
   deriving (Eq, Show)
 
 instance ToJSON InvoiceState where
-  toJSON = toJSON . invoiceStateToText
+  toJSON = toJSON . into @Text
 
 instance FromJSON InvoiceState where
-  parseJSON = withText "InvoiceState" $ eitherFail . textToInvoiceState
+  parseJSON = withText "InvoiceState" $ eitherFail . tryInto @InvoiceState
 
-invoiceStateToText :: InvoiceState -> Text
-invoiceStateToText invoiceState = case invoiceState of
-  ClosedInvoiceState -> "closed"
-  FailedInvoiceState -> "failed"
-  OpenInvoiceState -> "open"
-  PaidInvoiceState -> "paid"
-  PastDueInvoiceState -> "past_due"
-  PendingInvoiceState -> "pending"
-  ProcessingInvoiceState -> "processing"
-  VoidedInvoiceState -> "voided"
+instance TryFrom Text InvoiceState where
+  tryFrom = maybeTryFrom $ \invoiceState -> case invoiceState of
+    "closed" -> Just ClosedInvoiceState
+    "failed" -> Just FailedInvoiceState
+    "open" -> Just OpenInvoiceState
+    "paid" -> Just PaidInvoiceState
+    "past_due" -> Just PastDueInvoiceState
+    "pending" -> Just PendingInvoiceState
+    "processing" -> Just ProcessingInvoiceState
+    "voided" -> Just VoidedInvoiceState
+    _ -> Nothing
 
-textToInvoiceState :: Text -> Either String InvoiceState
-textToInvoiceState invoiceState = case invoiceState of
-  "closed" -> Right ClosedInvoiceState
-  "failed" -> Right FailedInvoiceState
-  "open" -> Right OpenInvoiceState
-  "paid" -> Right PaidInvoiceState
-  "past_due" -> Right PastDueInvoiceState
-  "pending" -> Right PendingInvoiceState
-  "processing" -> Right ProcessingInvoiceState
-  "voided" -> Right VoidedInvoiceState
-  _ -> Left $ "Failed to parse InvoiceState from text: " <> show invoiceState
+instance From InvoiceState Text where
+  from invoiceState = case invoiceState of
+    ClosedInvoiceState -> "closed"
+    FailedInvoiceState -> "failed"
+    OpenInvoiceState -> "open"
+    PaidInvoiceState -> "paid"
+    PastDueInvoiceState -> "past_due"
+    PendingInvoiceState -> "pending"
+    ProcessingInvoiceState -> "processing"
+    VoidedInvoiceState -> "voided"

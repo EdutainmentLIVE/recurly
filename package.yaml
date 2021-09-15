@@ -11,6 +11,7 @@ default-extensions:
   - DataKinds
   - DeriveGeneric
   - FlexibleContexts
+  - FlexibleInstances
   - GeneralizedNewtypeDeriving
   - MultiParamTypeClasses
   - OverloadedStrings
@@ -43,6 +44,7 @@ dependencies:
   transformers-base: ">=0.4.5 && <0.5"
   transformers: ">=0.5.6 && <0.6"
   unliftio-core: ">=0.2.0 && <0.3"
+  witch: ">=0.3 && <0.4"
   xml-conduit: ">=1.9.0 && <2.0"
   xml-lens: ">=0.2 && <0.4"
 

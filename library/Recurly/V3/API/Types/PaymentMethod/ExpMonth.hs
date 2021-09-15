@@ -6,8 +6,6 @@ newtype PaymentMethodExpMonth =
     PaymentMethodExpMonth Integer
     deriving (Eq, Show, FromJSON)
 
-paymentmethodExpMonthToInteger :: PaymentMethodExpMonth -> Integer
-paymentmethodExpMonthToInteger (PaymentMethodExpMonth integer) = integer
+instance From Integer PaymentMethodExpMonth
 
-integerToPaymentMethodExpMonth :: Integer -> PaymentMethodExpMonth
-integerToPaymentMethodExpMonth = PaymentMethodExpMonth
+instance From PaymentMethodExpMonth Integer

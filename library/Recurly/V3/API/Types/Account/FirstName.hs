@@ -6,8 +6,6 @@ newtype AccountFirstName =
     AccountFirstName Text
     deriving (Eq, Show, FromJSON, ToJSON)
 
-accountFirstNameToText :: AccountFirstName -> Text
-accountFirstNameToText (AccountFirstName text) = text
+instance From Text AccountFirstName
 
-textToAccountFirstName :: Text -> AccountFirstName
-textToAccountFirstName = AccountFirstName
+instance From AccountFirstName Text

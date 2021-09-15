@@ -6,8 +6,6 @@ newtype AccountEmail =
     AccountEmail Text
     deriving (Eq, Show, FromJSON, ToJSON)
 
-accountEmailToText :: AccountEmail -> Text
-accountEmailToText (AccountEmail text) = text
+instance From Text AccountEmail
 
-textToAccountEmail :: Text -> AccountEmail
-textToAccountEmail = AccountEmail
+instance From AccountEmail Text

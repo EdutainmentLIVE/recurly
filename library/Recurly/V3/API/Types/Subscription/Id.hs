@@ -6,8 +6,6 @@ newtype SubscriptionId =
     SubscriptionId Text
     deriving (Eq, Show, FromJSON)
 
-subscriptionIdToText :: SubscriptionId -> Text
-subscriptionIdToText (SubscriptionId text) = text
+instance From Text SubscriptionId
 
-textToSubscriptionId :: Text -> SubscriptionId
-textToSubscriptionId = SubscriptionId
+instance From SubscriptionId Text

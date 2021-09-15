@@ -6,8 +6,6 @@ newtype PaymentMethodRoutingNumberBank =
     PaymentMethodRoutingNumberBank Text
     deriving (Eq, Show, FromJSON)
 
-paymentmethodRoutingNumberBankToText :: PaymentMethodRoutingNumberBank -> Text
-paymentmethodRoutingNumberBankToText (PaymentMethodRoutingNumberBank text) = text
+instance From Text PaymentMethodRoutingNumberBank
 
-textToPaymentMethodRoutingNumberBank :: Text -> PaymentMethodRoutingNumberBank
-textToPaymentMethodRoutingNumberBank = PaymentMethodRoutingNumberBank
+instance From PaymentMethodRoutingNumberBank Text

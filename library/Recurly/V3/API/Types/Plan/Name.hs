@@ -6,8 +6,6 @@ newtype PlanName =
     PlanName Text
     deriving (Eq, Show, FromJSON, ToJSON)
 
-planNameToText :: PlanName -> Text
-planNameToText (PlanName text) = text
+instance From Text PlanName
 
-textToPlanName :: Text -> PlanName
-textToPlanName = PlanName
+instance From PlanName Text

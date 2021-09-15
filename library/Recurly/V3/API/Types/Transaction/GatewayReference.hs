@@ -6,8 +6,6 @@ newtype TransactionGatewayReference =
     TransactionGatewayReference Text
     deriving (Eq, Show, FromJSON)
 
-transactionGatewayReferenceToText :: TransactionGatewayReference -> Text
-transactionGatewayReferenceToText (TransactionGatewayReference text) = text
+instance From Text TransactionGatewayReference
 
-textToTransactionGatewayReference :: Text -> TransactionGatewayReference
-textToTransactionGatewayReference = TransactionGatewayReference
+instance From TransactionGatewayReference Text

@@ -6,8 +6,6 @@ newtype TransactionSuccess =
     TransactionSuccess Bool
     deriving (Eq, Show, FromJSON)
 
-transactionSuccessToBool :: TransactionSuccess -> Bool
-transactionSuccessToBool (TransactionSuccess b) = b
+instance From Bool TransactionSuccess
 
-boolToTransactionSuccess :: Bool -> TransactionSuccess
-boolToTransactionSuccess = TransactionSuccess
+instance From TransactionSuccess Bool

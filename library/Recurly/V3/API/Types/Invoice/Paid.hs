@@ -8,8 +8,6 @@ newtype InvoicePaid =
     InvoicePaid Money.DenseUSD
     deriving (Eq, Show, FromJSON)
 
-invoicePaidToDenseUSD :: InvoicePaid -> Money.DenseUSD
-invoicePaidToDenseUSD (InvoicePaid denseUSD) = denseUSD
+instance From Money.DenseUSD InvoicePaid
 
-denseUSDToInvoicePaid :: Money.DenseUSD -> InvoicePaid
-denseUSDToInvoicePaid = InvoicePaid
+instance From InvoicePaid Money.DenseUSD

@@ -8,7 +8,6 @@ import Data.CaseInsensitive (CI)
 import qualified Data.Foldable as Foldable
 import qualified Data.Monoid as Monoid
 import qualified Data.String as String
-import qualified Data.Text as Text
 import qualified Text.XML as Xml
 import qualified Text.XML.Lens as Lens
 import Text.XML.Lens ((...))
@@ -193,21 +192,21 @@ getDunningInfo notif rootName document =
     <*> previewEl getSubscriptionUuid rootName document
 
 getAccountCode :: CI Text -> Getter Xml.Document Types.AccountCode
-getAccountCode rootName = getEl rootName "account" "account_code" Types.textToAccountCode
+getAccountCode rootName = getEl rootName "account" "account_code" (into @Types.AccountCode)
 
 getSubscriptionUuid :: CI Text -> Getter Xml.Document Types.SubscriptionUuid
-getSubscriptionUuid rootName = getEl rootName "subscription" "uuid" Types.textToSubscriptionUuid
+getSubscriptionUuid rootName = getEl rootName "subscription" "uuid" (into @Types.SubscriptionUuid)
 
 -- Invoices don't have a uuid, not sure why the xml says uuid
 getInvoiceId :: CI Text -> Getter Xml.Document Types.InvoiceId
-getInvoiceId rootName = getEl rootName "invoice" "uuid" Types.textToInvoiceId
+getInvoiceId rootName = getEl rootName "invoice" "uuid" (into @Types.InvoiceId)
 
 getTransactionId :: CI Text -> Getter Xml.Document Types.TransactionId
-getTransactionId rootName = getEl rootName "transaction" "id" Types.textToTransactionId
+getTransactionId rootName = getEl rootName "transaction" "id" (into @Types.TransactionId)
 
 getCreditPaymentUuid :: CI Text -> Getter Xml.Document Types.CreditPaymentUuid
 getCreditPaymentUuid rootName =
-  getEl rootName "credit_payment" "uuid" Types.textToCreditPaymentUuid
+  getEl rootName "credit_payment" "uuid" (into @Types.CreditPaymentUuid)
 
 previewEl :: (CI Text -> Getter Xml.Document a) -> CI Text -> Xml.Document -> Maybe a
 previewEl getter = Lens.preview . getter
@@ -240,6 +239,6 @@ getNotificationAccountCode body = case Xml.parseLBS Xml.def body of
   Left _ -> Left InvalidXml
 
 documentNameToString :: Xml.Document -> String
-documentNameToString = Text.unpack . Xml.nameLocalName . Xml.elementName . Xml.documentRoot
+documentNameToString = into @String . Xml.nameLocalName . Xml.elementName . Xml.documentRoot
 
 type Getter from to = Lens.Getting (Monoid.First to) from to
