@@ -7,6 +7,7 @@
     - -XFlexibleInstances
     - -XGeneralizedNewtypeDeriving
     - -XMultiParamTypeClasses
+    - -XNamedFieldPuns
     - -XOverloadedStrings
     - -XScopedTypeVariables
     - -XTypeApplications

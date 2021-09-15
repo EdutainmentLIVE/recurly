@@ -188,6 +188,7 @@ library
       FlexibleInstances
       GeneralizedNewtypeDeriving
       MultiParamTypeClasses
+      NamedFieldPuns
       OverloadedStrings
       ScopedTypeVariables
       TypeApplications
