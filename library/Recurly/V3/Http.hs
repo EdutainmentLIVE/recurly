@@ -13,7 +13,6 @@ import qualified Network.HTTP.Client as Client
 import qualified Network.HTTP.Client.TLS as Tls
 import qualified Network.HTTP.Types as Http
 import qualified Network.URI as URI
-import qualified Numeric.Natural as Natural
 import qualified System.Random as Random
 import qualified Text.Printf as Printf
 
@@ -104,7 +103,7 @@ instance FromJSON a => FromJSON (RecurlyGet a) where
 
 sendRequestWith
   :: RequestId
-  -> Natural.Natural
+  -> Natural
   -> Client.Request
   -> Recurly.Recurly (Client.Response (Either RecurlyError LazyByteString.ByteString))
 sendRequestWith requestId attempt request = do
@@ -207,7 +206,7 @@ keepResponseTimeout exception = case exception of
 handleServerError
   :: Show body
   => RequestId
-  -> Natural.Natural
+  -> Natural
   -> Client.Request
   -> Client.Response body
   -> Recurly.Recurly
@@ -225,7 +224,7 @@ handleServerError requestId attempt request response = do
 
 handleTimeout
   :: RequestId
-  -> Natural.Natural
+  -> Natural
   -> Client.Request
   -> Client.HttpException
   -> Recurly.Recurly (Client.Response (Either RecurlyError LazyByteString.ByteString))

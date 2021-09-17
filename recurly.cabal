@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 8ce2425e6e853011af609d26ddeb46675475ba5c4aa89fd1dd39d9b60fd8ae8f
+-- hash: 6c29901b605e9f7b1dafcae5f6507cedfbd1049cc64a7ea0ebb08cb2e28c74d8
 
 name:           recurly
 version:        0.0.0.1
@@ -45,6 +45,9 @@ library
       Recurly.V3.API.Types.Coupon.AppliesToAllPlans
       Recurly.V3.API.Types.Coupon.Code
       Recurly.V3.API.Types.Coupon.DiscountType
+      Recurly.V3.API.Types.Coupon.DiscountType.DiscountCurrency
+      Recurly.V3.API.Types.Coupon.DiscountType.FixedValue
+      Recurly.V3.API.Types.Coupon.DiscountType.PercentValue
       Recurly.V3.API.Types.Coupon.Id
       Recurly.V3.API.Types.Coupon.Name
       Recurly.V3.API.Types.Coupon.Plan
