@@ -9,7 +9,7 @@ instance ToJSON CreditReason where
   toJSON = toJSON . into @Text
 
 instance FromJSON CreditReason where
-  parseJSON = withText "AccountLineItemCreditReason" $ eitherFail . tryInto @CreditReason
+  parseJSON = withText "AccountLineItem.CreditReason" $ eitherFail . tryInto @CreditReason
 
 instance TryFrom Text CreditReason where
   tryFrom = maybeTryFrom $ \creditReason -> case creditReason of

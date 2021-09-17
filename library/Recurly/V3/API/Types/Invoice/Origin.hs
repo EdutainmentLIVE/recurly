@@ -18,7 +18,7 @@ instance ToJSON Origin where
   toJSON = toJSON . into @Text
 
 instance FromJSON Origin where
-  parseJSON = withText "InvoiceOrigin" $ eitherFail . tryInto @Origin
+  parseJSON = withText "Invoice.Origin" $ eitherFail . tryInto @Origin
 
 instance TryFrom Text Origin where
   tryFrom = maybeTryFrom $ \origin -> case origin of

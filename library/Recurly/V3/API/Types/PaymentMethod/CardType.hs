@@ -21,7 +21,7 @@ instance ToJSON CardType where
   toJSON = toJSON . into @Text
 
 instance FromJSON CardType where
-  parseJSON = withText "PaymentMethodCardType" $ eitherFail . tryInto @CardType
+  parseJSON = withText "PaymentMethod.CardType" $ eitherFail . tryInto @CardType
 
 instance TryFrom Text CardType where
   tryFrom = maybeTryFrom $ \cardType -> case cardType of

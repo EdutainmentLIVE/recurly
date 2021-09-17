@@ -11,7 +11,7 @@ instance ToJSON AccountType where
   toJSON = toJSON . into @Text
 
 instance FromJSON AccountType where
-  parseJSON = withText "PaymentMethodAccountType" $ eitherFail . tryInto @AccountType
+  parseJSON = withText "PaymentMethod.AccountType" $ eitherFail . tryInto @AccountType
 
 instance TryFrom Text AccountType where
   tryFrom = maybeTryFrom $ \accountType -> case accountType of

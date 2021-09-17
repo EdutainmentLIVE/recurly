@@ -9,7 +9,7 @@ instance ToJSON Type where
   toJSON = toJSON . into @Text
 
 instance FromJSON Type where
-  parseJSON = withText "AccountLineItemType" $ eitherFail . tryInto @Type
+  parseJSON = withText "AccountLine.ItemType" $ eitherFail . tryInto @Type
 
 instance TryFrom Text Type where
   tryFrom = maybeTryFrom $ \type_ -> case type_ of

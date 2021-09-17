@@ -14,7 +14,7 @@ instance ToJSON State where
   toJSON = toJSON . into @Text
 
 instance FromJSON State where
-  parseJSON = withText "SubscriptionState" $ eitherFail . tryInto @State
+  parseJSON = withText "Subscription.State" $ eitherFail . tryInto @State
 
 instance TryFrom Text State where
   tryFrom = maybeTryFrom $ \state -> case state of

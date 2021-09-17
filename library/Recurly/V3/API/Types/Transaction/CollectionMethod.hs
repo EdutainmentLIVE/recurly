@@ -11,7 +11,7 @@ instance ToJSON CollectionMethod where
   toJSON = toJSON . into @Text
 
 instance FromJSON CollectionMethod where
-  parseJSON = withText "TransactionCollectionMethod" $ eitherFail . tryInto @CollectionMethod
+  parseJSON = withText "Transaction.CollectionMethod" $ eitherFail . tryInto @CollectionMethod
 
 instance TryFrom Text CollectionMethod where
   tryFrom = maybeTryFrom $ \transactionCollectionMethod -> case transactionCollectionMethod of

@@ -10,7 +10,7 @@ instance ToJSON State where
   toJSON = toJSON . into @Text
 
 instance FromJSON State where
-  parseJSON = withText "CouponRedemptionState" $ eitherFail . tryInto @State
+  parseJSON = withText "CouponRedemption.State" $ eitherFail . tryInto @State
 
 instance TryFrom Text State where
   tryFrom = maybeTryFrom $ \couponRedemptionState -> case couponRedemptionState of

@@ -25,7 +25,7 @@ instance ToJSON Object where
   toJSON = toJSON . into @Text
 
 instance FromJSON Object where
-  parseJSON = withText "PaymentMethodObject" $ eitherFail . tryInto @Object
+  parseJSON = withText "PaymentMethod.Object" $ eitherFail . tryInto @Object
 
 instance TryFrom Text Object where
   tryFrom = maybeTryFrom $ \object -> case object of

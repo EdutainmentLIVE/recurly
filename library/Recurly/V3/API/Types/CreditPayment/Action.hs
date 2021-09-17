@@ -13,7 +13,7 @@ instance ToJSON Action where
   toJSON = toJSON . into @Text
 
 instance FromJSON Action where
-  parseJSON = withText "CreditPaymentAction" $ eitherFail . tryInto @Action
+  parseJSON = withText "CreditPayment.Action" $ eitherFail . tryInto @Action
 
 instance TryFrom Text Action where
   tryFrom = maybeTryFrom $ \creditPaymentAction -> case creditPaymentAction of

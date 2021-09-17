@@ -18,7 +18,7 @@ instance ToJSON CvvCheck where
   toJSON = toJSON . into @Text
 
 instance FromJSON CvvCheck where
-  parseJSON = withText "TransactionCvvCheck" $ eitherFail . tryInto @CvvCheck
+  parseJSON = withText "Transaction.CvvCheck" $ eitherFail . tryInto @CvvCheck
 
 instance TryFrom Text CvvCheck where
   tryFrom = maybeTryFrom $ \transactionCvvCheck -> case transactionCvvCheck of

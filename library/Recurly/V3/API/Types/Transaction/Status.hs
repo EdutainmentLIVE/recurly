@@ -17,7 +17,7 @@ instance ToJSON Status where
   toJSON = toJSON . into @Text
 
 instance FromJSON Status where
-  parseJSON = withText "TransactionStatus" $ eitherFail . tryInto @Status
+  parseJSON = withText "Transaction.Status" $ eitherFail . tryInto @Status
 
 instance TryFrom Text Status where
   tryFrom = maybeTryFrom $ \transactionStatus -> case transactionStatus of
