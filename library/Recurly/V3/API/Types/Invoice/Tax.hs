@@ -4,10 +4,9 @@ import Recurlude
 
 import qualified Recurly.V3.API.Types.Money.Money as Money
 
-newtype InvoiceTax =
-    InvoiceTax Money.DenseUSD
+newtype Tax = Tax Money.DenseUSD
     deriving (Eq, Show, FromJSON)
 
-instance From Money.DenseUSD InvoiceTax
+instance From Money.DenseUSD Tax
 
-instance From InvoiceTax Money.DenseUSD
+instance From Tax Money.DenseUSD

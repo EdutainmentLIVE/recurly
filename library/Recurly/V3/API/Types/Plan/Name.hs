@@ -2,10 +2,9 @@ module Recurly.V3.API.Types.Plan.Name where
 
 import Recurlude
 
-newtype PlanName =
-    PlanName Text
+newtype Name = Name Text
     deriving (Eq, Show, FromJSON, ToJSON)
 
-instance From Text PlanName
+instance From Text Name
 
-instance From PlanName Text
+instance From Name Text

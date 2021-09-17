@@ -1,19 +1,26 @@
-module Recurly.V3.API.Types.Account where
+module Recurly.V3.API.Types.Account
+  ( module Recurly.V3.API.Types.Account
+  , Account.Code
+  , Account.Email
+  , Account.FirstName
+  , Account.Id
+  , Account.LastName
+  ) where
 
 import Recurlude
 
-import qualified Recurly.V3.API.Types.Account.Code as Types
-import qualified Recurly.V3.API.Types.Account.Email as Types
-import qualified Recurly.V3.API.Types.Account.FirstName as Types
-import qualified Recurly.V3.API.Types.Account.Id as Types
-import qualified Recurly.V3.API.Types.Account.LastName as Types
+import qualified Recurly.V3.API.Types.Account.Code as Account
+import qualified Recurly.V3.API.Types.Account.Email as Account
+import qualified Recurly.V3.API.Types.Account.FirstName as Account
+import qualified Recurly.V3.API.Types.Account.Id as Account
+import qualified Recurly.V3.API.Types.Account.LastName as Account
 
 data Account = Account
-  { accountId :: Types.AccountId
-  , accountCode :: Types.AccountCode
-  , accountEmail :: Types.AccountEmail
-  , accountFirstName :: Maybe Types.AccountFirstName
-  , accountLastName :: Maybe Types.AccountLastName
+  { id_ :: Account.Id
+  , code :: Account.Code
+  , email :: Account.Email
+  , firstName :: Maybe Account.FirstName
+  , lastName :: Maybe Account.LastName
   }
   deriving (Eq, Show)
 
@@ -24,10 +31,4 @@ instance FromJSON Account where
     email <- aesonRequired obj "email"
     firstName <- aesonOptional obj "first_name"
     lastName <- aesonOptional obj "last_name"
-    pure Account
-      { accountId = id_
-      , accountCode = code
-      , accountEmail = email
-      , accountFirstName = firstName
-      , accountLastName = lastName
-      }
+    pure Account { id_, code, email, firstName, lastName }

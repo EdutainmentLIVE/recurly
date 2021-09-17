@@ -2,10 +2,9 @@ module Recurly.V3.API.Types.PaymentMethod.GatewayToken where
 
 import Recurlude
 
-newtype PaymentMethodGatewayToken =
-    PaymentMethodGatewayToken Text
+newtype GatewayToken = GatewayToken Text
     deriving (Eq, Show, FromJSON)
 
-instance From Text PaymentMethodGatewayToken
+instance From Text GatewayToken
 
-instance From PaymentMethodGatewayToken Text
+instance From GatewayToken Text

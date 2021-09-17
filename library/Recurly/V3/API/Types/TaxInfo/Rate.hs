@@ -2,15 +2,13 @@ module Recurly.V3.API.Types.TaxInfo.Rate where
 
 import Recurlude
 
-newtype TaxInfoRate =
-    TaxInfoRate Rational
+newtype Rate = Rate Rational
     deriving (Eq, Show)
 
-instance FromJSON TaxInfoRate where
-  parseJSON = withScientific "TaxInfoRate" $ eitherFail . tryInto @TaxInfoRate . toRational
+instance FromJSON Rate where
+  parseJSON = withScientific "TaxInfoRate" $ eitherFail . tryInto @Rate . toRational
 
-instance TryFrom Rational TaxInfoRate where
-  tryFrom =
-    maybeTryFrom $ \rational -> if rational >= 0 then Just $ TaxInfoRate rational else Nothing
+instance TryFrom Rational Rate where
+  tryFrom = maybeTryFrom $ \rational -> if rational >= 0 then Just $ Rate rational else Nothing
 
-instance From TaxInfoRate Rational
+instance From Rate Rational

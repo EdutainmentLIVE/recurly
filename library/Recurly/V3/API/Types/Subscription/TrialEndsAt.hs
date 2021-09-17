@@ -2,10 +2,9 @@ module Recurly.V3.API.Types.Subscription.TrialEndsAt where
 
 import Recurlude
 
-newtype SubscriptionTrialEndsAt =
-    SubscriptionTrialEndsAt UTCTime
+newtype TrialEndsAt = TrialEndsAt UTCTime
     deriving (Eq, Show, FromJSON)
 
-instance From UTCTime SubscriptionTrialEndsAt
+instance From UTCTime TrialEndsAt
 
-instance From SubscriptionTrialEndsAt UTCTime
+instance From TrialEndsAt UTCTime

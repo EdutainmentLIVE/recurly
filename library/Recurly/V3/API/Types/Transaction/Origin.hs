@@ -2,48 +2,48 @@ module Recurly.V3.API.Types.Transaction.Origin where
 
 import Recurlude
 
-data TransactionOrigin
-  = ApiTransactionOrigin
-  | HppTransactionOrigin
-  | MerchantTransactionOrigin
-  | RecurlyAdminTransactionOrigin
-  | RecurlyjsTransactionOrigin
-  | RecurringTransactionOrigin
-  | TransparentTransactionOrigin
-  | ForceCollectTransactionOrigin
-  | RefundedExternallyTransactionOrigin
-  | ChargebackTransactionOrigin
+data Origin
+  = Api
+  | Hpp
+  | Merchant
+  | RecurlyAdmin
+  | Recurlyjs
+  | Recurring
+  | Transparent
+  | ForceCollect
+  | RefundedExternally
+  | Chargeback
   deriving (Eq, Show)
 
-instance ToJSON TransactionOrigin where
+instance ToJSON Origin where
   toJSON = toJSON . into @Text
 
-instance FromJSON TransactionOrigin where
-  parseJSON = withText "TransactionOrigin" $ eitherFail . tryInto @TransactionOrigin
+instance FromJSON Origin where
+  parseJSON = withText "Transaction.Origin" $ eitherFail . tryInto @Origin
 
-instance TryFrom Text TransactionOrigin where
+instance TryFrom Text Origin where
   tryFrom = maybeTryFrom $ \transactionOrigin -> case transactionOrigin of
-    "api" -> Just ApiTransactionOrigin
-    "hpp" -> Just HppTransactionOrigin
-    "merchant" -> Just MerchantTransactionOrigin
-    "recurly_admin" -> Just RecurlyAdminTransactionOrigin
-    "recurlyjs" -> Just RecurlyjsTransactionOrigin
-    "recurring" -> Just RecurringTransactionOrigin
-    "transparent" -> Just TransparentTransactionOrigin
-    "force_collect" -> Just ForceCollectTransactionOrigin
-    "refunded_externally" -> Just RefundedExternallyTransactionOrigin
-    "chargeback" -> Just ChargebackTransactionOrigin
+    "api" -> Just Api
+    "hpp" -> Just Hpp
+    "merchant" -> Just Merchant
+    "recurly_admin" -> Just RecurlyAdmin
+    "recurlyjs" -> Just Recurlyjs
+    "recurring" -> Just Recurring
+    "transparent" -> Just Transparent
+    "force_collect" -> Just ForceCollect
+    "refunded_externally" -> Just RefundedExternally
+    "chargeback" -> Just Chargeback
     _ -> Nothing
 
-instance From TransactionOrigin Text where
+instance From Origin Text where
   from transactionOrigin = case transactionOrigin of
-    ApiTransactionOrigin -> "api"
-    HppTransactionOrigin -> "hpp"
-    MerchantTransactionOrigin -> "merchant"
-    RecurlyAdminTransactionOrigin -> "recurly_admin"
-    RecurlyjsTransactionOrigin -> "recurlyjs"
-    RecurringTransactionOrigin -> "recurring"
-    TransparentTransactionOrigin -> "transparent"
-    ForceCollectTransactionOrigin -> "force_collect"
-    RefundedExternallyTransactionOrigin -> "refunded_externally"
-    ChargebackTransactionOrigin -> "chargeback"
+    Api -> "api"
+    Hpp -> "hpp"
+    Merchant -> "merchant"
+    RecurlyAdmin -> "recurly_admin"
+    Recurlyjs -> "recurlyjs"
+    Recurring -> "recurring"
+    Transparent -> "transparent"
+    ForceCollect -> "force_collect"
+    RefundedExternally -> "refunded_externally"
+    Chargeback -> "chargeback"

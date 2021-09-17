@@ -2,45 +2,45 @@ module Recurly.V3.API.Types.Invoice.Origin where
 
 import Recurlude
 
-data InvoiceOrigin
-  = PurchaseInvoiceOrigin
-  | LineItemRefundInvoiceOrigin
-  | OpenAmountRefundInvoiceOrigin
-  | RenewalInvoiceOrigin
-  | ImmediateChangeInvoiceOrigin
-  | TerminationInvoiceOrigin
-  | CreditInvoiceOrigin
-  | GiftCardInvoiceOrigin
-  | WriteOffInvoiceOrigin
+data Origin
+  = Purchase
+  | LineItemRefund
+  | OpenAmountRefund
+  | Renewal
+  | ImmediateChange
+  | Termination
+  | Credit
+  | GiftCard
+  | WriteOff
   deriving (Eq, Show)
 
-instance ToJSON InvoiceOrigin where
+instance ToJSON Origin where
   toJSON = toJSON . into @Text
 
-instance FromJSON InvoiceOrigin where
-  parseJSON = withText "InvoiceOrigin" $ eitherFail . tryInto @InvoiceOrigin
+instance FromJSON Origin where
+  parseJSON = withText "Invoice.Origin" $ eitherFail . tryInto @Origin
 
-instance TryFrom Text InvoiceOrigin where
-  tryFrom = maybeTryFrom $ \invoiceOrigin -> case invoiceOrigin of
-    "purchase" -> Just PurchaseInvoiceOrigin
-    "line_item_refund" -> Just LineItemRefundInvoiceOrigin
-    "open_amount_refund" -> Just OpenAmountRefundInvoiceOrigin
-    "renewal" -> Just RenewalInvoiceOrigin
-    "immediate_change" -> Just ImmediateChangeInvoiceOrigin
-    "termination" -> Just TerminationInvoiceOrigin
-    "credit" -> Just CreditInvoiceOrigin
-    "gift_card" -> Just GiftCardInvoiceOrigin
-    "write_off" -> Just WriteOffInvoiceOrigin
+instance TryFrom Text Origin where
+  tryFrom = maybeTryFrom $ \origin -> case origin of
+    "purchase" -> Just Purchase
+    "line_item_refund" -> Just LineItemRefund
+    "open_amount_refund" -> Just OpenAmountRefund
+    "renewal" -> Just Renewal
+    "immediate_change" -> Just ImmediateChange
+    "termination" -> Just Termination
+    "credit" -> Just Credit
+    "gift_card" -> Just GiftCard
+    "write_off" -> Just WriteOff
     _ -> Nothing
 
-instance From InvoiceOrigin Text where
-  from invoiceOrigin = case invoiceOrigin of
-    PurchaseInvoiceOrigin -> "purchase"
-    LineItemRefundInvoiceOrigin -> "line_item_refund"
-    OpenAmountRefundInvoiceOrigin -> "open_amount_refund"
-    RenewalInvoiceOrigin -> "renewal"
-    ImmediateChangeInvoiceOrigin -> "immediate_change"
-    TerminationInvoiceOrigin -> "termination"
-    CreditInvoiceOrigin -> "credit"
-    GiftCardInvoiceOrigin -> "gift_card"
-    WriteOffInvoiceOrigin -> "write_off"
+instance From Origin Text where
+  from origin = case origin of
+    Purchase -> "purchase"
+    LineItemRefund -> "line_item_refund"
+    OpenAmountRefund -> "open_amount_refund"
+    Renewal -> "renewal"
+    ImmediateChange -> "immediate_change"
+    Termination -> "termination"
+    Credit -> "credit"
+    GiftCard -> "gift_card"
+    WriteOff -> "write_off"

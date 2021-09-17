@@ -2,10 +2,9 @@ module Recurly.V3.API.Types.Subscription.CurrentPeriodEndsAt where
 
 import Recurlude
 
-newtype SubscriptionCurrentPeriodEndsAt =
-    SubscriptionCurrentPeriodEndsAt UTCTime
+newtype CurrentPeriodEndsAt = CurrentPeriodEndsAt UTCTime
     deriving (Eq, Ord, Show, FromJSON)
 
-instance From UTCTime SubscriptionCurrentPeriodEndsAt
+instance From UTCTime CurrentPeriodEndsAt
 
-instance From SubscriptionCurrentPeriodEndsAt UTCTime
+instance From CurrentPeriodEndsAt UTCTime

@@ -2,10 +2,9 @@ module Recurly.V3.API.Types.Transaction.IpAddressCountry where
 
 import Recurlude
 
-newtype TransactionIpAddressCountry =
-    TransactionIpAddressCountry Text
+newtype IpAddressCountry = IpAddressCountry Text
     deriving (Eq, Show, FromJSON)
 
-instance From Text TransactionIpAddressCountry
+instance From Text IpAddressCountry
 
-instance From TransactionIpAddressCountry Text
+instance From IpAddressCountry Text

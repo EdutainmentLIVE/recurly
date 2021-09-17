@@ -2,10 +2,9 @@ module Recurly.V3.API.Types.Subscription.RemainingBillingCycles where
 
 import Recurlude
 
-newtype SubscriptionRemainingBillingCycles =
-    SubscriptionRemainingBillingCycles Integer
+newtype RemainingBillingCycles = RemainingBillingCycles Integer
     deriving (Eq, Show, FromJSON)
 
-instance From Integer SubscriptionRemainingBillingCycles
+instance From Integer RemainingBillingCycles
 
-instance From SubscriptionRemainingBillingCycles Integer
+instance From RemainingBillingCycles Integer

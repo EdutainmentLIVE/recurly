@@ -2,10 +2,9 @@ module Recurly.V3.API.Types.AccountLineItem.Id where
 
 import Recurlude
 
-newtype AccountLineItemId =
-    AccountLineItemId Text
+newtype Id = Id Text
     deriving (Eq, Show, FromJSON, ToJSON)
 
-instance From Text AccountLineItemId
+instance From Text Id
 
-instance From AccountLineItemId Text
+instance From Id Text

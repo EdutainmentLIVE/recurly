@@ -2,28 +2,23 @@ module Recurly.V3.API.Types.Transaction.Invoice where
 
 import Recurlude
 
-import qualified Recurly.V3.API.Types.Invoice.Id as Types
-import qualified Recurly.V3.API.Types.Invoice.Number as Types
-import qualified Recurly.V3.API.Types.Invoice.State as Types
-import qualified Recurly.V3.API.Types.Invoice.Type as Types
+import qualified Recurly.V3.API.Types.Invoice.Id as Invoice
+import qualified Recurly.V3.API.Types.Invoice.Number as Invoice
+import qualified Recurly.V3.API.Types.Invoice.State as Invoice
+import qualified Recurly.V3.API.Types.Invoice.Type as Invoice
 
-data TransactionInvoice = TransactionInvoice
-  { transactionInvoiceId :: Types.InvoiceId
-  , transactionInvoiceNumber :: Types.InvoiceNumber
-  , transactionInvoiceType :: Types.InvoiceType
-  , transactionInvoiceState :: Types.InvoiceState
+data Invoice = Invoice
+  { id_ :: Invoice.Id
+  , number :: Invoice.Number
+  , type_ :: Invoice.Type
+  , state :: Invoice.State
   }
   deriving (Eq, Show)
 
-instance FromJSON TransactionInvoice where
+instance FromJSON Invoice where
   parseJSON = withObject "TransactionInvoice" $ \obj -> do
     id_ <- aesonRequired obj "id"
     number <- aesonRequired obj "number"
     type_ <- aesonRequired obj "type"
     state <- aesonRequired obj "state"
-    pure TransactionInvoice
-      { transactionInvoiceId = id_
-      , transactionInvoiceNumber = number
-      , transactionInvoiceType = type_
-      , transactionInvoiceState = state
-      }
+    pure Invoice { id_, number, type_, state }

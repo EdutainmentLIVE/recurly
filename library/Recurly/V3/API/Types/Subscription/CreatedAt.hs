@@ -2,10 +2,9 @@ module Recurly.V3.API.Types.Subscription.CreatedAt where
 
 import Recurlude
 
-newtype SubscriptionCreatedAt =
-    SubscriptionCreatedAt UTCTime
+newtype CreatedAt = CreatedAt UTCTime
     deriving (Eq, Show, FromJSON)
 
-instance From UTCTime SubscriptionCreatedAt
+instance From UTCTime CreatedAt
 
-instance From SubscriptionCreatedAt UTCTime
+instance From CreatedAt UTCTime

@@ -2,10 +2,9 @@ module Recurly.V3.API.Types.Coupon.Name where
 
 import Recurlude
 
-newtype CouponName =
-    CouponName Text
+newtype Name = Name Text
     deriving (Eq, Show, FromJSON, ToJSON)
 
-instance From Text CouponName
+instance From Text Name
 
-instance From CouponName Text
+instance From Name Text

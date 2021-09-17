@@ -1,24 +1,29 @@
-module Recurly.V3.API.Types.PostAccountLineItem where
+module Recurly.V3.API.Types.PostAccountLineItem
+  ( module Recurly.V3.API.Types.PostAccountLineItem
+  , AccountLineItem.CreditReason
+  , AccountLineItem.Type
+  , AccountLineItem.UnitAmount
+  ) where
 
 import Recurlude
 
-import qualified Recurly.V3.API.Types.AccountLineItem.CreditReason as Types
-import qualified Recurly.V3.API.Types.AccountLineItem.Type as Types
-import qualified Recurly.V3.API.Types.AccountLineItem.UnitAmount as Types
-import qualified Recurly.V3.API.Types.Currency as Types
+import qualified Recurly.V3.API.Types.AccountLineItem.CreditReason as AccountLineItem
+import qualified Recurly.V3.API.Types.AccountLineItem.Type as AccountLineItem
+import qualified Recurly.V3.API.Types.AccountLineItem.UnitAmount as AccountLineItem
+import qualified Recurly.V3.API.Types.Currency as Currency
 
 data PostAccountLineItem = PostAccountLineItem
-  { postAccountLineItemCurrency :: Types.Currency
-  , postAccountLineItemUnitAmount :: Types.AccountLineItemUnitAmount
-  , postAccountLineItemType :: Types.AccountLineItemType
-  , postAccountLineItemCreditReason :: Types.AccountLineItemCreditReason
+  { currency :: Currency.Currency
+  , unitAmount :: AccountLineItem.UnitAmount
+  , type_ :: AccountLineItem.Type
+  , creditReason :: AccountLineItem.CreditReason
   }
   deriving (Eq, Show)
 
 instance ToJSON PostAccountLineItem where
   toJSON = aesonPairHelper
-    [ ("currency", toJSON . postAccountLineItemCurrency)
-    , ("unit_amount", toJSON . postAccountLineItemUnitAmount)
-    , ("type", toJSON . postAccountLineItemType)
-    , ("credit_reason_code", toJSON . postAccountLineItemCreditReason)
+    [ ("currency", toJSON . currency)
+    , ("unit_amount", toJSON . unitAmount)
+    , ("type", toJSON . type_)
+    , ("credit_reason_code", toJSON . creditReason)
     ]

@@ -2,10 +2,9 @@ module Recurly.V3.API.Types.Account.Email where
 
 import Recurlude
 
-newtype AccountEmail =
-    AccountEmail Text
+newtype Email = Email Text
     deriving (Eq, Show, FromJSON, ToJSON)
 
-instance From Text AccountEmail
+instance From Text Email
 
-instance From AccountEmail Text
+instance From Email Text

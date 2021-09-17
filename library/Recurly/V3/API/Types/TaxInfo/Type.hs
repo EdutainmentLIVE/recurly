@@ -2,10 +2,9 @@ module Recurly.V3.API.Types.TaxInfo.Type where
 
 import Recurlude
 
-newtype TaxInfoType =
-    TaxInfoType Text
+newtype Type = Type Text
     deriving (Eq, Show, FromJSON, ToJSON)
 
-instance From Text TaxInfoType
+instance From Text Type
 
-instance From TaxInfoType Text
+instance From Type Text

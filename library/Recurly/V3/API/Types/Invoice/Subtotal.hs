@@ -4,10 +4,9 @@ import Recurlude
 
 import qualified Recurly.V3.API.Types.Money.Money as Money
 
-newtype InvoiceSubtotal =
-    InvoiceSubtotal Money.DenseUSD
+newtype Subtotal = Subtotal Money.DenseUSD
     deriving (Eq, Show, FromJSON)
 
-instance From Money.DenseUSD InvoiceSubtotal
+instance From Money.DenseUSD Subtotal
 
-instance From InvoiceSubtotal Money.DenseUSD
+instance From Subtotal Money.DenseUSD

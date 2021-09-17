@@ -1,20 +1,19 @@
 module Recurly.V3.Env.MaxAttempts where
 
-import qualified Numeric.Natural as Natural
+import Recurlude
+
 import qualified System.Envy as Envy
 import qualified Text.Read as Read
 
-newtype MaxAttempts = MaxAttempts Natural.Natural deriving (Eq)
+newtype MaxAttempts = MaxAttempts Natural deriving (Eq)
 
 instance Show MaxAttempts where
-  show = show . maxAttemptsToNatural
+  show = show . into @Natural
 
 instance Envy.Var MaxAttempts where
   toVar = show
-  fromVar = fmap naturalToMaxAttempts . Read.readMaybe
+  fromVar = fmap (from @Natural) . Read.readMaybe
 
-naturalToMaxAttempts :: Natural.Natural -> MaxAttempts
-naturalToMaxAttempts = MaxAttempts
+instance From Natural MaxAttempts
 
-maxAttemptsToNatural :: MaxAttempts -> Natural.Natural
-maxAttemptsToNatural (MaxAttempts natural) = natural
+instance From MaxAttempts Natural

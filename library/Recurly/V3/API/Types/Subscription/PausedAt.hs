@@ -2,10 +2,9 @@ module Recurly.V3.API.Types.Subscription.PausedAt where
 
 import Recurlude
 
-newtype SubscriptionPausedAt =
-    SubscriptionPausedAt UTCTime
+newtype PausedAt = PausedAt UTCTime
     deriving (Eq, Show, FromJSON)
 
-instance From UTCTime SubscriptionPausedAt
+instance From UTCTime PausedAt
 
-instance From SubscriptionPausedAt UTCTime
+instance From PausedAt UTCTime

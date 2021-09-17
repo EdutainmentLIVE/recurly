@@ -2,10 +2,9 @@ module Recurly.V3.API.Types.Transaction.CustomerMessage where
 
 import Recurlude
 
-newtype TransactionCustomerMessage =
-    TransactionCustomerMessage Text
+newtype CustomerMessage = CustomerMessage Text
     deriving (Eq, Show, FromJSON)
 
-instance From Text TransactionCustomerMessage
+instance From Text CustomerMessage
 
-instance From TransactionCustomerMessage Text
+instance From CustomerMessage Text

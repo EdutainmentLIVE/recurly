@@ -2,24 +2,24 @@ module Recurly.V3.API.Types.PaymentMethod.AccountType where
 
 import Recurlude
 
-data PaymentMethodAccountType
-  = CheckingPaymentMethodAccountType
-  | SavingsPaymentMethodAccountType
+data AccountType
+  = Checking
+  | Savings
   deriving (Eq, Show)
 
-instance ToJSON PaymentMethodAccountType where
+instance ToJSON AccountType where
   toJSON = toJSON . into @Text
 
-instance FromJSON PaymentMethodAccountType where
-  parseJSON = withText "PaymentMethodAccountType" $ eitherFail . tryInto @PaymentMethodAccountType
+instance FromJSON AccountType where
+  parseJSON = withText "PaymentMethod.AccountType" $ eitherFail . tryInto @AccountType
 
-instance TryFrom Text PaymentMethodAccountType where
-  tryFrom = maybeTryFrom $ \paymentMethodAccountType -> case paymentMethodAccountType of
-    "checking" -> Just CheckingPaymentMethodAccountType
-    "savings" -> Just SavingsPaymentMethodAccountType
+instance TryFrom Text AccountType where
+  tryFrom = maybeTryFrom $ \accountType -> case accountType of
+    "checking" -> Just Checking
+    "savings" -> Just Savings
     _ -> Nothing
 
-instance From PaymentMethodAccountType Text where
-  from paymentMethodAccountType = case paymentMethodAccountType of
-    CheckingPaymentMethodAccountType -> "checking"
-    SavingsPaymentMethodAccountType -> "savings"
+instance From AccountType Text where
+  from accountType = case accountType of
+    Checking -> "checking"
+    Savings -> "savings"

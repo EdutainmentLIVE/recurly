@@ -4,8 +4,7 @@ import Recurlude
 
 import qualified Data.Aeson as Aeson
 
-newtype TransactionGatewayResponseValues =
-    TransactionGatewayResponseValues (Map String Aeson.Value)
+newtype GatewayResponseValues = GatewayResponseValues (Map String Aeson.Value)
     deriving (Eq, Show, FromJSON)
 
-instance From TransactionGatewayResponseValues (Map String Aeson.Value) where
+instance From GatewayResponseValues (Map String Aeson.Value) where

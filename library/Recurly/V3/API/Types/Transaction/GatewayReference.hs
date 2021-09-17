@@ -2,10 +2,9 @@ module Recurly.V3.API.Types.Transaction.GatewayReference where
 
 import Recurlude
 
-newtype TransactionGatewayReference =
-    TransactionGatewayReference Text
+newtype GatewayReference = GatewayReference Text
     deriving (Eq, Show, FromJSON)
 
-instance From Text TransactionGatewayReference
+instance From Text GatewayReference
 
-instance From TransactionGatewayReference Text
+instance From GatewayReference Text

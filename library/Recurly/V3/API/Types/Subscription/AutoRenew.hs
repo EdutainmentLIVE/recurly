@@ -2,10 +2,9 @@ module Recurly.V3.API.Types.Subscription.AutoRenew where
 
 import Recurlude
 
-newtype SubscriptionAutoRenew =
-    SubscriptionAutoRenew Bool
+newtype AutoRenew = AutoRenew Bool
     deriving (Eq, Show, FromJSON)
 
-instance From Bool SubscriptionAutoRenew
+instance From Bool AutoRenew
 
-instance From SubscriptionAutoRenew Bool
+instance From AutoRenew Bool

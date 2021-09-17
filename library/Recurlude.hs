@@ -15,6 +15,7 @@ module Recurlude
   , module GHC.Generics
   , module Network.HTTP.Types
   , module Network.URI
+  , module Numeric.Natural
   , module Witch
   -- IO
   , Moon
@@ -24,6 +25,7 @@ module Recurlude
   -- Helpers
   , aesonOptional
   , aesonRequired
+  , aesonWDefault
   , aesonPair
   , aesonPairHelper
   , eitherFail
@@ -52,6 +54,7 @@ import GHC.Generics (Generic)
 import Network.HTTP.Types
   (HeaderName, Method, methodDelete, methodGet, methodPost, methodPut, statusCode)
 import Network.URI (URI)
+import Numeric.Natural (Natural)
 import Witch (From(..), TryFrom(..), into, maybeTryFrom, tryInto, via)
 
 import qualified Data.Aeson as Aeson
@@ -104,6 +107,9 @@ aesonOptional object key = object Aeson..:? into @Text key
 
 aesonRequired :: FromJSON value => Aeson.Object -> String -> Aeson.Parser value
 aesonRequired object key = object Aeson..: into @Text key
+
+aesonWDefault :: FromJSON value => value -> Aeson.Object -> String -> Aeson.Parser value
+aesonWDefault f object key = fmap (fromMaybe f) $ object Aeson..:? into @Text key
 
 aesonPair :: (ToJSON value, Aeson.KeyValue pair) => String -> value -> pair
 aesonPair key value = into @Text key Aeson..= value

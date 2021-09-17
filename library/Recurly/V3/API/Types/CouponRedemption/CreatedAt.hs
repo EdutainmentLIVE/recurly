@@ -2,10 +2,9 @@ module Recurly.V3.API.Types.CouponRedemption.CreatedAt where
 
 import Recurlude
 
-newtype CouponRedemptionCreatedAt =
-    CouponRedemptionCreatedAt UTCTime
+newtype CreatedAt = CreatedAt UTCTime
     deriving (Eq, Ord, Show, FromJSON, ToJSON)
 
-instance From UTCTime CouponRedemptionCreatedAt
+instance From UTCTime CreatedAt
 
-instance From CouponRedemptionCreatedAt UTCTime
+instance From CreatedAt UTCTime

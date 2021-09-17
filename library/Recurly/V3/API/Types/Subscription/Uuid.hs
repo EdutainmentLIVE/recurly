@@ -4,13 +4,12 @@ import Recurlude
 
 import qualified Recurly.V3.API.Types.PathPiece as PathPiece
 
-newtype SubscriptionUuid =
-    SubscriptionUuid Text
+newtype Uuid = Uuid Text
     deriving (Eq, Show, FromJSON)
 
-instance From Text SubscriptionUuid
+instance From Text Uuid
 
-instance From SubscriptionUuid Text
+instance From Uuid Text
 
-instance From SubscriptionUuid PathPiece.PathPiece where
+instance From Uuid PathPiece.PathPiece where
   from code = into @PathPiece.PathPiece $ "uuid-" <> into @Text code

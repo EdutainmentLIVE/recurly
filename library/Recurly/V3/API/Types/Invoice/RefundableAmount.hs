@@ -4,10 +4,9 @@ import Recurlude
 
 import qualified Recurly.V3.API.Types.Money.Money as Money
 
-newtype InvoiceRefundableAmount =
-    InvoiceRefundableAmount Money.DenseUSD
+newtype RefundableAmount = RefundableAmount Money.DenseUSD
     deriving (Eq, Show, FromJSON)
 
-instance From Money.DenseUSD InvoiceRefundableAmount
+instance From Money.DenseUSD RefundableAmount
 
-instance From InvoiceRefundableAmount Money.DenseUSD
+instance From RefundableAmount Money.DenseUSD

@@ -1,24 +1,30 @@
-module Recurly.V3.API.Types.PostAccount where
+module Recurly.V3.API.Types.PostAccount
+  ( module Recurly.V3.API.Types.PostAccount
+  , Account.Code
+  , Account.Email
+  , Account.FirstName
+  , Account.LastName
+  ) where
 
 import Recurlude
 
-import qualified Recurly.V3.API.Types.Account.Code as Types
-import qualified Recurly.V3.API.Types.Account.Email as Types
-import qualified Recurly.V3.API.Types.Account.FirstName as Types
-import qualified Recurly.V3.API.Types.Account.LastName as Types
+import qualified Recurly.V3.API.Types.Account.Code as Account
+import qualified Recurly.V3.API.Types.Account.Email as Account
+import qualified Recurly.V3.API.Types.Account.FirstName as Account
+import qualified Recurly.V3.API.Types.Account.LastName as Account
 
 data PostAccount = PostAccount
-  { postAccountCode :: Types.AccountCode
-  , postAccountEmail :: Types.AccountEmail
-  , postAccountFirstName :: Types.AccountFirstName
-  , postAccountLastName :: Types.AccountLastName
+  { code :: Account.Code
+  , email :: Account.Email
+  , firstName :: Account.FirstName
+  , lastName :: Account.LastName
   }
   deriving Show
 
 instance ToJSON PostAccount where
   toJSON = aesonPairHelper
-    [ ("code", toJSON . postAccountCode)
-    , ("email", toJSON . postAccountEmail)
-    , ("first_name", toJSON . postAccountFirstName)
-    , ("last_name", toJSON . postAccountLastName)
+    [ ("code", toJSON . code)
+    , ("email", toJSON . email)
+    , ("first_name", toJSON . firstName)
+    , ("last_name", toJSON . lastName)
     ]

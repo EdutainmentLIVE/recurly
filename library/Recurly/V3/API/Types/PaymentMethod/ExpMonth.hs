@@ -2,10 +2,9 @@ module Recurly.V3.API.Types.PaymentMethod.ExpMonth where
 
 import Recurlude
 
-newtype PaymentMethodExpMonth =
-    PaymentMethodExpMonth Integer
+newtype ExpMonth = ExpMonth Integer
     deriving (Eq, Show, FromJSON)
 
-instance From Integer PaymentMethodExpMonth
+instance From Integer ExpMonth
 
-instance From PaymentMethodExpMonth Integer
+instance From ExpMonth Integer

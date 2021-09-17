@@ -2,22 +2,22 @@ module Recurly.V3.API.Types.AccountLineItem.Type where
 
 import Recurlude
 
-data AccountLineItemType = Charge | Credit
+data Type = Charge | Credit
   deriving (Eq, Show)
 
-instance ToJSON AccountLineItemType where
+instance ToJSON Type where
   toJSON = toJSON . into @Text
 
-instance FromJSON AccountLineItemType where
-  parseJSON = withText "AccountLineItemType" $ eitherFail . tryInto @AccountLineItemType
+instance FromJSON Type where
+  parseJSON = withText "AccountLine.ItemType" $ eitherFail . tryInto @Type
 
-instance TryFrom Text AccountLineItemType where
-  tryFrom = maybeTryFrom $ \accountLineItemType -> case accountLineItemType of
+instance TryFrom Text Type where
+  tryFrom = maybeTryFrom $ \type_ -> case type_ of
     "charge" -> Just Charge
     "credit" -> Just Credit
     _ -> Nothing
 
-instance From AccountLineItemType Text where
-  from accountLineItemType = case accountLineItemType of
+instance From Type Text where
+  from type_ = case type_ of
     Charge -> "charge"
     Credit -> "credit"

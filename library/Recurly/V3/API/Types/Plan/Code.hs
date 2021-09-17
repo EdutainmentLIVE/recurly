@@ -2,10 +2,9 @@ module Recurly.V3.API.Types.Plan.Code where
 
 import Recurlude
 
-newtype PlanCode =
-    PlanCode Text
+newtype Code = Code Text
     deriving (Eq, Show, FromJSON, ToJSON)
 
-instance From Text PlanCode
+instance From Text Code
 
-instance From PlanCode Text
+instance From Code Text

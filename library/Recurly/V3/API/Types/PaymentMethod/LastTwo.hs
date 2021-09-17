@@ -2,10 +2,9 @@ module Recurly.V3.API.Types.PaymentMethod.LastTwo where
 
 import Recurlude
 
-newtype PaymentMethodLastTwo =
-    PaymentMethodLastTwo Text
+newtype LastTwo = LastTwo Text
     deriving (Eq, Show, FromJSON)
 
-instance From Text PaymentMethodLastTwo
+instance From Text LastTwo
 
-instance From PaymentMethodLastTwo Text
+instance From LastTwo Text

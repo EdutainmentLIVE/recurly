@@ -2,10 +2,9 @@ module Recurly.V3.API.Types.Transaction.GatewayMessage where
 
 import Recurlude
 
-newtype TransactionGatewayMessage =
-    TransactionGatewayMessage Text
+newtype GatewayMessage = GatewayMessage Text
     deriving (Eq, Show, FromJSON)
 
-instance From Text TransactionGatewayMessage
+instance From Text GatewayMessage
 
-instance From TransactionGatewayMessage Text
+instance From GatewayMessage Text

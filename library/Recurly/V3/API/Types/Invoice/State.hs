@@ -2,42 +2,42 @@ module Recurly.V3.API.Types.Invoice.State where
 
 import Recurlude
 
-data InvoiceState
-  = ClosedInvoiceState
-  | FailedInvoiceState
-  | OpenInvoiceState
-  | PaidInvoiceState
-  | PastDueInvoiceState
-  | PendingInvoiceState
-  | ProcessingInvoiceState
-  | VoidedInvoiceState
+data State
+  = Closed
+  | Failed
+  | Open
+  | Paid
+  | PastDue
+  | Pending
+  | Processing
+  | Voided
   deriving (Eq, Show)
 
-instance ToJSON InvoiceState where
+instance ToJSON State where
   toJSON = toJSON . into @Text
 
-instance FromJSON InvoiceState where
-  parseJSON = withText "InvoiceState" $ eitherFail . tryInto @InvoiceState
+instance FromJSON State where
+  parseJSON = withText "Invoice.State" $ eitherFail . tryInto @State
 
-instance TryFrom Text InvoiceState where
-  tryFrom = maybeTryFrom $ \invoiceState -> case invoiceState of
-    "closed" -> Just ClosedInvoiceState
-    "failed" -> Just FailedInvoiceState
-    "open" -> Just OpenInvoiceState
-    "paid" -> Just PaidInvoiceState
-    "past_due" -> Just PastDueInvoiceState
-    "pending" -> Just PendingInvoiceState
-    "processing" -> Just ProcessingInvoiceState
-    "voided" -> Just VoidedInvoiceState
+instance TryFrom Text State where
+  tryFrom = maybeTryFrom $ \state -> case state of
+    "closed" -> Just Closed
+    "failed" -> Just Failed
+    "open" -> Just Open
+    "paid" -> Just Paid
+    "past_due" -> Just PastDue
+    "pending" -> Just Pending
+    "processing" -> Just Processing
+    "voided" -> Just Voided
     _ -> Nothing
 
-instance From InvoiceState Text where
-  from invoiceState = case invoiceState of
-    ClosedInvoiceState -> "closed"
-    FailedInvoiceState -> "failed"
-    OpenInvoiceState -> "open"
-    PaidInvoiceState -> "paid"
-    PastDueInvoiceState -> "past_due"
-    PendingInvoiceState -> "pending"
-    ProcessingInvoiceState -> "processing"
-    VoidedInvoiceState -> "voided"
+instance From State Text where
+  from state = case state of
+    Closed -> "closed"
+    Failed -> "failed"
+    Open -> "open"
+    Paid -> "paid"
+    PastDue -> "past_due"
+    Pending -> "pending"
+    Processing -> "processing"
+    Voided -> "voided"

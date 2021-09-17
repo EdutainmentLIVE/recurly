@@ -12,7 +12,11 @@ import qualified Text.XML as Xml
 import qualified Text.XML.Lens as Lens
 import Text.XML.Lens ((...))
 
-import qualified Recurly.V3.API.Types as Types
+import qualified Recurly.V3.API.Types.Account as Account
+import qualified Recurly.V3.API.Types.CreditPayment as CreditPayment
+import qualified Recurly.V3.API.Types.Invoice as Invoice
+import qualified Recurly.V3.API.Types.Subscription as Subscription
+import qualified Recurly.V3.API.Types.Transaction as Transaction
 
 data WebhookError
   = InvalidXml
@@ -23,54 +27,54 @@ data WebhookError
 instance Exception WebhookError
 
 data Notification
-  = AccountNew Types.AccountCode
-  | AccountUpdated Types.AccountCode
-  | AccountCanceled Types.AccountCode
-  | AccountBillingInfoUpdated Types.AccountCode
-  | AccountBillingInfoUpdateFailed Types.AccountCode
-  | SubscriptionNew Types.AccountCode Types.SubscriptionUuid
-  | SubscriptionUpdated Types.AccountCode Types.SubscriptionUuid
-  | SubscriptionCanceled Types.AccountCode Types.SubscriptionUuid
-  | SubscriptionExpired Types.AccountCode Types.SubscriptionUuid
-  | SubscriptionRenewed Types.AccountCode Types.SubscriptionUuid
-  | SubscriptionReactivated Types.AccountCode Types.SubscriptionUuid
-  | SubscriptionPaused Types.AccountCode Types.SubscriptionUuid
-  | SubscriptionResumed Types.AccountCode Types.SubscriptionUuid
-  | SubscriptionScheduledPause Types.AccountCode Types.SubscriptionUuid
-  | SubscriptionPauseModified Types.AccountCode Types.SubscriptionUuid
-  | SubscriptionPausedRenewal Types.AccountCode Types.SubscriptionUuid
-  | SubscriptionPauseCanceled Types.AccountCode Types.SubscriptionUuid
-  | InvoiceNewCharge Types.AccountCode Types.InvoiceId
-  | InvoiceProcessingCharge Types.AccountCode Types.InvoiceId
-  | InvoicePastDueCharge Types.AccountCode Types.InvoiceId
-  | InvoicePaidCharge Types.AccountCode Types.InvoiceId
-  | InvoiceFailedCharge Types.AccountCode Types.InvoiceId
-  | InvoiceReopenedCharge Types.AccountCode Types.InvoiceId
-  | InvoiceUpdatedCharge Types.AccountCode Types.InvoiceId
-  | InvoiceNewCredit Types.AccountCode Types.InvoiceId
-  | InvoiceProcessingCredit Types.AccountCode Types.InvoiceId
-  | InvoiceClosedCredit Types.AccountCode Types.InvoiceId
-  | InvoiceVoidedCredit Types.AccountCode Types.InvoiceId
-  | InvoiceReopenedCredit Types.AccountCode Types.InvoiceId
-  | InvoiceOpenCredit Types.AccountCode Types.InvoiceId
-  | InvoiceUpdatedCredit Types.AccountCode Types.InvoiceId
-  | InvoiceNew Types.AccountCode Types.InvoiceId
-  | InvoiceProcessing Types.AccountCode Types.InvoiceId
-  | InvoiceClosed Types.AccountCode Types.InvoiceId
-  | InvoicePastDue Types.AccountCode Types.InvoiceId
-  | PaymentScheduled Types.AccountCode Types.TransactionId
-  | PaymentProcessing Types.AccountCode Types.TransactionId
-  | PaymentSuccessful Types.AccountCode Types.TransactionId
-  | PaymentFailed Types.AccountCode Types.TransactionId
-  | PaymentSuccessfulRefund Types.AccountCode Types.TransactionId
-  | PaymentVoid Types.AccountCode Types.TransactionId
-  | PaymentFraudInfoUpdated Types.AccountCode Types.TransactionId
-  | PaymentTransactionStatusUpdated Types.AccountCode Types.TransactionId
-  | PaymentTransactionAuthorized Types.AccountCode Types.TransactionId
-  | CreditPaymentNew Types.AccountCode Types.CreditPaymentUuid
-  | CreditPaymentVoided Types.AccountCode Types.CreditPaymentUuid
-  | LegacyDunningEventNew Types.AccountCode Types.InvoiceId Types.SubscriptionUuid Types.TransactionId
-  | DunningEventNew Types.AccountCode Types.InvoiceId Types.SubscriptionUuid
+  = AccountNew Account.Code
+  | AccountUpdated Account.Code
+  | AccountCanceled Account.Code
+  | AccountBillingInfoUpdated Account.Code
+  | AccountBillingInfoUpdateFailed Account.Code
+  | SubscriptionNew Account.Code Subscription.Uuid
+  | SubscriptionUpdated Account.Code Subscription.Uuid
+  | SubscriptionCanceled Account.Code Subscription.Uuid
+  | SubscriptionExpired Account.Code Subscription.Uuid
+  | SubscriptionRenewed Account.Code Subscription.Uuid
+  | SubscriptionReactivated Account.Code Subscription.Uuid
+  | SubscriptionPaused Account.Code Subscription.Uuid
+  | SubscriptionResumed Account.Code Subscription.Uuid
+  | SubscriptionScheduledPause Account.Code Subscription.Uuid
+  | SubscriptionPauseModified Account.Code Subscription.Uuid
+  | SubscriptionPausedRenewal Account.Code Subscription.Uuid
+  | SubscriptionPauseCanceled Account.Code Subscription.Uuid
+  | InvoiceNewCharge Account.Code Invoice.Id
+  | InvoiceProcessingCharge Account.Code Invoice.Id
+  | InvoicePastDueCharge Account.Code Invoice.Id
+  | InvoicePaidCharge Account.Code Invoice.Id
+  | InvoiceFailedCharge Account.Code Invoice.Id
+  | InvoiceReopenedCharge Account.Code Invoice.Id
+  | InvoiceUpdatedCharge Account.Code Invoice.Id
+  | InvoiceNewCredit Account.Code Invoice.Id
+  | InvoiceProcessingCredit Account.Code Invoice.Id
+  | InvoiceClosedCredit Account.Code Invoice.Id
+  | InvoiceVoidedCredit Account.Code Invoice.Id
+  | InvoiceReopenedCredit Account.Code Invoice.Id
+  | InvoiceOpenCredit Account.Code Invoice.Id
+  | InvoiceUpdatedCredit Account.Code Invoice.Id
+  | InvoiceNew Account.Code Invoice.Id
+  | InvoiceProcessing Account.Code Invoice.Id
+  | InvoiceClosed Account.Code Invoice.Id
+  | InvoicePastDue Account.Code Invoice.Id
+  | PaymentScheduled Account.Code Transaction.Id
+  | PaymentProcessing Account.Code Transaction.Id
+  | PaymentSuccessful Account.Code Transaction.Id
+  | PaymentFailed Account.Code Transaction.Id
+  | PaymentSuccessfulRefund Account.Code Transaction.Id
+  | PaymentVoid Account.Code Transaction.Id
+  | PaymentFraudInfoUpdated Account.Code Transaction.Id
+  | PaymentTransactionStatusUpdated Account.Code Transaction.Id
+  | PaymentTransactionAuthorized Account.Code Transaction.Id
+  | CreditPaymentNew Account.Code CreditPayment.Uuid
+  | CreditPaymentVoided Account.Code CreditPayment.Uuid
+  | LegacyDunningEventNew Account.Code Invoice.Id Subscription.Uuid Transaction.Id
+  | DunningEventNew Account.Code Invoice.Id Subscription.Uuid
   deriving (Eq, Show)
 
 -- brittany-next-binding --columns 300
@@ -128,48 +132,36 @@ documentToNotification document = Foldable.asum $ fmap
   , getDunningInfo DunningEventNew "new_dunning_event_notification"
   ]
 
-getAccountInfo :: (Types.AccountCode -> notif) -> CI Text -> Xml.Document -> Maybe notif
+getAccountInfo :: (Account.Code -> notif) -> CI Text -> Xml.Document -> Maybe notif
 getAccountInfo notif rootName document = notif <$> previewEl getAccountCode rootName document
 
 getSubscriptionInfo
-  :: (Types.AccountCode -> Types.SubscriptionUuid -> notif)
-  -> CI Text
-  -> Xml.Document
-  -> Maybe notif
+  :: (Account.Code -> Subscription.Uuid -> notif) -> CI Text -> Xml.Document -> Maybe notif
 getSubscriptionInfo notif rootName document =
   notif
     <$> previewEl getAccountCode rootName document
     <*> previewEl getSubscriptionUuid rootName document
 
-getInvoiceInfo
-  :: (Types.AccountCode -> Types.InvoiceId -> notif) -> CI Text -> Xml.Document -> Maybe notif
+getInvoiceInfo :: (Account.Code -> Invoice.Id -> notif) -> CI Text -> Xml.Document -> Maybe notif
 getInvoiceInfo notif rootName document =
   notif <$> previewEl getAccountCode rootName document <*> previewEl getInvoiceId rootName document
 
 getPaymentInfo
-  :: (Types.AccountCode -> Types.TransactionId -> notif) -> CI Text -> Xml.Document -> Maybe notif
+  :: (Account.Code -> Transaction.Id -> notif) -> CI Text -> Xml.Document -> Maybe notif
 getPaymentInfo notif rootName document =
   notif
     <$> previewEl getAccountCode rootName document
     <*> previewEl getTransactionId rootName document
 
 getCreditPaymentInfo
-  :: (Types.AccountCode -> Types.CreditPaymentUuid -> notif)
-  -> CI Text
-  -> Xml.Document
-  -> Maybe notif
+  :: (Account.Code -> CreditPayment.Uuid -> notif) -> CI Text -> Xml.Document -> Maybe notif
 getCreditPaymentInfo notif rootName document =
   notif
     <$> previewEl getAccountCode rootName document
     <*> previewEl getCreditPaymentUuid rootName document
 
 getLegacyDunningInfo
-  :: ( Types.AccountCode
-     -> Types.InvoiceId
-     -> Types.SubscriptionUuid
-     -> Types.TransactionId
-     -> notif
-     )
+  :: (Account.Code -> Invoice.Id -> Subscription.Uuid -> Transaction.Id -> notif)
   -> CI Text
   -> Xml.Document
   -> Maybe notif
@@ -181,7 +173,7 @@ getLegacyDunningInfo notif rootName document =
     <*> previewEl getTransactionId rootName document
 
 getDunningInfo
-  :: (Types.AccountCode -> Types.InvoiceId -> Types.SubscriptionUuid -> notif)
+  :: (Account.Code -> Invoice.Id -> Subscription.Uuid -> notif)
   -> CI Text
   -> Xml.Document
   -> Maybe notif
@@ -191,22 +183,21 @@ getDunningInfo notif rootName document =
     <*> previewEl getInvoiceId rootName document
     <*> previewEl getSubscriptionUuid rootName document
 
-getAccountCode :: CI Text -> Getter Xml.Document Types.AccountCode
-getAccountCode rootName = getEl rootName "account" "account_code" (into @Types.AccountCode)
+getAccountCode :: CI Text -> Getter Xml.Document Account.Code
+getAccountCode rootName = getEl rootName "account" "account_code" (into @Account.Code)
 
-getSubscriptionUuid :: CI Text -> Getter Xml.Document Types.SubscriptionUuid
-getSubscriptionUuid rootName = getEl rootName "subscription" "uuid" (into @Types.SubscriptionUuid)
+getSubscriptionUuid :: CI Text -> Getter Xml.Document Subscription.Uuid
+getSubscriptionUuid rootName = getEl rootName "subscription" "uuid" (into @Subscription.Uuid)
 
 -- Invoices don't have a uuid, not sure why the xml says uuid
-getInvoiceId :: CI Text -> Getter Xml.Document Types.InvoiceId
-getInvoiceId rootName = getEl rootName "invoice" "uuid" (into @Types.InvoiceId)
+getInvoiceId :: CI Text -> Getter Xml.Document Invoice.Id
+getInvoiceId rootName = getEl rootName "invoice" "uuid" (into @Invoice.Id)
 
-getTransactionId :: CI Text -> Getter Xml.Document Types.TransactionId
-getTransactionId rootName = getEl rootName "transaction" "id" (into @Types.TransactionId)
+getTransactionId :: CI Text -> Getter Xml.Document Transaction.Id
+getTransactionId rootName = getEl rootName "transaction" "id" (into @Transaction.Id)
 
-getCreditPaymentUuid :: CI Text -> Getter Xml.Document Types.CreditPaymentUuid
-getCreditPaymentUuid rootName =
-  getEl rootName "credit_payment" "uuid" (into @Types.CreditPaymentUuid)
+getCreditPaymentUuid :: CI Text -> Getter Xml.Document CreditPayment.Uuid
+getCreditPaymentUuid rootName = getEl rootName "credit_payment" "uuid" (into @CreditPayment.Uuid)
 
 previewEl :: (CI Text -> Getter Xml.Document a) -> CI Text -> Xml.Document -> Maybe a
 previewEl getter = Lens.preview . getter
@@ -228,7 +219,7 @@ getNotificationType body = case Xml.parseLBS Xml.def body of
   Left _ -> Left InvalidXml
 
 getNotificationAccountCode
-  :: LazyByteString.ByteString -> Either WebhookError (Types.AccountCode, String)
+  :: LazyByteString.ByteString -> Either WebhookError (Account.Code, String)
 getNotificationAccountCode body = case Xml.parseLBS Xml.def body of
   Right notificationXml ->
     let rootName = documentNameToString notificationXml

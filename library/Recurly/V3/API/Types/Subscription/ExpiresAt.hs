@@ -2,10 +2,9 @@ module Recurly.V3.API.Types.Subscription.ExpiresAt where
 
 import Recurlude
 
-newtype SubscriptionExpiresAt =
-    SubscriptionExpiresAt UTCTime
+newtype ExpiresAt = ExpiresAt UTCTime
     deriving (Eq, Show, FromJSON)
 
-instance From UTCTime SubscriptionExpiresAt
+instance From UTCTime ExpiresAt
 
-instance From SubscriptionExpiresAt UTCTime
+instance From ExpiresAt UTCTime

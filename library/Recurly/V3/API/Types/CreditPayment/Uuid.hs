@@ -2,10 +2,9 @@ module Recurly.V3.API.Types.CreditPayment.Uuid where
 
 import Recurlude
 
-newtype CreditPaymentUuid =
-    CreditPaymentUuid Text
+newtype Uuid = Uuid Text
     deriving (Eq, Show, FromJSON, ToJSON)
 
-instance From Text CreditPaymentUuid
+instance From Text Uuid
 
-instance From CreditPaymentUuid Text
+instance From Uuid Text

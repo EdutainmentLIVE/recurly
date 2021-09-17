@@ -20,6 +20,7 @@ conf_forward:
     - -XFlexibleInstances
     - -XGeneralizedNewtypeDeriving
     - -XMultiParamTypeClasses
+    - -XNamedFieldPuns
     - -XOverloadedStrings
     - -XScopedTypeVariables
     - -XTypeApplications

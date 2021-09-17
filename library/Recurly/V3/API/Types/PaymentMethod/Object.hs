@@ -2,66 +2,66 @@ module Recurly.V3.API.Types.PaymentMethod.Object where
 
 import Recurlude
 
-data PaymentMethodObject
-  = CreditCardPaymentMethodObject
-  | PaypalPaymentMethodObject
-  | AmazonPaymentMethodObject
-  | RokuPaymentMethodObject
-  | BankAccountInfoPaymentMethodObject
-  | ApplePayPaymentMethodObject
-  | SepadirectdebitPaymentMethodObject
-  | EftPaymentMethodObject
-  | WireTransferPaymentMethodObject
-  | MoneyOrderPaymentMethodObject
-  | CheckPaymentMethodObject
-  | AmazonBillingAgreementPaymentMethodObject
-  | PaypalBillingAgreementPaymentMethodObject
-  | GatewayTokenPaymentMethodObject
-  | IbanBankAccountPaymentMethodObject
-  | OtherPaymentMethodObject
+data Object
+  = CreditCard
+  | Paypal
+  | Amazon
+  | Roku
+  | BankAccountInfo
+  | ApplePay
+  | Sepadirectdebit
+  | Eft
+  | WireTransfer
+  | MoneyOrder
+  | Check
+  | AmazonBillingAgreement
+  | PaypalBillingAgreement
+  | GatewayToken
+  | IbanBankAccount
+  | Other
   deriving (Eq, Show)
 
-instance ToJSON PaymentMethodObject where
+instance ToJSON Object where
   toJSON = toJSON . into @Text
 
-instance FromJSON PaymentMethodObject where
-  parseJSON = withText "PaymentMethodObject" $ eitherFail . tryInto @PaymentMethodObject
+instance FromJSON Object where
+  parseJSON = withText "PaymentMethod.Object" $ eitherFail . tryInto @Object
 
-instance TryFrom Text PaymentMethodObject where
-  tryFrom = maybeTryFrom $ \paymentMethodObject -> case paymentMethodObject of
-    "credit_card" -> Just CreditCardPaymentMethodObject
-    "paypal" -> Just PaypalPaymentMethodObject
-    "amazon" -> Just AmazonPaymentMethodObject
-    "roku" -> Just RokuPaymentMethodObject
-    "bank_account_info" -> Just BankAccountInfoPaymentMethodObject
-    "apple_pay" -> Just ApplePayPaymentMethodObject
-    "sepadirectdebit" -> Just SepadirectdebitPaymentMethodObject
-    "eft" -> Just EftPaymentMethodObject
-    "wire_transfer" -> Just WireTransferPaymentMethodObject
-    "money_order" -> Just MoneyOrderPaymentMethodObject
-    "check" -> Just CheckPaymentMethodObject
-    "amazon_billing_agreement" -> Just AmazonBillingAgreementPaymentMethodObject
-    "paypal_billing_agreement" -> Just PaypalBillingAgreementPaymentMethodObject
-    "gateway_token" -> Just GatewayTokenPaymentMethodObject
-    "iban_bank_account" -> Just IbanBankAccountPaymentMethodObject
-    "other" -> Just OtherPaymentMethodObject
+instance TryFrom Text Object where
+  tryFrom = maybeTryFrom $ \object -> case object of
+    "credit_card" -> Just CreditCard
+    "paypal" -> Just Paypal
+    "amazon" -> Just Amazon
+    "roku" -> Just Roku
+    "bank_account_info" -> Just BankAccountInfo
+    "apple_pay" -> Just ApplePay
+    "sepadirectdebit" -> Just Sepadirectdebit
+    "eft" -> Just Eft
+    "wire_transfer" -> Just WireTransfer
+    "money_order" -> Just MoneyOrder
+    "check" -> Just Check
+    "amazon_billing_agreement" -> Just AmazonBillingAgreement
+    "paypal_billing_agreement" -> Just PaypalBillingAgreement
+    "gateway_token" -> Just GatewayToken
+    "iban_bank_account" -> Just IbanBankAccount
+    "other" -> Just Other
     _ -> Nothing
 
-instance From PaymentMethodObject Text where
-  from paymentMethodObject = case paymentMethodObject of
-    CreditCardPaymentMethodObject -> "credit_card"
-    PaypalPaymentMethodObject -> "paypal"
-    AmazonPaymentMethodObject -> "amazon"
-    RokuPaymentMethodObject -> "roku"
-    BankAccountInfoPaymentMethodObject -> "bank_account_info"
-    ApplePayPaymentMethodObject -> "apple_pay"
-    SepadirectdebitPaymentMethodObject -> "sepadirectdebit"
-    EftPaymentMethodObject -> "eft"
-    WireTransferPaymentMethodObject -> "wire_transfer"
-    MoneyOrderPaymentMethodObject -> "money_order"
-    CheckPaymentMethodObject -> "check"
-    AmazonBillingAgreementPaymentMethodObject -> "amazon_billing_agreement"
-    PaypalBillingAgreementPaymentMethodObject -> "paypal_billing_agreement"
-    GatewayTokenPaymentMethodObject -> "gateway_token"
-    IbanBankAccountPaymentMethodObject -> "iban_bank_account"
-    OtherPaymentMethodObject -> "other"
+instance From Object Text where
+  from object = case object of
+    CreditCard -> "credit_card"
+    Paypal -> "paypal"
+    Amazon -> "amazon"
+    Roku -> "roku"
+    BankAccountInfo -> "bank_account_info"
+    ApplePay -> "apple_pay"
+    Sepadirectdebit -> "sepadirectdebit"
+    Eft -> "eft"
+    WireTransfer -> "wire_transfer"
+    MoneyOrder -> "money_order"
+    Check -> "check"
+    AmazonBillingAgreement -> "amazon_billing_agreement"
+    PaypalBillingAgreement -> "paypal_billing_agreement"
+    GatewayToken -> "gateway_token"
+    IbanBankAccount -> "iban_bank_account"
+    Other -> "other"

@@ -1,23 +1,32 @@
-module Recurly.V3.API.Types.AccountCouponRedemption where
+module Recurly.V3.API.Types.AccountCouponRedemption
+  ( module Recurly.V3.API.Types.AccountCouponRedemption
+  , CouponRedemption.Account
+  , CouponRedemption.Coupon
+  , CouponRedemption.CreatedAt
+  , CouponRedemption.Discounted
+  , CouponRedemption.Id
+  , CouponRedemption.RemovedAt
+  , CouponRedemption.State
+  ) where
 
 import Recurlude
 
-import qualified Recurly.V3.API.Types.CouponRedemption.Account as Types
-import qualified Recurly.V3.API.Types.CouponRedemption.Coupon as Types
-import qualified Recurly.V3.API.Types.CouponRedemption.CreatedAt as Types
-import qualified Recurly.V3.API.Types.CouponRedemption.Discounted as Types
-import qualified Recurly.V3.API.Types.CouponRedemption.Id as Types
-import qualified Recurly.V3.API.Types.CouponRedemption.RemovedAt as Types
-import qualified Recurly.V3.API.Types.CouponRedemption.State as Types
+import qualified Recurly.V3.API.Types.CouponRedemption.Account as CouponRedemption
+import qualified Recurly.V3.API.Types.CouponRedemption.Coupon as CouponRedemption
+import qualified Recurly.V3.API.Types.CouponRedemption.CreatedAt as CouponRedemption
+import qualified Recurly.V3.API.Types.CouponRedemption.Discounted as CouponRedemption
+import qualified Recurly.V3.API.Types.CouponRedemption.Id as CouponRedemption
+import qualified Recurly.V3.API.Types.CouponRedemption.RemovedAt as CouponRedemption
+import qualified Recurly.V3.API.Types.CouponRedemption.State as CouponRedemption
 
 data AccountCouponRedemption = AccountCouponRedemption
-  { accountCouponRedemptionId :: Types.CouponRedemptionId
-  , accountCouponRedemptionAccount :: Types.CouponRedemptionAccount
-  , accountCouponRedemptionCoupon :: Types.CouponRedemptionCoupon
-  , accountCouponRedemptionState :: Types.CouponRedemptionState
-  , accountCouponRedemptionDiscounted :: Types.CouponRedemptionDiscounted
-  , accountCouponRedemptionCreatedAt :: Types.CouponRedemptionCreatedAt
-  , accountCouponRedemptionRemovedAt :: Maybe Types.CouponRedemptionRemovedAt
+  { id_ :: CouponRedemption.Id
+  , account :: CouponRedemption.Account
+  , coupon :: CouponRedemption.Coupon
+  , state :: CouponRedemption.State
+  , discounted :: CouponRedemption.Discounted
+  , createdAt :: CouponRedemption.CreatedAt
+  , removedAt :: Maybe CouponRedemption.RemovedAt
   }
   deriving (Eq, Show)
 
@@ -30,12 +39,4 @@ instance FromJSON AccountCouponRedemption where
     discounted <- aesonRequired obj "discounted"
     createdAt <- aesonRequired obj "created_at"
     removedAt <- aesonOptional obj "removed_at"
-    pure AccountCouponRedemption
-      { accountCouponRedemptionId = id_
-      , accountCouponRedemptionAccount = account
-      , accountCouponRedemptionCoupon = coupon
-      , accountCouponRedemptionState = state
-      , accountCouponRedemptionDiscounted = discounted
-      , accountCouponRedemptionCreatedAt = createdAt
-      , accountCouponRedemptionRemovedAt = removedAt
-      }
+    pure AccountCouponRedemption { id_, account, coupon, state, discounted, createdAt, removedAt }

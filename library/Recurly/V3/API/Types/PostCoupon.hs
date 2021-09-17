@@ -1,19 +1,24 @@
-module Recurly.V3.API.Types.PostCoupon where
+module Recurly.V3.API.Types.PostCoupon
+  ( module Recurly.V3.API.Types.PostCoupon
+  , Coupon.Code
+  , Coupon.DiscountType
+  , Coupon.Name
+  ) where
 
 import Recurlude
 
 import qualified Data.Aeson as Aeson
 import qualified Data.Aeson.Types as Aeson
 
-import qualified Recurly.V3.API.Types.Coupon.Code as Types
-import qualified Recurly.V3.API.Types.Coupon.DiscountType as Types
-import qualified Recurly.V3.API.Types.Coupon.Name as Types
-import qualified Recurly.V3.API.Types.Currency as Types
+import qualified Recurly.V3.API.Types.Coupon.Code as Coupon
+import qualified Recurly.V3.API.Types.Coupon.DiscountType as Coupon
+import qualified Recurly.V3.API.Types.Coupon.Name as Coupon
+import qualified Recurly.V3.API.Types.Currency as Currency
 
 data PostCoupon = PostCoupon
-  { postCouponName :: Types.CouponName
-  , postCouponCode :: Types.CouponCode
-  , postCouponDiscountType :: Types.CouponDiscountType
+  { name :: Coupon.Name
+  , code :: Coupon.Code
+  , discountType :: Coupon.DiscountType
   }
   deriving (Eq, Show)
 
@@ -21,17 +26,17 @@ instance ToJSON PostCoupon where
   toJSON postCoupon =
     let
       discount :: [Aeson.Pair]
-      discount = case postCouponDiscountType postCoupon of
-        Types.Fixed fixed ->
+      discount = case discountType postCoupon of
+        Coupon.Fixed fixed ->
           [ aesonPair "discount_type" ("fixed" :: Text)
           , aesonPair
             "currencies"
-            [Aeson.object [aesonPair "amount" fixed, aesonPair "currency" Types.USD]]
+            [Aeson.object [aesonPair "amount" fixed, aesonPair "currency" Currency.USD]]
           ]
-        Types.Percent percent ->
+        Coupon.Percent percent ->
           [aesonPair "discount_type" ("percent" :: Text), aesonPair "discount_percent" percent]
     in
       Aeson.object
-      $ (aesonPair "name" . toJSON $ postCouponName postCoupon)
-      : (aesonPair "code" . toJSON $ postCouponCode postCoupon)
+      $ (aesonPair "name" . toJSON $ name postCoupon)
+      : (aesonPair "code" . toJSON $ code postCoupon)
       : discount

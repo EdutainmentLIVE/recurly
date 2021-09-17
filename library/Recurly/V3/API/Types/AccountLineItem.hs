@@ -1,21 +1,28 @@
-module Recurly.V3.API.Types.AccountLineItem where
+module Recurly.V3.API.Types.AccountLineItem
+  ( module Recurly.V3.API.Types.AccountLineItem
+  , Account.Account
+  , AccountLineItem.CreditReason
+  , AccountLineItem.Id
+  , AccountLineItem.Type
+  , AccountLineItem.UnitAmount
+  ) where
 
 import Recurlude
 
-import qualified Recurly.V3.API.Types.Account as Types
-import qualified Recurly.V3.API.Types.AccountLineItem.CreditReason as Types
-import qualified Recurly.V3.API.Types.AccountLineItem.Id as Types
-import qualified Recurly.V3.API.Types.AccountLineItem.Type as Types
-import qualified Recurly.V3.API.Types.AccountLineItem.UnitAmount as Types
-import qualified Recurly.V3.API.Types.Currency as Types
+import qualified Recurly.V3.API.Types.Account as Account
+import qualified Recurly.V3.API.Types.AccountLineItem.CreditReason as AccountLineItem
+import qualified Recurly.V3.API.Types.AccountLineItem.Id as AccountLineItem
+import qualified Recurly.V3.API.Types.AccountLineItem.Type as AccountLineItem
+import qualified Recurly.V3.API.Types.AccountLineItem.UnitAmount as AccountLineItem
+import qualified Recurly.V3.API.Types.Currency as Currency
 
 data AccountLineItem = AccountLineItem
-  { accountLineItemId :: Types.AccountLineItemId
-  , accountLineItemAccount :: Types.Account
-  , accountLineItemCurrency :: Types.Currency
-  , accountLineItemUnitAmount :: Types.AccountLineItemUnitAmount
-  , accountLineItemType :: Types.AccountLineItemType
-  , accountLineItemCreditReason :: Types.AccountLineItemCreditReason
+  { id_ :: AccountLineItem.Id
+  , account :: Account.Account
+  , currency :: Currency.Currency
+  , unitAmount :: AccountLineItem.UnitAmount
+  , type_ :: AccountLineItem.Type
+  , creditReason :: AccountLineItem.CreditReason
   }
   deriving (Eq, Show)
 
@@ -27,11 +34,4 @@ instance FromJSON AccountLineItem where
     unitAmount <- aesonRequired obj "unit_amount"
     type_ <- aesonRequired obj "type"
     creditReason <- aesonRequired obj "credit_reason_code"
-    pure AccountLineItem
-      { accountLineItemId = id_
-      , accountLineItemAccount = account
-      , accountLineItemCurrency = currency
-      , accountLineItemUnitAmount = unitAmount
-      , accountLineItemType = type_
-      , accountLineItemCreditReason = creditReason
-      }
+    pure AccountLineItem { id_, account, currency, unitAmount, type_, creditReason }
