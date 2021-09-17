@@ -8,14 +8,12 @@ import qualified Text.Read as Read
 newtype MaxAttempts = MaxAttempts Natural deriving (Eq)
 
 instance Show MaxAttempts where
-  show = show . maxAttemptsToNatural
+  show = show . into @Natural
 
 instance Envy.Var MaxAttempts where
   toVar = show
-  fromVar = fmap naturalToMaxAttempts . Read.readMaybe
+  fromVar = fmap (from @Natural) . Read.readMaybe
 
-naturalToMaxAttempts :: Natural -> MaxAttempts
-naturalToMaxAttempts = MaxAttempts
+instance From Natural MaxAttempts
 
-maxAttemptsToNatural :: MaxAttempts -> Natural
-maxAttemptsToNatural (MaxAttempts natural) = natural
+instance From MaxAttempts Natural

@@ -17,15 +17,13 @@ import qualified System.Random as Random
 import qualified Text.Printf as Printf
 
 import qualified Recurly.V3.API.Types.PathPiece as PathPiece
-import qualified Recurly.V3.Env.ApiUri as Env
-import qualified Recurly.V3.Env.MaxAttempts as Env
 import qualified Recurly.V3.Recurly as Recurly
 
 makeRequest :: [PathPiece.PathPiece] -> Recurly.Recurly Client.Request
 makeRequest path = do
   env <- Recurly.env
   let
-    uri = Env.apiUriToUri $ Recurly.recurlyApiUrl env
+    uri = into @URI $ Recurly.recurlyApiUrl env
     pathValues = fmap (into @Text) path
   Client.requestFromURI uri { URI.uriPath = into @String $ "/" <> Text.intercalate "/" pathValues }
 
@@ -73,7 +71,7 @@ sendRequestListWith
   -> Recurly.Recurly (Client.Response (Either RecurlyError [json]))
 sendRequestListWith acc request = do
   env <- Recurly.env
-  let uri = Env.apiUriToUri $ Recurly.recurlyApiUrl env
+  let uri = into @URI $ Recurly.recurlyApiUrl env
   response <- sendRequest request
   case Client.responseBody response of
     Left err -> pure $ response { Client.responseBody = Left err }
@@ -214,7 +212,7 @@ handleServerError
 handleServerError requestId attempt request response = do
   maxAttempts <- fmap Recurly.recurlyMaxAttempts Recurly.env
   logLn' requestId $ "Encountered server error with code: " <> show (responseCode response)
-  when (attempt > Env.maxAttemptsToNatural maxAttempts) $ do
+  when (attempt > into @Natural maxAttempts) $ do
     logLn' requestId $ "Giving up after " <> pluralize "attempt" attempt
     fail $ unlines ["Recurly API V3 failed", show request, show response]
   let delay = 1 :: Int
@@ -231,7 +229,7 @@ handleTimeout
 handleTimeout requestId attempt request exception = do
   maxAttempts <- fmap Recurly.recurlyMaxAttempts Recurly.env
   logLn' requestId "Request timed out"
-  when (attempt > Env.maxAttemptsToNatural maxAttempts) $ do
+  when (attempt > into @Natural maxAttempts) $ do
     logLn' requestId $ "Giving up after " <> pluralize "attempt" attempt
     fail $ unlines ["Recurly API V3 timed out", show request, show exception]
   sendRequestWith requestId (attempt + 1) request

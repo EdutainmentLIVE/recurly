@@ -9,10 +9,11 @@ newtype ApiUri = ApiUri URI deriving (Show)
 
 instance Envy.Var ApiUri where
   toVar = show
-  fromVar = stringToApiUri
+  fromVar = hush . tryInto @ApiUri
 
-stringToApiUri :: String -> Maybe ApiUri
-stringToApiUri = fmap ApiUri . Uri.parseAbsoluteURI
+instance From URI ApiUri
 
-apiUriToUri :: ApiUri -> URI
-apiUriToUri (ApiUri uri) = uri
+instance From ApiUri URI
+
+instance TryFrom String ApiUri where
+  tryFrom = maybeTryFrom $ \uri -> fmap (into @ApiUri) $ Uri.parseAbsoluteURI uri

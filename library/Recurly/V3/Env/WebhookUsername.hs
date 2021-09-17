@@ -6,5 +6,6 @@ import qualified System.Envy as Envy
 
 newtype WebhookUsername = WebhookUsername Text deriving (Envy.Var)
 
-webhookUsernameToText :: WebhookUsername -> Text
-webhookUsernameToText (WebhookUsername username) = username
+instance From Text WebhookUsername
+
+instance From WebhookUsername Text
