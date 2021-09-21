@@ -16,6 +16,7 @@ module Recurlude
   , module Network.HTTP.Types
   , module Network.URI
   , module Numeric.Natural
+  , module Recurlude.WithCallStack
   , module Witch
   -- IO
   , Moon
@@ -55,6 +56,7 @@ import Network.HTTP.Types
   (HeaderName, Method, methodDelete, methodGet, methodPost, methodPut, statusCode)
 import Network.URI (URI)
 import Numeric.Natural (Natural)
+import Recurlude.WithCallStack
 import Witch (From(..), TryFrom(..), into, maybeTryFrom, tryInto, via)
 
 import qualified Data.Aeson as Aeson

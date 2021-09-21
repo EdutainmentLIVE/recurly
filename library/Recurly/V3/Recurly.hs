@@ -35,7 +35,6 @@ newtype Recurly result = Recurly
     , Monad
     , Monad.MonadPlus
     , MonadCatch
-    , MonadFail
     , MonadIO
     , MonadThrow
     , Unlift.MonadUnliftIO

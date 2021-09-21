@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 6c29901b605e9f7b1dafcae5f6507cedfbd1049cc64a7ea0ebb08cb2e28c74d8
+-- hash: 93cec51b0b7b8f0122ddabbc753afe83884a4d784e37f8f2b516d1109c72d9b5
 
 name:           recurly
 version:        0.0.0.1
@@ -25,6 +25,7 @@ source-repository head
 library
   exposed-modules:
       Recurlude
+      Recurlude.WithCallStack
       Recurly.V3.API.Account
       Recurly.V3.API.Coupon
       Recurly.V3.API.Invoice
@@ -179,6 +180,7 @@ library
       Recurly.V3.Env.WebhookUsername
       Recurly.V3.Http
       Recurly.V3.Recurly
+      Recurly.V3.Types.RecurlyException
       Recurly.V3.Webhook.Webhook
   other-modules:
       Paths_recurly
