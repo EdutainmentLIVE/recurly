@@ -34,6 +34,7 @@ data Notification
   | AccountBillingInfoUpdateFailed Account.Code
   | SubscriptionNew Account.Code Subscription.Uuid
   | SubscriptionUpdated Account.Code Subscription.Uuid
+  | SubscriptionScheduledUpdate Account.Code Subscription.Uuid
   | SubscriptionCanceled Account.Code Subscription.Uuid
   | SubscriptionExpired Account.Code Subscription.Uuid
   | SubscriptionRenewed Account.Code Subscription.Uuid
@@ -88,6 +89,7 @@ documentToNotification document = Foldable.asum $ fmap
   , getAccountInfo AccountBillingInfoUpdateFailed "billing_info_update_failed_notification"
   , getSubscriptionInfo SubscriptionNew "reactivated_account_notification"
   , getSubscriptionInfo SubscriptionUpdated "updated_subscription_notification"
+  , getSubscriptionInfo SubscriptionScheduledUpdate "scheduled_subscription_update_notification"
   , getSubscriptionInfo SubscriptionCanceled "canceled_subscription_notification"
   , getSubscriptionInfo SubscriptionExpired "expired_subscription_notification"
   , getSubscriptionInfo SubscriptionRenewed "renewed_subscription_notification"
