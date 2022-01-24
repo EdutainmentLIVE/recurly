@@ -9,6 +9,7 @@ import qualified Recurly.V3.API.Types.Account as Account
 import Recurly.V3.API.Types.Account (Account)
 import Recurly.V3.API.Types.AccountCouponRedemption (AccountCouponRedemption)
 import Recurly.V3.API.Types.AccountLineItem (AccountLineItem)
+import Recurly.V3.API.Types.BillingInfo (BillingInfo)
 import qualified Recurly.V3.API.Types.PathPiece as PathPiece
 import Recurly.V3.API.Types.PostAccount (PostAccount)
 import Recurly.V3.API.Types.PostAccountLineItem (PostAccountLineItem)
@@ -17,6 +18,15 @@ import Recurly.V3.API.Types.Subscription (Subscription)
 import qualified Recurly.V3.Http as RecurlyApi
 import qualified Recurly.V3.Recurly as Recurly
 import Recurly.V3.Types.RecurlyException (RecurlyException)
+
+getAccountBillingInfo
+  :: Recurly.MonadRecurly m
+  => Account.Code
+  -> m (Client.Response (Either RecurlyException BillingInfo))
+getAccountBillingInfo accountCode = Recurly.liftRecurly $ do
+  request <- RecurlyApi.makeRequest
+    ["accounts", into @PathPiece.PathPiece accountCode, "billing_info"]
+  RecurlyApi.sendRequestList request
 
 getAccountSubscriptions
   :: Recurly.MonadRecurly m
