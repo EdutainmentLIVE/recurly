@@ -20,7 +20,7 @@ data BillingInfo = BillingInfo
 instance FromJSON BillingInfo where
   parseJSON = withObject "BillingInfo" $ \obj -> do
     id_ <- aesonRequired obj "id"
-    payment_method <- aesonRequired obj "payment_method"
+    paymentMethod <- aesonRequired obj "payment_method"
     firstName <- aesonOptional obj "first_name"
     lastName <- aesonOptional obj "last_name"
-    pure BillingInfo { id_, payment_method, firstName, lastName }
+    pure BillingInfo { id_, paymentMethod, firstName, lastName }
