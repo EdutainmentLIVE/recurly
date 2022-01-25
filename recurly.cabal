@@ -22,6 +22,10 @@ source-repository head
   type: git
   location: https://github.com/EdutainmentLIVE/recurly
 
+flag pedantic
+  default: False
+  manual: True
+
 library
   exposed-modules:
       Recurlude
@@ -233,3 +237,6 @@ library
     , xml-conduit >=1.9.0 && <2.0
     , xml-lens >=0.2 && <0.4
   default-language: Haskell2010
+
+  if flag(pedantic)
+    ghc-options: -Werror
