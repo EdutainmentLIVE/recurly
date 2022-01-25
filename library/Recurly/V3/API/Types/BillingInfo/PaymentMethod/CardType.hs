@@ -40,7 +40,7 @@ instance TryFrom Text CardType where
     "Union Pay" -> Just UnionPay
     "Unknown" -> Just Unknown
     "Visa" -> Just Visa
-    "Tarjeta Naranj" -> Just TarjetaNaranj
+    "Tarjeta Naranja" -> Just TarjetaNaranja
     _ -> Nothing
 
 instance From CardType Text where
@@ -58,4 +58,4 @@ instance From CardType Text where
     UnionPay -> "Union Pay"
     Unknown -> "Unknown"
     Visa -> "Visa"
-    TarjetaNaranj -> "Tarjeta Naranj"
+    TarjetaNaranja -> "Tarjeta Naranja"
