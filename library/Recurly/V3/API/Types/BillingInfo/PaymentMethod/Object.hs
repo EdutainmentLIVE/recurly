@@ -20,6 +20,7 @@ data Object
   | Sepadirectdebit
   | WireTransfer
   | BraintreeVZero
+  deriving (Eq, Show)
 
 instance ToJSON Object where
   toJSON = toJSON . into @Text

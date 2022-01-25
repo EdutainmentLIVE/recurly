@@ -1,11 +1,5 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.34.4.
---
--- see: https://github.com/sol/hpack
---
--- hash: 93cec51b0b7b8f0122ddabbc753afe83884a4d784e37f8f2b516d1109c72d9b5
-
 name:           recurly
 version:        0.0.0.1
 synopsis:       Access recurly v3 api
@@ -21,6 +15,10 @@ build-type:     Simple
 source-repository head
   type: git
   location: https://github.com/EdutainmentLIVE/recurly
+
+flag pedantic
+  default: False
+  manual: True
 
 library
   exposed-modules:
@@ -42,6 +40,10 @@ library
       Recurly.V3.API.Types.AccountLineItem.Id
       Recurly.V3.API.Types.AccountLineItem.Type
       Recurly.V3.API.Types.AccountLineItem.UnitAmount
+      Recurly.V3.API.Types.BillingInfo
+      Recurly.V3.API.Types.BillingInfo.PaymentMethod
+      Recurly.V3.API.Types.BillingInfo.PaymentMethod.CardType
+      Recurly.V3.API.Types.BillingInfo.PaymentMethod.Object
       Recurly.V3.API.Types.Coupon
       Recurly.V3.API.Types.Coupon.AppliesToAllPlans
       Recurly.V3.API.Types.Coupon.Code
@@ -198,7 +200,20 @@ library
       OverloadedStrings
       ScopedTypeVariables
       TypeApplications
-  ghc-options: -Weverything -Wno-all-missed-specializations -Wno-implicit-prelude -Wno-missed-specialisations -Wno-missing-deriving-strategies -Wno-missing-export-lists -Wno-missing-exported-signatures -Wno-missing-import-lists -Wno-missing-safe-haskell-mode -Wno-prepositive-qualified-module -Wno-redundant-constraints -Wno-safe -Wno-unsafe
+  ghc-options:
+    -Weverything
+    -Wno-all-missed-specializations
+    -Wno-implicit-prelude
+    -Wno-missed-specialisations
+    -Wno-missing-deriving-strategies
+    -Wno-missing-export-lists
+    -Wno-missing-exported-signatures
+    -Wno-missing-import-lists
+    -Wno-missing-safe-haskell-mode
+    -Wno-prepositive-qualified-module
+    -Wno-redundant-constraints
+    -Wno-safe
+    -Wno-unsafe
   build-depends:
       aeson >=1.5.4 && <1.6
     , base >=4.14.0 && <4.15
@@ -229,3 +244,6 @@ library
     , xml-conduit >=1.9.0 && <2.0
     , xml-lens >=0.2 && <0.4
   default-language: Haskell2010
+
+  if flag(pedantic)
+    ghc-options: -Werror
