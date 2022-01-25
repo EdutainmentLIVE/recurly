@@ -42,6 +42,10 @@ library
       Recurly.V3.API.Types.AccountLineItem.Id
       Recurly.V3.API.Types.AccountLineItem.Type
       Recurly.V3.API.Types.AccountLineItem.UnitAmount
+      Recurly.V3.API.Types.BillingInfo
+      Recurly.V3.API.Types.BillingInfo.PaymentMethod
+      Recurly.V3.API.Types.BillingInfo.PaymentMethod.CardType
+      Recurly.V3.API.Types.BillingInfo.PaymentMethod.Object
       Recurly.V3.API.Types.Coupon
       Recurly.V3.API.Types.Coupon.AppliesToAllPlans
       Recurly.V3.API.Types.Coupon.Code
