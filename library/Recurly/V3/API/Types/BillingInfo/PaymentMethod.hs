@@ -11,10 +11,10 @@ import qualified Recurly.V3.API.Types.BillingInfo.PaymentMethod.Object as Paymen
 
 data PaymentMethod = PaymentMethod
   { object :: PaymentMethod.Object
-  , cardType :: Mayb PaymentMethod.CardType
-  , lastFour :: Mayb Text
-  , month :: Mayb Integer
-  , year :: Mayb Integer
+  , cardType :: Maybe PaymentMethod.CardType
+  , lastFour :: Maybe Text
+  , month :: Maybe Integer
+  , year :: Maybe Integer
   , payPalBillingAgreementId :: Maybe Text
   }
   deriving (Eq, Show)
