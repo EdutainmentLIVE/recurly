@@ -28,6 +28,15 @@ getAccountBillingInfo accountCode = Recurly.liftRecurly $ do
     ["accounts", into @PathPiece.PathPiece accountCode, "billing_info"]
   RecurlyApi.sendRequest request
 
+getAccountBillingInfos
+  :: Recurly.MonadRecurly m
+  => Account.Code
+  -> m (Client.Response (Either RecurlyException [BillingInfo]))
+getAccountBillingInfos accountCode = Recurly.liftRecurly $ do
+  request <- RecurlyApi.makeRequest
+    ["accounts", into @PathPiece.PathPiece accountCode, "billing_info"]
+  RecurlyApi.sendRequestList request
+
 getAccountSubscriptions
   :: Recurly.MonadRecurly m
   => Account.Code
