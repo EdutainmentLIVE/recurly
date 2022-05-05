@@ -62,6 +62,7 @@ import Witch (From(..), TryFrom(..), into, maybeTryFrom, tryInto, via)
 import qualified Data.Aeson as Aeson
 import qualified Data.Aeson.Types as Aeson
 import qualified Data.IORef as IORef
+import qualified Data.String as String
 import qualified Data.Time as Time
 import qualified System.IO as IO
 import qualified System.IO.Unsafe as Unsafe
@@ -89,7 +90,7 @@ logLn message = do
   now <- getCurrentTime
   let
     timestamp =
-      Time.formatTime Time.defaultTimeLocale (Time.iso8601DateFormat $ Just "%T%3Q%z") now
+      Time.formatTime Time.defaultTimeLocale "%Y-%m-%dT%T%3Q%z" now
   liftIO . Logger.noticeM "Recurly" $ timestamp <> " " <> message
 
 {- hlint ignore logInitRef "Avoid restricted function" -}
@@ -105,16 +106,16 @@ pShow = into @String . Pretty.pShowNoColor
 
 -- Helpers
 aesonOptional :: FromJSON value => Aeson.Object -> String -> Aeson.Parser (Maybe value)
-aesonOptional object key = object Aeson..:? into @Text key
+aesonOptional object key = object Aeson..:? String.fromString key
 
 aesonRequired :: FromJSON value => Aeson.Object -> String -> Aeson.Parser value
-aesonRequired object key = object Aeson..: into @Text key
+aesonRequired object key = object Aeson..: String.fromString key
 
 aesonWDefault :: FromJSON value => value -> Aeson.Object -> String -> Aeson.Parser value
-aesonWDefault f object key = fmap (fromMaybe f) $ object Aeson..:? into @Text key
+aesonWDefault f object key = fmap (fromMaybe f) $ object Aeson..:? String.fromString key
 
 aesonPair :: (ToJSON value, Aeson.KeyValue pair) => String -> value -> pair
-aesonPair key value = into @Text key Aeson..= value
+aesonPair key value = String.fromString key Aeson..= value
 
 aesonPairHelper :: [(String, record -> Aeson.Value)] -> record -> Aeson.Value
 aesonPairHelper fields record =
