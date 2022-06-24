@@ -1,3 +1,5 @@
+{-# LANGUAGE DeriveAnyClass #-}
+
 module Recurly.V3.Webhook.Webhook where
 
 import Recurlude
@@ -76,7 +78,7 @@ data Notification
   | CreditPaymentVoided Account.Code CreditPayment.Uuid
   | LegacyDunningEventNew Account.Code Invoice.Id Subscription.Uuid Transaction.Id
   | DunningEventNew Account.Code Invoice.Id Subscription.Uuid
-  deriving (Eq, Show)
+  deriving (Eq, Show, Generic, FromJSON, ToJSON)
 
 -- brittany-next-binding --columns 300
 documentToNotification :: Xml.Document -> Maybe Notification

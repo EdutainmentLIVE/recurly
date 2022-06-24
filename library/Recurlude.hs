@@ -88,9 +88,7 @@ logLn :: MonadIO io => String -> io ()
 logLn message = do
   initializeLogger
   now <- getCurrentTime
-  let
-    timestamp =
-      Time.formatTime Time.defaultTimeLocale "%Y-%m-%dT%T%3Q%z" now
+  let timestamp = Time.formatTime Time.defaultTimeLocale "%Y-%m-%dT%T%3Q%z" now
   liftIO . Logger.noticeM "Recurly" $ timestamp <> " " <> message
 
 {- hlint ignore logInitRef "Avoid restricted function" -}
