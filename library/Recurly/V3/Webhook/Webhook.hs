@@ -1,3 +1,5 @@
+{-# LANGUAGE DeriveAnyClass #-}
+
 module Recurly.V3.Webhook.Webhook where
 
 import Recurlude
@@ -76,7 +78,7 @@ data Notification
   | CreditPaymentVoided Account.Code CreditPayment.Uuid
   | LegacyDunningEventNew Account.Code Invoice.Id Subscription.Uuid Transaction.Id
   | DunningEventNew Account.Code Invoice.Id Subscription.Uuid
-  deriving (Eq, Show)
+  deriving (Eq, Show, Generic, FromJSON, ToJSON)
 
 -- brittany-next-binding --columns 300
 documentToNotification :: Xml.Document -> Maybe Notification
@@ -133,6 +135,58 @@ documentToNotification document = Foldable.asum $ fmap
   -- it's important legacy comes before the new notification, because legacy has more information
   , getDunningInfo DunningEventNew "new_dunning_event_notification"
   ]
+
+extractAccountCode :: Notification -> Account.Code
+extractAccountCode notification = case notification of
+  AccountNew a -> a
+  AccountUpdated a -> a
+  AccountCanceled a -> a
+  AccountBillingInfoUpdated a -> a
+  AccountBillingInfoUpdateFailed a -> a
+  SubscriptionNew a _ -> a
+  SubscriptionUpdated a _ -> a
+  SubscriptionScheduledUpdate a _ -> a
+  SubscriptionCanceled a _ -> a
+  SubscriptionExpired a _ -> a
+  SubscriptionRenewed a _ -> a
+  SubscriptionReactivated a _ -> a
+  SubscriptionPaused a _ -> a
+  SubscriptionResumed a _ -> a
+  SubscriptionScheduledPause a _ -> a
+  SubscriptionPauseModified a _ -> a
+  SubscriptionPausedRenewal a _ -> a
+  SubscriptionPauseCanceled a _ -> a
+  InvoiceNewCharge a _ -> a
+  InvoiceProcessingCharge a _ -> a
+  InvoicePastDueCharge a _ -> a
+  InvoicePaidCharge a _ -> a
+  InvoiceFailedCharge a _ -> a
+  InvoiceReopenedCharge a _ -> a
+  InvoiceUpdatedCharge a _ -> a
+  InvoiceNewCredit a _ -> a
+  InvoiceProcessingCredit a _ -> a
+  InvoiceClosedCredit a _ -> a
+  InvoiceVoidedCredit a _ -> a
+  InvoiceReopenedCredit a _ -> a
+  InvoiceOpenCredit a _ -> a
+  InvoiceUpdatedCredit a _ -> a
+  InvoiceNew a _ -> a
+  InvoiceProcessing a _ -> a
+  InvoiceClosed a _ -> a
+  InvoicePastDue a _ -> a
+  PaymentScheduled a _ -> a
+  PaymentProcessing a _ -> a
+  PaymentSuccessful a _ -> a
+  PaymentFailed a _ -> a
+  PaymentSuccessfulRefund a _ -> a
+  PaymentVoid a _ -> a
+  PaymentFraudInfoUpdated a _ -> a
+  PaymentTransactionStatusUpdated a _ -> a
+  PaymentTransactionAuthorized a _ -> a
+  CreditPaymentNew a _ -> a
+  CreditPaymentVoided a _ -> a
+  LegacyDunningEventNew a _ _ _ -> a
+  DunningEventNew a _ _ -> a
 
 getAccountInfo :: (Account.Code -> notif) -> CI Text -> Xml.Document -> Maybe notif
 getAccountInfo notif rootName document = notif <$> previewEl getAccountCode rootName document

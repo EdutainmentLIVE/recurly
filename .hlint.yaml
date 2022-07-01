@@ -97,6 +97,7 @@
 # By default deny using any extensions, then selectively allow some.
 - extensions:
     - default: false
+    - name: DeriveAnyClass
 
 # By default allow using any function, then deny some that cause problems.
 - functions:
